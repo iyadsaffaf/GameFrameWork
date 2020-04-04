@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
@@ -19,11 +21,16 @@
    <children>
       <Pane prefHeight="398.0" prefWidth="605.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
-            <Button layoutX="130.0" layoutY="57.0" mnemonicParsing="false" onAction="#LoginButton" text="Login" />
-            <Button layoutX="261.0" layoutY="57.0" mnemonicParsing="false" onAction="#GetGameListButton" text="Getgamelist" />
-            <Button layoutX="433.0" layoutY="57.0" mnemonicParsing="false" onAction="#GetPlyerlistButton" text="plyerlist" />
-            <Text layoutX="176.0" layoutY="191.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="176.5366668701172" />
-            <Button layoutX="238.0" layoutY="105.0" mnemonicParsing="false" onAction="#ConnectButton" text="Connect" />
+            <Button layoutX="473.0" layoutY="74.0" mnemonicParsing="false" onAction="#LoginButton" text="Login" />
+            <Button layoutX="275.0" layoutY="218.0" mnemonicParsing="false" onAction="#GetGameListButton" text="Get game list" />
+            <Button layoutX="79.0" layoutY="218.0" mnemonicParsing="false" onAction="#GetPlyerlistButton" text="Get Plyers list" />
+            <Text id="textremote" fx:id="textremote" layoutX="187.0" layoutY="351.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please Connect to server" wrappingWidth="176.5366668701172" />
+            <Button layoutX="236.0" layoutY="295.0" mnemonicParsing="false" onAction="#ConnectButton" text="Connect" />
+            <ListView fx:id="plyerListView" layoutX="38.0" layoutY="55.0" prefHeight="156.0" prefWidth="177.0" />
+            <Label layoutX="38.0" layoutY="29.0" text="Plyerlist" />
+            <ListView fx:id="gameListView" layoutX="230.0" layoutY="55.0" prefHeight="156.0" prefWidth="177.0" />
+            <Label layoutX="241.0" layoutY="29.0" text="Game list" />
+            <Button layoutX="414.0" layoutY="174.0" mnemonicParsing="false" onAction="#SubscribeButton" text="Subcribe for the selected game" />
          </children>
       </Pane>
    </children>

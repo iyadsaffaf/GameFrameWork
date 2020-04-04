@@ -11,11 +11,11 @@ import java.nio.channels.SocketChannel;
 import java.nio.charset.Charset;
 
 public class Connect {
-    private Socket clientSocket;
+    private SocketChannel sc;
     private PrintWriter out;
     private BufferedReader in;
     public void setUpConnection(){
-        SocketChannel sc = null;
+         sc = null;
         try {
             sc = SocketChannel.open();
 
@@ -37,21 +37,30 @@ public class Connect {
         }
         System.out.println(bytesRead);
 
-        bb.flip();//sets the Position to 0 and limit to the number of bytes to be read.
+        bb.flip();
         CharBuffer c = Charset.forName("ISO-8859-1").decode(bb);
         System.out.println(c);
+
+
+    }
+
+    public void Connect(){
+
+    }
+    public void Disconnect(){
+
+    }
+    public String WriteToServer(String message) {
 
         try {
             out = new PrintWriter(sc.socket().getOutputStream(), true);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //out.println("get playerlist");
-        out.println("help");
+        out.println(message);
 
 
-
-        ByteBuffer crunchifyBuffer = ByteBuffer.allocate(555);
+        ByteBuffer br = ByteBuffer.allocate(555);
 
         try {
             Thread.sleep(100);
@@ -59,18 +68,19 @@ public class Connect {
             e.printStackTrace();
         }
         try {
-            sc.read(crunchifyBuffer);
+            sc.read(br);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        crunchifyBuffer.flip();
-        String result = new String(crunchifyBuffer.array()).trim();
+        br.flip();
+        String result = new String(br.array()).trim();
         System.out.println(result);
-        try {
-            sc.configureBlocking(false);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+//        try {
+//            sc.configureBlocking(false);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        br.clear();
+      return result;
     }
 }
