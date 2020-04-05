@@ -22,6 +22,7 @@ public class TicLogic {
 
 
     }
+    //
     //Return the best move
     public  int GetNextMove(){
         int nextmovet=0;
