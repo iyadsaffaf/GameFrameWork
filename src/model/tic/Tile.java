@@ -13,6 +13,7 @@ import javafx.scene.text.Text;
 
 public class Tile extends StackPane {
     private Text text = new Text();
+    private  int  TileIndex;
     public Tile(){
         Rectangle border =new Rectangle(100,100);
         border.setFill(null);
@@ -20,15 +21,6 @@ public class Tile extends StackPane {
         setAlignment(Pos.CENTER);
         getChildren().addAll(border,text);
         text.setFont(Font.font(72));
-        setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-        DrawX();
-            }
-        });
-
-
-
 
     }
   public void DrawX(){
@@ -37,6 +29,14 @@ public class Tile extends StackPane {
   }
     public void DrawY(){
         text.setText("Y");
+
+    }
+    public void setIndex(int x){
+        this.TileIndex=x;
+
+    }
+    public int GetIndex(){
+        return this.TileIndex;
 
     }
 }

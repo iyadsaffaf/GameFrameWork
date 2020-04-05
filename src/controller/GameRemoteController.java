@@ -4,6 +4,8 @@ import com.sun.javafx.beans.event.AbstractNotifyListener;
 import connection.Connect;
 import connection.ServerCommand;
 import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
@@ -37,13 +39,16 @@ public class GameRemoteController {
 
 
         ArrayList<String> array=serverCommand.GetPlayersList(s.WriteToServer("get gamelist"));
+        ObservableList<String> data = FXCollections.observableArrayList();
         gameListView.getItems().clear();
 
         for ( String var : array)
         {
-            gameListView.getItems().add(var);
+            //gameListView.getItems().add("ddf");
+            data.add(var);
 
         }
+        gameListView.setItems(data);
 
         System.out.println(gameListView.getSelectionModel().getSelectedItems());
 
@@ -57,6 +62,7 @@ public class GameRemoteController {
 
         for ( String var : array)
         {
+
             plyerListView.getItems().add(var);
 
         }
@@ -73,7 +79,9 @@ public class GameRemoteController {
     }
 
     public void SubscribeButton(ActionEvent actionEvent) {
-       System.out.println(s.WriteToServer("subscribe "+gameListView.getSelectionModel().getSelectedItems().toString()));
+        String ss = gameListView.getSelectionModel().getSelectedItems().toString();
+        String game=(ss.substring(1,ss.length()-1));
+       System.out.println(s.WriteToServer("subscribe "+game));
 
     }
 }
