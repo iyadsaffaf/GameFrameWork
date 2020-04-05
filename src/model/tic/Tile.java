@@ -12,9 +12,12 @@ import javafx.scene.text.Text;
 
 
 public class Tile extends StackPane {
-    private Text text = new Text();
+
+
+    private Text text;
     private  int  TileIndex;
     public Tile(){
+        text= new Text();
         Rectangle border =new Rectangle(100,100);
         border.setFill(null);
         border.setStroke(Color.BLACK);
@@ -31,6 +34,10 @@ public class Tile extends StackPane {
         text.setText("Y");
 
     }
+    public void DrawIndex(int s){
+        text.setText(s+"");
+
+    }
     public void setIndex(int x){
         this.TileIndex=x;
 
@@ -38,5 +45,13 @@ public class Tile extends StackPane {
     public int GetIndex(){
         return this.TileIndex;
 
+    }
+
+    public Text getText() {
+        return text;
+    }
+
+    public void setText(Text text) {
+        this.text = text;
     }
 }
