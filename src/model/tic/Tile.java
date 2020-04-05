@@ -27,11 +27,11 @@ public class Tile extends StackPane {
 
     }
   public void DrawX(){
-        text.setText("x");
+        text.setText("X");
 
   }
-    public void DrawY(){
-        text.setText("Y");
+    public void DrawO(){
+        text.setText("O");
 
     }
     public void DrawIndex(int s){
