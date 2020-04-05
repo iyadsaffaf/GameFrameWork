@@ -23,7 +23,7 @@ public class Connect {
             e.printStackTrace();
         }
         try {
-            sc.connect(new InetSocketAddress("192.168.2.4", 7789));
+            sc.connect(new InetSocketAddress("127.0.0.1", 7789));
         } catch (IOException e) {
             e.printStackTrace();
         }
