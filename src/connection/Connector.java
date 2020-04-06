@@ -15,17 +15,20 @@ public class Connector implements Runnable {
     private Connection connection;
     private ListView<String> playerListView;
     private ListView<String> gameListView;
+    private ListView<String> challengeList;
+
     private ServerCommand serverCommand;
     private String gameType;
-    private boolean amIThefirst =true;
+    private boolean amIThefirst = true;
     private PlayerType playerType;
 
 
-    public Connector(Connection s, ListView<String> plyerListView, ListView<String> gameListView) {
-        this.serverCommand= new ServerCommand();
+    public Connector(Connection s, ListView<String> plyerListView, ListView<String> gameListView, ListView<String> challengeList) {
+        this.serverCommand = new ServerCommand();
         this.connection = s;
         this.playerListView = plyerListView;
         this.gameListView = gameListView;
+        this.challengeList = challengeList;
 
     }
 
@@ -74,14 +77,28 @@ public class Connector implements Runnable {
         } else if (message.contains("LOSS")) {
             //update PlayerList
 
-        }else if (message.contains("MOVE")) {
+        } else if (message.contains("MOVE")) {
             //update PlayerList
-         updateGame(message);
+            updateGame(message);
+        } else if (message.contains("CHALLENGE")) {
+            //update PlayerList
+            updateChallengeList(message);
         }
+
+
+    }
+
+    private void updateChallengeList(String message) {
+
+        ArrayList<String> array= serverCommand.GetPlayersList(message);
+        String challenge = array.get(1) +" The player "+ array.get(0)+" sent you a challenge to "+ array.get(2);
+        challengeList.getItems().add(challenge);
+        System.out.println(challengeList.getSelectionModel().getSelectedItems());
+
     }
 
     public void updatePlayerList(String message) {
-        ArrayList<String> array=serverCommand.GetPlayersList(message);
+        ArrayList<String> array = serverCommand.GetPlayersList(message);
         ObservableList<String> data = FXCollections.observableArrayList();
         playerListView.getItems().clear();
 
@@ -90,9 +107,10 @@ public class Connector implements Runnable {
 
         System.out.println(playerListView.getSelectionModel().getSelectedItems());
     }
+
     public void updateGameList(String message) {
-       System.out.println(message);
-        ArrayList<String> array=serverCommand.GetPlayersList( message);
+        System.out.println(message);
+        ArrayList<String> array = serverCommand.GetPlayersList(message);
         ObservableList<String> data = FXCollections.observableArrayList();
         gameListView.getItems().clear();
         data.addAll(array);
@@ -100,6 +118,7 @@ public class Connector implements Runnable {
 
         System.out.println(gameListView.getSelectionModel().getSelectedItems());
     }
+
     public void startMatch(String message) {
         System.out.println(message);
         //todo check the type of math
@@ -108,23 +127,25 @@ public class Connector implements Runnable {
 
 
     }
+
     public void move(String message) {
         System.out.println(message);
-        if(amIThefirst){
-            amIThefirst=false;
+        if (amIThefirst) {
+            amIThefirst = false;
             playerType = PlayerType.X;
             this.ai.setAiType(playerType);
 
         }
         //todo check the type of math
-        int x=ai.GetNextMove();
-        connection.getOutput().println("move " +x);
+        int x = ai.GetNextMove();
+        connection.getOutput().println("move " + x);
 
 
     }
-    public void updateGame(String message){
-        if(amIThefirst){
-            amIThefirst=false;
+
+    public void updateGame(String message) {
+        if (amIThefirst) {
+            amIThefirst = false;
             playerType = PlayerType.O;
             this.ai.setAiType(playerType);
 
