@@ -8,15 +8,21 @@ import java.util.Random;
 public class TicLogic {
    private TicTacGame state ;
    private PlayerType playerType;
+   private PlayerType aiType;
 
 
 
-    public TicLogic(){
+    public TicLogic(PlayerType playerType){
         state=new TicTacGame();
+        this.playerType=playerType;
+        this.aiType=getAiType(this.playerType);
     }
     public void move( int x){
+        System.out.println("Player  "+playerType.toString());
+        System.out.println("Ai    "+aiType.toString());
+
         if(state.isFree(x)){
-        state.fillInCells(x);
+        state.fillInCells(x,playerType.toString());
         }
 
 
@@ -24,14 +30,32 @@ public class TicLogic {
     }
     //Return the best move
     public  int GetNextMove(){
-        int nextmovet=0;
-        Random r = new Random();
-        int x = r.nextInt(8);
-        return nextmovet;
+        int nextMove=state.getTheFistFreeIndex();
+        state.fillInCells(nextMove,aiType.toString());
+        return nextMove;
     }
-    public boolean isVailedMove(int x){
+    public boolean isValidMove(int x){
 
         return state.isFree(x);
     }
 
+    public PlayerType getAiType(PlayerType playerType) {
+        PlayerType aiType;
+        if (playerType.toString().equals("X")) {
+            aiType=PlayerType.O;
+        }else {
+            aiType=PlayerType.X;
+
+
+        }
+        return aiType;
+    }
+
+    public PlayerType getAiType() {
+        return aiType;
+    }
+
+    public void setAiType(PlayerType aiType) {
+        this.aiType = aiType;
+    }
 }
