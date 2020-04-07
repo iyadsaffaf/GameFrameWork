@@ -100,4 +100,11 @@ public class TicLogic {
         return aiType;
     }
 
+    public PlayerType getAiType() {
+        return aiType;
+    }
+
+    public void setAiType(PlayerType aiType) {
+        this.aiType = aiType;
+    }
 }
