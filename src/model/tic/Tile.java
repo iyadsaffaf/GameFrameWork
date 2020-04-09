@@ -13,8 +13,7 @@ import javafx.scene.text.Text;
 
 public class Tile extends StackPane {
 
-
-    private Text text;
+     private Text text;
     private  int  TileIndex;
     public Tile(){
         text= new Text();

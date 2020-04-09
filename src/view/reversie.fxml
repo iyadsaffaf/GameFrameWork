@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.ReversieController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<GridPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReversieController">
+    <columnConstraints>
+        <ColumnConstraints />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints />
+      <RowConstraints />
+    </rowConstraints>
+    <children>
+        <Pane fx:id="panem" prefHeight="328.0" prefWidth="490.0">
+            <children>
+                <Pane id="paneR" fx:id="paneR" layoutX="14.0" layoutY="14.0" prefHeight="350.0" prefWidth="588.0">
+               <children>
+                      <Button layoutX="274.0" layoutY="150.0" mnemonicParsing="false" onAction="#StartDraw" text="start" />
+               </children></Pane>
+            </children>
+        </Pane>
+    </children>
+</GridPane>

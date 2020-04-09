@@ -19,4 +19,14 @@ public class GameLocalController {
         }
         root.getChildren().setAll(gridPane);
     }
+
+    public void openRevWindow(ActionEvent actionEvent) {
+        GridPane gridPane= null;
+        try {
+            gridPane = FXMLLoader.load(getClass().getResource("../view/reversie.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        root.getChildren().setAll(gridPane);
+    }
 }
