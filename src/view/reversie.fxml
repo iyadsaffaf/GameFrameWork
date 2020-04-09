@@ -15,10 +15,10 @@
         <RowConstraints />
     </rowConstraints>
     <children>
-        <Pane fx:id="panem" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0">
+        <Pane fx:id="panem" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" styleClass="background" stylesheets="@Stylesheets/reversieStyle.css">
             <children>
-                <Pane id="pane" fx:id="pane" layoutX="210.0" layoutY="14.0" prefHeight="600.0" prefWidth="600.0" />
-                <Button layoutX="500.0" layoutY="628.0" mnemonicParsing="false" onAction="#StartReversie" text="start" />
+                <Pane id="pane" fx:id="pane" layoutX="172.0" layoutY="23.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" styleClass="pane" stylesheets="@Stylesheets/reversieStyle.css" />
+                <Button layoutX="490.0" layoutY="647.0" mnemonicParsing="false" onAction="#StartReversie" text="start" />
             </children>
         </Pane>
     </children>

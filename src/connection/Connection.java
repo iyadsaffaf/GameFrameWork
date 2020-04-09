@@ -22,7 +22,7 @@ public class Connection {
     }
     public void setUpConnection() {
         try {
-            socket = new Socket("192.168.2.4", 7789);
+            socket = new Socket("145.33.225.170", 7789);
         } catch (IOException e) {
             e.printStackTrace();
         }

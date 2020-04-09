@@ -1,0 +1,22 @@
+.pane {
+   -fx-background-color: GREEN;
+   -fx-text-fill: white; 
+}
+.background {
+   -fx-background-color: BEIGE;
+   -fx-text-fill: white;
+
+    -fx-background-repeat: stretch;
+       -fx-background-size: 900 506;
+       -fx-background-position: center center;
+       -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);
+}
+
+.background_image{
+    -fx-background-image: url("../../resources/b.png");
+      -fx-background-repeat: stretch;
+      -fx-background-size: 50 50;
+      -fx-background-position: center center;
+      -fx-border-color: black ;
+          -fx-border-width: 1 ;
+}
