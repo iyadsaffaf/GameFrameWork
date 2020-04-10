@@ -6,19 +6,23 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import model.tic.Tile;
+import model.tic.PlayerType;
+import model.Reversi.TileReversi;
 
-import java.awt.*;
+import java.util.LinkedList;
 
 public class TicController {
     private TicLogic ai;
+    LinkedList<TileReversi> tiles;
+
 
 
     @FXML
     Pane pane;
 
     public void StartTic(ActionEvent actionEvent) {
-        ai = new TicLogic();
+        tiles= new LinkedList<>();
+        ai = new TicLogic(PlayerType.X);
         drawTheBoard();
 
     }
@@ -27,9 +31,9 @@ public class TicController {
         int index=0;
         for(int i =0;i<3;i++){
             for(int j=0;j<3;j++){
-                Tile tile= new Tile();
+                TileReversi tile= new TileReversi();
+                tiles.add(tile);
                 tile.setIndex(index);
-                tile.DrawIndex(index);
 
                 index++;
                 tile.setTranslateX(j*100);
@@ -39,14 +43,16 @@ public class TicController {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
                         System.out.println(tile.GetIndex());
+                        //my turn
 
-                        if(ai.isVailedMove(tile.GetIndex())){
+
+                        if(ai.isValidMove(tile.GetIndex())){
                             //my turn
                             ai.move(tile.GetIndex());
-
                             // the ai turn
-                            ai.GetNextMove();
-                        tile.DrawX();}
+                          int x=  ai.GetNextMove();
+
+                      }
                         else {
                             System.out.println("Not A valid move");
                         }
