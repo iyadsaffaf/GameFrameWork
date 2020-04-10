@@ -18,18 +18,14 @@ public class Tile extends StackPane {
     private Text text;
     private  int  TileIndex;
     public Tile(){
-       // setBackground(new Background(new BackgroundFill(Color.rgb(20, 205, 50), CornerRadii.EMPTY, Insets.EMPTY)));
+
 
         text= new Text();
-        Rectangle border =new Rectangle(75,75);
-      border.setFill(null);
-        //setStyle("-fx-border-color: black");
-
-//        setBorder(new Border(new BorderStroke(Color.BLACK,
-//                BorderStrokeStyle.DASHED, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        Rectangle border =new Rectangle(100,100);
+        border.setFill(Color.WHITE);
         border.setStroke(Color.BLACK);
         setAlignment(Pos.CENTER);
-       getChildren().addAll(text);
+        getChildren().addAll(border,text);
         text.setFont(Font.font(72));
 
     }
