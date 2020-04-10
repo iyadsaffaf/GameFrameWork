@@ -1,16 +1,9 @@
 package model.Reversi;
 
 
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
+
+
 
 
 public class TileReversi extends Pane {
@@ -18,12 +11,19 @@ public class TileReversi extends Pane {
 
     private int TileIndex;
 
+    // if 1  is black  2 is white  0 is free
+    private int colour;
+    private String path;
+
     public TileReversi() {
         setPrefWidth(75);
         setPrefHeight(75);
-        String xx = String.valueOf(getClass().getResource("/view/Stylesheets/reversieStyle.css").toExternalForm());
-        getStylesheets().add(xx);
-        getStyleClass().add("background_image");
+        path = String.valueOf(getClass().getResource("/view/Stylesheets/reversieStyle.css").toExternalForm());
+        getStylesheets().add(path);
+
+        getStyleClass().add("background_border");
+
+
 
     }
 
@@ -34,6 +34,33 @@ public class TileReversi extends Pane {
 
     public int GetIndex() {
         return this.TileIndex;
+
+    }
+
+    public void flip() {
+        if (colour == 1) {
+            System.out.println(" set to white");
+            setColourToWhite();
+
+        } else if (colour == 2) {
+            System.out.println(" set to black");
+            setColourToBlack();
+
+        }
+
+    }
+
+    public void setColourToBlack() {
+        colour = 1;
+        getStyleClass().clear();
+        getStyleClass().addAll("background_image");
+
+    }
+
+    public void setColourToWhite() {
+        colour = 2;
+        getStyleClass().clear();
+        getStyleClass().addAll("background_imagew");
 
     }
 
