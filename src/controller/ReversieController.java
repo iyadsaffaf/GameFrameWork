@@ -49,6 +49,7 @@ public class ReversieController {
                         Move move = new Move(tile.GetIndex());
                         System.out.println("the x = " + move.x + "  the y = " + move.y);
 
+
                         tile.flip();
                         // ai.test();
                     }
