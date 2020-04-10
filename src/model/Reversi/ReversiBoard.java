@@ -109,6 +109,29 @@ public class ReversiBoard {
         return free;
     }
 
+
+    public char getOwner(int x) {
+        char owner = 'F';
+        int index = 0;
+        for (int r = 0; r < boardSize; r++) {
+            for (int c = 0; c < boardSize; c++) {
+                if (index == x) {
+                    if (board[r][c] == 'B')
+                        owner = 'B';
+                    if (board[r][c] == 'W')
+                        owner = 'W';
+
+                }
+                index++;
+
+
+            }
+
+        }
+        return owner;
+    }
+
+
     //checkifvalid
     public boolean checkIfValidMove(int index, char player) {
         boolean isValid = true;
@@ -140,6 +163,19 @@ public class ReversiBoard {
     }
 
     //ismoveleft
+    public boolean isMoveLeft() {
+        boolean moveleft = false;
+        for (int i = 0; i < board.length; ++i) {
+            for (int j = 0; j < board[i].length; ++j) {
+                if (board[i][j] == 'F') {
+                    moveleft = true;
+                    break;
+                }
+            }
+        }
+        return moveleft;
+    }
+
     //evaluateboard
     public Score GetScore() {
         score.setWhite(CountTiles('W'));
@@ -160,5 +196,9 @@ public class ReversiBoard {
         }
         return result;
     }
+
     //flibaftermove en fill current
+    public void flipAfterMove() {
+
+    }
 }

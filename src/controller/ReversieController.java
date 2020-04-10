@@ -24,7 +24,7 @@ public class ReversieController {
     public void StartReversie(ActionEvent actionEvent) {
         tiles = new LinkedList<>();
         drawTheBoard();
-        ai = new ReversiLogic(tiles);
+        ai = new ReversiLogic(tiles,'B');
 
 
     }
