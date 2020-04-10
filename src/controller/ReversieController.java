@@ -1,13 +1,12 @@
 package controller;
 
 import ai.ReversiLogic;
-import ai.TicLogic;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import model.tic.PlayerType;
+import model.Move;
 import model.Reversi.TileReversi;
 
 import java.util.LinkedList;
@@ -47,8 +46,11 @@ public class ReversieController {
                     public void handle(MouseEvent mouseEvent) {
 
                         System.out.println(tile.GetIndex());
+                        Move move = new Move(tile.GetIndex());
+                        System.out.println("the x = " + move.x + "  the y = " + move.y);
+
                         tile.flip();
-                       // ai.test();
+                        // ai.test();
                     }
                 });
 

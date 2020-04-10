@@ -63,6 +63,11 @@ public class TileReversi extends Pane {
         getStyleClass().addAll("background_imagew");
 
     }
+    public void setColourToHighLight() {
+        getStyleClass().clear();
+        getStyleClass().addAll("HighLight");
+
+    }
 
 
 }

@@ -29,4 +29,13 @@
       -fx-border-color: black ;
       -fx-border-width: 1 ;
 }
+.HighLight{
+ -fx-background-image: url("../../resources/g.png");
+      -fx-background-repeat: stretch;
+      -fx-background-size: 20 20;
+      -fx-background-position: center center;
+      -fx-border-color: black ;
+      -fx-border-width: 1 ;
+
+}
 
