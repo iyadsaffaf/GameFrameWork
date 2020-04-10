@@ -27,7 +27,7 @@ public class ReversiLogic {
 //myTurn
     public void move(int index){
 
-
+  System.out.println(board.checkIfValidMove(index,'B'));
         if(board.isValid()){
 
       board.fillInCells(index,playerType);
@@ -35,7 +35,7 @@ public class ReversiLogic {
 
 
 
-        }
+      }
 
     }
     public char getAiType(char playerType) {
