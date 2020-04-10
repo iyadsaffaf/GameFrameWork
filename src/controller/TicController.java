@@ -7,13 +7,13 @@ import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import model.tic.PlayerType;
-import model.Reversi.TileReversi;
+import model.tic.Tile;
 
 import java.util.LinkedList;
 
 public class TicController {
     private TicLogic ai;
-    LinkedList<TileReversi> tiles;
+    LinkedList<Tile> tiles;
 
 
 
@@ -21,7 +21,7 @@ public class TicController {
     Pane pane;
 
     public void StartTic(ActionEvent actionEvent) {
-        tiles= new LinkedList<>();
+        tiles= new LinkedList<Tile>();
         ai = new TicLogic(PlayerType.X);
         drawTheBoard();
 
@@ -31,7 +31,7 @@ public class TicController {
         int index=0;
         for(int i =0;i<3;i++){
             for(int j=0;j<3;j++){
-                TileReversi tile= new TileReversi();
+                Tile tile = new Tile();
                 tiles.add(tile);
                 tile.setIndex(index);
 
@@ -49,8 +49,10 @@ public class TicController {
                         if(ai.isValidMove(tile.GetIndex())){
                             //my turn
                             ai.move(tile.GetIndex());
+                            tile.DrawX();
                             // the ai turn
-                          int x=  ai.GetNextMove();
+                            int x=  ai.GetNextMove();
+                            tiles.get(x).DrawO();
 
                       }
                         else {
