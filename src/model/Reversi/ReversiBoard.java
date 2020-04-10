@@ -4,7 +4,7 @@ import model.Move;
 
 import java.util.LinkedList;
 
-public abstract class ReversiBoard {
+public class ReversiBoard {
     private int boardSize = 8;
     private char[][] board = new char[boardSize][boardSize];
     private LinkedList<TileReversi> tiles;
