@@ -30,7 +30,9 @@ public class ReversiBoard {
         fillInCells(27, 'B');
         tiles.get(27).setColourToWhite();
         fillInCells(28, 'W');
-        tiles.get(28).setColourToBlack();
+        tiles.get(28).setColourToWhite();
+        fillInCells(29, 'B');
+        tiles.get(29).setColourToBlack();
         fillInCells(35, 'W');
         tiles.get(35).setColourToBlack();
         fillInCells(36, 'B');
@@ -143,45 +145,93 @@ public class ReversiBoard {
         int x = move.x;
         int y = move.y;
 
+        String direction = "nothing";
+
         if (getOwner(index) == 'F') {
-            if (  move.y != 0 &&move.x != 0 && board[move.y - 1][move.x - 1] == player ) {
-                tiles.get(index).setColourToHighLight();
+            if (move.y != 0 && move.x != 0 && board[move.y - 1][move.x - 1] == player) {
+                //tiles.get(index).setColourToHighLight();
 
 
+            } else if (move.x != 0 && board[move.y][move.x - 1] == player) {
+                //tiles.get(index).setColourToHighLight();
 
-            } else if ( move.x != 0 &&board[move.y][move.x - 1] == player) {
-                tiles.get(index).setColourToHighLight();
+            } else if (move.y != 7 && move.x != 0 && board[move.y + 1][move.x - 1] == player) {
+                //tiles.get(index).setColourToHighLight();
 
-            } else if ( move.y != 7 &&move.x != 0 &&board[move.y + 1][move.x - 1] == player) {
-                tiles.get(index).setColourToHighLight();
+            } else if (move.y != 0 && board[move.y - 1][move.x] == player) {
+                //tiles.get(index).setColourToHighLight();
 
-            } else if (move.y != 0 &&board[move.y - 1][move.x] == player) {
-                tiles.get(index).setColourToHighLight();
+            } else if (move.x != 7 && board[move.y][move.x + 1] == player) {
+                //tiles.get(index).setColourToHighLight();
+                direction = "Right";
+                isValid = checkCapture(direction, move, player);
+                if(isValid) {
+                    tiles.get(index).setColourToHighLight();
+                }
 
-            } else if (move.x != 7&&board[move.y][move.x + 1] == player) {
-                tiles.get(index).setColourToHighLight();
-
-            } else if (move.y != 7&&move.x != 7&&board[move.y + 1][move.x + 1] == player) {
-                while (x<boardSize && y<boardSize) {
-
-                    if (board[move.y + y][move.x + x] == player) {
-                        isValid = true;
+            } else if (move.y != 7 && move.x != 7 && board[move.y + 1][move.x + 1] == player) {
+                direction = "Bottomright";
+                isValid = checkCapture(direction, move, player);
+                    if(isValid) {
                         tiles.get(index).setColourToHighLight();
-                    }else{
+                    }
+
+
+
+            } else if (move.y != 7 && board[move.y + 1][move.x] == player) {
+                //tiles.get(index).setColourToHighLight();
+            } else if (move.y != 0 && move.x != 7 && board[move.y - 1][move.x + 1] == player) {
+                //tiles.get(index).setColourToHighLight();
+            }
+
+
+        }
+        return isValid;
+    }
+
+    public boolean checkCapture(String direction, Move move, char player) {
+        boolean checkCapture = false;
+        //int captureScore = 2;
+        int x = move.x;
+        int y = move.y;
+
+        switch (direction) {
+            case "Topleft":
+
+                break;
+            case "Top":
+                break;
+            case "Topright":
+                break;
+            case "Left":
+                break;
+            case "Right":
+                for (int i = 1; (x +i)< boardSize; i++) {
+                    //capturescore ++;
+                    System.out.println("index"+i);
+                    if (board[y][x + i] == player) {
+                        checkCapture = true;
+                        System.out.println("right = true");
+                    } else {
                         break;
                     }
-                    x++;
-                    y++;
                 }
-            } else if (move.y != 7&&board[move.y + 1][move.x] == player) {
-                tiles.get(index).setColourToHighLight();
-
-            } else if (move.y != 0&&move.x != 7&&board[move.y - 1][move.x + 1] == player) {
-                tiles.get(index).setColourToHighLight();
-            }
+                break;
+            case "Bottomleft":
+                break;
+            case "Bottom":
+                break;
+            case "Bottomright":
+                for (int i = 0; x+i < boardSize && y+i < boardSize; i++) {
+                        //capturescore ++;
+                        if (board[y + i][x + i] == player) {
+                        checkCapture = true;
+                    } else {
+                        break;
+                    }
+                }
         }
-
-        return isValid;
+        return checkCapture;
     }
 
     public boolean checkIfValidMove2(int x, char i) {
@@ -241,43 +291,43 @@ public class ReversiBoard {
     }
 
 
-        //ismoveleft
-        public boolean isMoveLeft () {
-            boolean moveleft = false;
-            for (int i = 0; i < board.length; ++i) {
-                for (int j = 0; j < board[i].length; ++j) {
-                    if (board[i][j] == 'F') {
-                        moveleft = true;
-                        break;
-                    }
+    //ismoveleft
+    public boolean isMoveLeft() {
+        boolean moveleft = false;
+        for (int i = 0; i < board.length; ++i) {
+            for (int j = 0; j < board[i].length; ++j) {
+                if (board[i][j] == 'F') {
+                    moveleft = true;
+                    break;
                 }
             }
-            return moveleft;
         }
-
-        //evaluateboard
-        public Score GetScore () {
-            score.setWhite(CountTiles('W'));
-            score.setBlack(CountTiles('B'));
-            score.setFree(CountTiles('F'));
-
-            return score;
-        }
-
-        int CountTiles ( char color){
-            int result = 0;
-            for (int i = 0; i < board.length; ++i) {
-                for (int j = 0; j < board[i].length; ++j) {
-                    if (board[i][j] == color) {
-                        result++;
-                    }
-                }
-            }
-            return result;
-        }
-
-        //flibaftermove en fill current
-        public void flipAfterMove () {
-
-        }
+        return moveleft;
     }
+
+    //evaluateboard
+    public Score GetScore() {
+        score.setWhite(CountTiles('W'));
+        score.setBlack(CountTiles('B'));
+        score.setFree(CountTiles('F'));
+
+        return score;
+    }
+
+    int CountTiles(char color) {
+        int result = 0;
+        for (int i = 0; i < board.length; ++i) {
+            for (int j = 0; j < board[i].length; ++j) {
+                if (board[i][j] == color) {
+                    result++;
+                }
+            }
+        }
+        return result;
+    }
+
+    //flibaftermove en fill current
+    public void flipAfterMove() {
+
+    }
+}
