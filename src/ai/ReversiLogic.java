@@ -27,15 +27,15 @@ public class ReversiLogic {
 //myTurn
     public void move(int index){
 
-
-        if(board.isValid()){
-
-      board.fillInCells(index,playerType);
-      board.flipAfterMove();
-
-
-
-        }
+  System.out.println(board.checkIfValidMove(index,'B'));
+//        if(board.isValid()){
+//
+//      board.fillInCells(index,playerType);
+//      board.flipAfterMove();
+//
+//
+//
+//        }
 
     }
     public char getAiType(char playerType) {

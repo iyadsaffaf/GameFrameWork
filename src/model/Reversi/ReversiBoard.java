@@ -1,5 +1,9 @@
 package model.Reversi;
 
+import java.util.List;
+
+import java.util.Arrays;
+
 import model.Move;
 
 import java.util.LinkedList;
@@ -99,7 +103,7 @@ public class ReversiBoard {
         for (int r = 0; r < boardSize; r++) {
             for (int c = 0; c < boardSize; c++) {
 
-                checkIfValidMove(index, 'B');
+                free = checkIfValidMove(index, 'B');
                 index++;
 
 
@@ -131,74 +135,149 @@ public class ReversiBoard {
         return owner;
     }
 
-
     //checkifvalid
     public boolean checkIfValidMove(int index, char player) {
-        boolean isValid = true;
+        boolean isValid = false;
+        boolean opponentCheck = false;
         Move move = new Move(index);
-        if (move.x != 0 && move.y != 0 && move.x != 7 && move.y != 7 && isEmpty(index)) {
-            if (board[move.y - 1][move.x - 1] == player) {
-                tiles.get(index).setColourToHighLight();
-            } else if (board[move.y][move.x - 1] == player) {
+        int x = move.x;
+        int y = move.y;
+
+        if (getOwner(index) == 'F') {
+            if (  move.y != 0 &&move.x != 0 && board[move.y - 1][move.x - 1] == player ) {
                 tiles.get(index).setColourToHighLight();
 
-            } else if (board[move.y + 1][move.x - 1] == player) {
+
+
+            } else if ( move.x != 0 &&board[move.y][move.x - 1] == player) {
                 tiles.get(index).setColourToHighLight();
 
-            } else if (board[move.y - 1][move.x] == player) {
+            } else if ( move.y != 7 &&move.x != 0 &&board[move.y + 1][move.x - 1] == player) {
                 tiles.get(index).setColourToHighLight();
 
-            } else if (board[move.y][move.x + 1] == player) {
+            } else if (move.y != 0 &&board[move.y - 1][move.x] == player) {
                 tiles.get(index).setColourToHighLight();
 
-            } else if (board[move.y + 1][move.x + 1] == player) {
+            } else if (move.x != 7&&board[move.y][move.x + 1] == player) {
                 tiles.get(index).setColourToHighLight();
 
-            } else if (board[move.y + 1][move.x] == player) {
+            } else if (move.y != 7&&move.x != 7&&board[move.y + 1][move.x + 1] == player) {
+                while (x<boardSize && y<boardSize) {
+
+                    if (board[move.y + y][move.x + x] == player) {
+                        isValid = true;
+                        tiles.get(index).setColourToHighLight();
+                    }else{
+                        break;
+                    }
+                    x++;
+                    y++;
+                }
+            } else if (move.y != 7&&board[move.y + 1][move.x] == player) {
                 tiles.get(index).setColourToHighLight();
 
+            } else if (move.y != 0&&move.x != 7&&board[move.y - 1][move.x + 1] == player) {
+                tiles.get(index).setColourToHighLight();
             }
         }
+
         return isValid;
     }
 
-    //ismoveleft
-    public boolean isMoveLeft() {
-        boolean moveleft = false;
-        for (int i = 0; i < board.length; ++i) {
-            for (int j = 0; j < board[i].length; ++j) {
-                if (board[i][j] == 'F') {
-                    moveleft = true;
-                    break;
+    public boolean checkIfValidMove2(int x, char i) {
+        List<Integer> uitzonderingl = Arrays.asList(0, 8, 16, 24, 32, 40, 48, 56);
+        List<Integer> uitzonderingr = Arrays.asList(7, 15, 23, 31, 39, 47, 55, 63);
+        List<Integer> uitzonderingb = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7);
+        List<Integer> uitzonderingo = Arrays.asList(56, 57, 58, 59, 60, 61, 62, 63);
+        List<Integer> opponentlocation = Arrays.asList();
+        boolean valid = false;
+        boolean opponentCheck = false;
+        //System.out.println(getOwner(x));
+        if (getOwner(x) == 'F') {
+            if (uitzonderingl.contains(x)) {
+                if (uitzonderingb.contains(x)) {
+                    if (getOwner(x + 1) == 'W' || getOwner(x + 8) == 'W' || getOwner(x + 9) == 'W') {
+                        opponentCheck = true;
+                    }
+                } else if (uitzonderingo.contains(x)) {
+                    if (getOwner(x + 1) == 'W' || getOwner(x - 8) == 'W' || getOwner(x - 7) == 'W') {
+                        opponentCheck = true;
+                    }
+                } else if (getOwner(x + 1) == 'W' || getOwner(x + 8) == 'W' || getOwner(x + 9) == 'W' || getOwner(x - 8) == 'W' || getOwner(x - 7) == 'W') {
+                    opponentCheck = true;
+                }
+            } else if (uitzonderingr.contains(x)) {
+                if (uitzonderingb.contains(x)) {
+                    if (getOwner(x - 1) == 'W' || getOwner(x + 7) == 'W' || getOwner(x + 8) == 'W') {
+                        opponentCheck = true;
+                    }
+                } else if (uitzonderingo.contains(x)) {
+                    if (getOwner(x - 1) == 'W' || getOwner(x - 8) == 'W' || getOwner(x - 9) == 'W') {
+                        opponentCheck = true;
+                    }
+                } else if (getOwner(x - 1) == 'W' || getOwner(x - 8) == 'W' || getOwner(x - 9) == 'W' || getOwner(x + 8) == 'W' || getOwner(x + 7) == 'W') {
+                    opponentCheck = true;
+                }
+            } else if (uitzonderingb.contains(x)) {
+                if (getOwner(x + 1) == 'W' || getOwner(x - 1) == 'W' || getOwner(x + 7) == 'W' || getOwner(x + 8) == 'W' || getOwner(x + 9) == 'W') {
+                    opponentCheck = true;
+                }
+            } else if (uitzonderingo.contains(x)) {
+                if (getOwner(x + 1) == 'W' || getOwner(x - 1) == 'W' || getOwner(x - 9) == 'W' || getOwner(x - 8) == 'W' || getOwner(x - 7) == 'W') {
+                    opponentCheck = true;
+                }
+            } else if (uitzonderingb.contains(x) == false && uitzonderingl.contains(x) == false && uitzonderingo.contains(x) == false == uitzonderingr.contains(x) == false) {
+                if (getOwner(x + 1) == 'W' || getOwner(x - 1) == 'W' || getOwner(x + 7) == 'W' || getOwner(x - 7) == 'W' || getOwner(x + 8) == 'W' || getOwner(x - 8) == 'W' || getOwner(x + 9) == 'W' || getOwner(x - 9) == 'W') {
+                    opponentCheck = true;
+                    tiles.get(x).setColourToHighLight();
                 }
             }
-        }
-        return moveleft;
-    }
-
-    //evaluateboard
-    public Score GetScore() {
-        score.setWhite(CountTiles('W'));
-        score.setBlack(CountTiles('B'));
-        score.setFree(CountTiles('F'));
-
-        return score;
-    }
-
-    int CountTiles(char color) {
-        int result = 0;
-        for (int i = 0; i < board.length; ++i) {
-            for (int j = 0; j < board[i].length; ++j) {
-                if (board[i][j] == color) {
-                    result++;
-                }
+            if (opponentCheck == true) {
+                // nog check bouwen of steen van zelf aan de andere kant is
+                valid = true; //tijdelijk voor test
             }
         }
-        return result;
+        return valid;
     }
 
-    //flibaftermove en fill current
-    public void flipAfterMove() {
 
+        //ismoveleft
+        public boolean isMoveLeft () {
+            boolean moveleft = false;
+            for (int i = 0; i < board.length; ++i) {
+                for (int j = 0; j < board[i].length; ++j) {
+                    if (board[i][j] == 'F') {
+                        moveleft = true;
+                        break;
+                    }
+                }
+            }
+            return moveleft;
+        }
+
+        //evaluateboard
+        public Score GetScore () {
+            score.setWhite(CountTiles('W'));
+            score.setBlack(CountTiles('B'));
+            score.setFree(CountTiles('F'));
+
+            return score;
+        }
+
+        int CountTiles ( char color){
+            int result = 0;
+            for (int i = 0; i < board.length; ++i) {
+                for (int j = 0; j < board[i].length; ++j) {
+                    if (board[i][j] == color) {
+                        result++;
+                    }
+                }
+            }
+            return result;
+        }
+
+        //flibaftermove en fill current
+        public void flipAfterMove () {
+
+        }
     }
-}
