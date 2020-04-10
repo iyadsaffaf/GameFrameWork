@@ -3,6 +3,9 @@ package ai;
 import model.tic.PlayerType;
 import model.tic.TicTacGame;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class TicLogic {
@@ -10,81 +13,38 @@ public class TicLogic {
     private PlayerType playerType;
     private PlayerType aiType;
 
-    boolean areWeFirst = false;
-    int moveCount = 0;
-
-    int lastMovePlayer;
-    int lastMoveAi;
-
 
     public TicLogic(PlayerType playerType) {
         state = new TicTacGame();
         this.playerType = playerType;
         this.aiType = getAiType(this.playerType);
-        System.out.println("Player  " + playerType.toString());
-        System.out.println("Ai    " + aiType.toString());
-        System.out.println("Start...");
     }
 
     public void move(int x) {
+        System.out.println("Player  " + playerType.toString());
+        System.out.println("Ai    " + aiType.toString());
 
         if (state.isFree(x)) {
             state.fillInCells(x, playerType.toString());
-            lastMovePlayer = x;
         }
-    }
-
-    public int GetRandomIndex(int posA, int posB) {
-        int randomNr = (int) Math.floor((Math.random() * 2) + 1);
-        System.out.println(randomNr);
 
 
-        if (randomNr == 1)
-            return posA;
-        else
-            return posB;
-    }
-
-    public int GetLastMovePlayer() {
-        return lastMovePlayer;
     }
 
     //Return the best move
     public int GetNextMove() {
-        int nextMove = state.getTheFistFreeIndex();;
-
-        //Can we win?
-
-        //Do we need to defend?
-
-
-        //start in een corner 0 2 6 8
-        //Eerste zet
-        if (moveCount == 0) {
-            System.out.println("Eerste beurt");
-            if (GetLastMovePlayer() > 4)
-                nextMove = GetRandomIndex(0, 2);
-            else if (GetLastMovePlayer() < 4)
-                nextMove = GetRandomIndex(6, 8);
-            else {
-                nextMove = GetRandomIndex(2, 8);
-            }
-        }
-
-        //als hij middel heeft pak de tegenovergestelde hoek
-
-        moveCount++;
-        lastMoveAi = nextMove;
-        if (isValidMove(nextMove)) {
-            state.fillInCells(nextMove, aiType.toString());
-            return nextMove;
-        } else
-            System.out.println(nextMove + " = " + isValidMove(nextMove) + ", Not a valid move (Ai)");
-        return state.getTheFistFreeIndex();
-
+        List list = new ArrayList();
+        list.add("Ffd");
+        list.add(2);
+        Move m = findBestMove(state.getCells());
+        System.out.println(" vf");
+        int nextMove = state.getTheFistFreeIndex();
+        state.fillInCells(nextMove, aiType.toString());
+        return nextMove;
     }
 
     public boolean isValidMove(int x) {
+
         return state.isFree(x);
     }
 
@@ -107,4 +67,124 @@ public class TicLogic {
     public void setAiType(PlayerType aiType) {
         this.aiType = aiType;
     }
+
+
+    static class Move {
+        int row, col;
+    }
+
+    ;
+
+    public int minimax(String board[][],
+                       int depth, Boolean isMax) {
+        int score = state.evaluate(playerType.toString());
+
+        // If Maximizer has won the game
+        // return his/her evaluated score
+        if (score == 10)
+            return score;
+
+        // If Minimizer has won the game
+        // return his/her evaluated score
+        if (score == -10)
+            return score;
+
+        // If there are no more moves and
+        // no winner then it is a tie
+        if (!state.isMovesLeft())
+            return 0;
+
+        // If this maximizer's move
+        if (isMax) {
+            int best = -1000;
+
+            // Traverse all cells
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    // Check if cell is empty
+                    if (board[i][j].equals("FREE")) {
+                        // Make the move
+                        board[i][j] = aiType.toString();
+
+                        // Call minimax recursively and choose
+                        // the maximum value
+                        best = Math.max(best, minimax(board,
+                                depth + 1, !isMax));
+
+                        // Undo the move
+                        board[i][j] = "FREE";
+                    }
+                }
+            }
+            return best;
+        }
+
+        // If this minimizer's move
+        else {
+            int best = 1000;
+
+            // Traverse all cells
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    // Check if cell is empty
+                    if (board[i][j].equals("FREE")) {
+                        // Make the move
+                        board[i][j] = playerType.toString();
+
+                        // Call minimax recursively and choose
+                        // the minimum value
+                        best = Math.min(best, minimax(board,
+                                depth + 1, !isMax));
+
+                        // Undo the move
+                        board[i][j] = "FREE";
+                    }
+                }
+            }
+            return best;
+        }
+    }
+
+    public Move findBestMove(String[][] board) {
+        int bestVal = -1000;
+        Move bestMove = new Move();
+        bestMove.row = -1;
+        bestMove.col = -1;
+
+        // Traverse all cells, evaluate minimax function
+        // for all empty cells. And return the cell
+        // with optimal value.
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                // Check if cell is empty
+                if (board[i][j].equals("FREE")) {
+                    // Make the move
+                    board[i][j] = aiType.toString();
+
+                    // compute evaluation function for this
+                    // move.
+                    int moveVal = minimax(board, 0, false);
+
+                    // Undo the move
+                    board[i][j] = "FREE";
+
+                    // If the value of the current move is
+                    // more than the best value, then update
+                    // best/
+                    if (moveVal > bestVal) {
+                        bestMove.row = i;
+                        bestMove.col = j;
+                        bestVal = moveVal;
+                    }
+                }
+            }
+        }
+
+        System.out.printf("The value of the best Move " +
+                "is : %d\n\n", bestVal);
+
+        return bestMove;
+    }
+
 }
+
