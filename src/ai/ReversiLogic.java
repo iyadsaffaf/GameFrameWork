@@ -2,9 +2,6 @@ package ai;
 
 import model.Reversi.ReversiBoard;
 import model.Reversi.TileReversi;
-import model.tic.PlayerType;
-
-import javax.swing.border.Border;
 import java.util.LinkedList;
 
 public class ReversiLogic {
@@ -12,12 +9,15 @@ public class ReversiLogic {
     private ReversiBoard board;
     private char playerType;
     private char aiType;
+    private String difficulty;
 
-    public ReversiLogic(LinkedList<TileReversi> tiles, char b) {
+
+    public ReversiLogic(LinkedList<TileReversi> tiles, char b, String difficulty) {
         this.tiles = tiles;
         this.board = new ReversiBoard(tiles);
         this.playerType = b;
         this.aiType = getAiType(b);
+        this.difficulty=difficulty;
     }
 
     public void test() {
@@ -69,12 +69,16 @@ public class ReversiLogic {
 
     //Ai Turn
     public void moveAI() {
-        int aiMove = GetRandomMove();
+       int aiMove;
+        if ("Advanced".equals(difficulty)) {
+            aiMove = GetBestMove();
+        } else {
+            aiMove = GetRandomMove();
+        }
 
         System.out.println(aiMove+"GG");
         tiles.get(aiMove).setColourToThisPlayer(aiType);
         board.fillInCells(aiMove, aiType);
-
         board.isValid(playerType);
         board.flipAfterMove();
 
@@ -106,6 +110,8 @@ public class ReversiLogic {
 
     //miniMAX Algorithm
     public int GetBestMove() {
+//todo
+        System.out.println("NIKS");
 
         return 4;
     }

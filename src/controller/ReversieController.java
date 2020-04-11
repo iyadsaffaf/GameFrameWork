@@ -1,10 +1,15 @@
 package controller;
 
 import ai.ReversiLogic;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
@@ -18,20 +23,38 @@ public class ReversieController {
     private ReversiLogic ai;
     private LinkedList<TileReversi> tiles;
     private char playerType;
-
-
+    private String difficulty;
     @FXML
     Pane pane;
     @FXML
     Label playerTypeText;
 
+    @FXML
+    ChoiceBox choiceDifficulty;
+    @FXML
+    Label difficultyLevel;
+    @FXML
+    Button startButton;
+
+    public ReversieController(){
+
+    }
+
+
 
     public void StartReversie(ActionEvent actionEvent) {
+        difficulty = choiceDifficulty.getSelectionModel().getSelectedItem().toString();
+        System.out.println(difficulty);
+        pane.setVisible(true);
+        choiceDifficulty.setVisible(false);
+        difficultyLevel.setVisible(false);
+
         tiles = new LinkedList<>();
         playerType='B';
         drawTheBoard();
-        ai = new ReversiLogic(tiles,playerType);
+        ai = new ReversiLogic(tiles,playerType,difficulty);
         playerTypeText.setText(getTextForPlayerType(playerType));
+
 
 
     }
@@ -51,6 +74,8 @@ public class ReversieController {
                 tile.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
+
+
 
                         System.out.println(tile.GetIndex());
                         Move move = new Move(tile.GetIndex());
@@ -82,4 +107,8 @@ public class ReversieController {
 
 
         return s;}
+
+    public void clickck(KeyEvent keyEvent) {
+        startButton.setVisible(true);
+    }
 }
