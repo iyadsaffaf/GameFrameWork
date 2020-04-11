@@ -80,7 +80,7 @@ public class ReversiLogic {
         tiles.get(aiMove).setColourToThisPlayer(aiType);
         board.fillInCells(aiMove, aiType);
         board.isValid(playerType);
-        board.flipAfterMove();
+        board.flipAfterMove(aiMove, aiType);
 
         PrintBoard();
 

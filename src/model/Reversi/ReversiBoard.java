@@ -2,6 +2,9 @@ package model.Reversi;
 
 import model.Move;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import java.util.LinkedList;
 
 public class ReversiBoard {
@@ -430,8 +433,82 @@ public class ReversiBoard {
         return result;
     }
 
-    //flibaftermove en fill current
-    public void flipAfterMove() {
+
+    //flip after move en fill current
+    public void flipAfterMove(int index, char player) {
+        List<Integer> xDirection = new ArrayList<>();
+        List<Integer> yDirection = new ArrayList<>();
+        List<Integer> tilesToChange = new ArrayList<>();
+        int counter;
+        int row;
+        int column;
+        int xTowards = -1;
+        int yTowards = -1;
+        int yCurrentTile;
+        int xCurrentTile;
+        Move move = new Move(index);
+        int x = move.x;
+        int y = move.y;
+        char opponent;
+        if(player =='B') {
+            opponent = 'W';
+        } else {
+            opponent = 'B';
+        }
+
+        //Determine to which direction tiles have to be checked to flip
+        while(yTowards <= 1) {
+            while(xTowards <= 1) {
+                if(xTowards == 0 && yTowards == 0) {
+                    xTowards++;
+                }
+
+                xCurrentTile = x+xTowards;
+                yCurrentTile = y+yTowards;
+                index = xCurrentTile+yCurrentTile;
+
+                if(xCurrentTile >= 0 && xCurrentTile <= boardSize-1 && yCurrentTile >= 0 && yCurrentTile <= boardSize-1) {
+                    if(board[y + yTowards][x + xTowards] == opponent) {
+                        xDirection.add(xTowards);
+                        yDirection.add(yTowards);
+                        index = xCurrentTile + boardSize*yCurrentTile;
+                    }
+                }
+                xTowards++;
+            }
+            xTowards=-1;
+            yTowards++;
+        }
+
+        for(int i = 0; i < xDirection.size(); i++) {
+            counter = 1;
+            xTowards = xDirection.get(i);
+            yTowards = yDirection.get(i);
+
+            //Check how far to change tiles, and if it is valid to flip those tiles
+            while ((y + yTowards * counter) >= 0 && (y + yTowards * counter) <= 7 && (x + xTowards * counter) >= 0 && (x + xTowards * counter) <= 7) {
+                if (board[y + yTowards * counter][x + xTowards * counter] == opponent) {
+                    xCurrentTile = x + xTowards * counter;
+                    yCurrentTile = boardSize * (y + yTowards * counter);
+                    tilesToChange.add(yCurrentTile+xCurrentTile);
+                } else if (board[y + yTowards * counter][x + xTowards * counter] == player) {
+                    for(int j = 0;j < tilesToChange.size();j++) {
+                        index = tilesToChange.get(j);
+                        tiles.get(index).flip();
+                        //update board
+                        row = (int)Math.floor(index/boardSize);
+                        column = index % boardSize;
+                        board[row][column] = player;
+                    }
+                    tilesToChange.clear();
+                    break;
+                } else {
+                    tilesToChange.clear();
+                    break;
+                }
+                counter++;
+            }
+        }
 
     }
 
