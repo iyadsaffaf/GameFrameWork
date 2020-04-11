@@ -4,8 +4,10 @@ import ai.ReversiLogic;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+
 import model.Move;
 import model.Reversi.TileReversi;
 
@@ -15,16 +17,21 @@ public class ReversieController {
 
     private ReversiLogic ai;
     private LinkedList<TileReversi> tiles;
+    private char playerType;
 
 
     @FXML
     Pane pane;
+    @FXML
+    Label playerTypeText;
 
 
     public void StartReversie(ActionEvent actionEvent) {
         tiles = new LinkedList<>();
+        playerType='B';
         drawTheBoard();
-        ai = new ReversiLogic(tiles,'B');
+        ai = new ReversiLogic(tiles,playerType);
+        playerTypeText.setText(getTextForPlayerType(playerType));
 
 
     }
@@ -50,6 +57,7 @@ public class ReversieController {
                         System.out.println("the x = " + move.x + "  the y = " + move.y);
 
                         ai.move(tile.GetIndex());
+                    //    ai.moveAI();
 
 
                        // tile.flip();
@@ -60,4 +68,18 @@ public class ReversieController {
             }
         }
     }
+
+
+    public String getTextForPlayerType(char player){
+        String s ="";
+        if(player=='B'){
+            s=" You are BLack";
+        }else if(player=='W'){
+            s="You are White";
+
+        }
+
+
+
+        return s;}
 }

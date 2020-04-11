@@ -1,28 +1,32 @@
 package model.Reversi;
 
-import java.util.List;
-
-import java.util.Arrays;
-
 import model.Move;
 
-import javax.swing.border.Border;
 import java.util.LinkedList;
 
 public class ReversiBoard {
     private int boardSize = 8;
-    private char[][] board = new char[boardSize][boardSize];
+    private char[][] board;
+
+    public char[][] getBoard() {
+        return board;
+    }
+
+    public void setBoard(char[][] board) {
+        this.board = board;
+    }
+
     private LinkedList<TileReversi> tiles;
     private Score score;
 
 
     // character W B F
     public ReversiBoard(LinkedList<TileReversi> tiles) {
+        this.board = new char[boardSize][boardSize];
         this.tiles = tiles;
         FillInWithFree();
         score = new Score();
         setUpTheFirstCoins();
-        isValid();
 
     }
 
@@ -98,21 +102,18 @@ public class ReversiBoard {
 //        }
         Move move = new Move(x);
         board[move.y][move.x] = playerType;
-        tiles.get(x).setColourToWhite();
-        isValid();
-
 
     }
 
     // highlight
-    public boolean isValid() {
+    public boolean isValid(char player) {
 
         boolean free = false;
         int index = 0;
         for (int r = 0; r < boardSize; r++) {
             for (int c = 0; c < boardSize; c++) {
 
-                free = checkIfValidMove(index, 'W');
+                free = checkIfValidMove(index, player);
                 index++;
 
 
@@ -157,57 +158,101 @@ public class ReversiBoard {
                 isValid = checkCapture(direction, move, player);
                 if (isValid) {
                     tiles.get(index).setColourToHighLight();
+                    return true;
                 }
+                System.out.println("Check for Topleft   pleyer:" + player + "  results:" + isValid);
+                System.out.println("x  :" + move.x + "  y:" + move.y);
 
 
-            } else if (move.x != 0 && board[move.y][move.x - 1] == player) {
+            }
+            if (move.x != 0 && board[move.y][move.x - 1] == player) {
                 direction = "Left";
                 isValid = checkCapture(direction, move, player);
                 if (isValid) {
                     tiles.get(index).setColourToHighLight();
-                }
+                    return true;
 
-            } else if (move.y != 7 && move.x != 0 && board[move.y + 1][move.x - 1] == player) {
+                }
+                System.out.println("Check for Left   pleyer:" + player + "  results:" + isValid);
+                System.out.println("x  :" + move.x + "  y:" + move.y);
+
+
+            }
+            if (move.y != 7 && move.x != 0 && board[move.y + 1][move.x - 1] == player) {
                 direction = "Bottomleft";
                 isValid = checkCapture(direction, move, player);
                 if (isValid) {
                     tiles.get(index).setColourToHighLight();
-                }
+                    return true;
 
-            } else if (move.y != 0 && board[move.y - 1][move.x] == player) {
+                }
+                System.out.println("Check for Bottomleft   pleyer:" + player + "  results:" + isValid);
+                System.out.println("x  :" + move.x + "  y:" + move.y);
+
+
+            }
+            if (move.y != 0 && board[move.y - 1][move.x] == player) {
                 direction = "Top";
                 isValid = checkCapture(direction, move, player);
                 if (isValid) {
                     tiles.get(index).setColourToHighLight();
-                }
+                    return true;
 
-            } else if (move.x != 7 && board[move.y][move.x + 1] == player) {
+                }
+                System.out.println("Check for Top   pleyer:" + player + "  results:" + isValid);
+                System.out.println("x  :" + move.x + "  y:" + move.y);
+
+
+            }
+            if (move.x != 7 && board[move.y][move.x + 1] == player) {
                 direction = "Right";
                 isValid = checkCapture(direction, move, player);
                 if (isValid) {
                     tiles.get(index).setColourToHighLight();
-                }
+                    return true;
 
-            } else if (move.y != 7 && move.x != 7 && board[move.y + 1][move.x + 1] == player) {
+                }
+                System.out.println("Check for Right   pleyer:" + player + "  results:" + isValid);
+                System.out.println("x  :" + move.x + "  y:" + move.y);
+
+
+            }
+            if (move.y != 7 && move.x != 7 && board[move.y + 1][move.x + 1] == player) {
                 direction = "Bottomright";
                 isValid = checkCapture(direction, move, player);
                 if (isValid) {
                     tiles.get(index).setColourToHighLight();
+                    return true;
                 }
+                System.out.println("Check for Bottomright   pleyer:" + player + "  results:" + isValid);
+                System.out.println("x  :" + move.x + "  y:" + move.y);
 
 
-            } else if (move.y != 7 && board[move.y + 1][move.x] == player) {
+            }
+            if (move.y != 7 && board[move.y + 1][move.x] == player) {
                 direction = "Bottom";
                 isValid = checkCapture(direction, move, player);
                 if (isValid) {
                     tiles.get(index).setColourToHighLight();
+                    return true;
                 }
-            } else if (move.y != 0 && move.x != 7 && board[move.y - 1][move.x + 1] == player) {
+                System.out.println("Check for Bottom   pleyer:" + player + "  results:" + isValid);
+                System.out.println("x  :" + move.x + "  y:" + move.y);
+
+
+            }
+            if (move.y != 0 && move.x != 7 && board[move.y - 1][move.x + 1] == player) {
                 direction = "Topright";
                 isValid = checkCapture(direction, move, player);
                 if (isValid) {
                     tiles.get(index).setColourToHighLight();
+                    return true;
+
                 }
+                System.out.println("Check for Topright   pleyer:" + player + "  results:" + isValid);
+                System.out.println("x  :" + move.x + "  y:" + move.y);
+
+
             }
 
 
@@ -224,8 +269,10 @@ public class ReversiBoard {
         player = getAiType(player);
         switch (direction) {
             case "Topleft":
-                for (int i = 2; (x - i) < boardSize && (y - i) < boardSize; i++) {
+                for (int i = 2; (x - i) > 0 && (y - i) > 0; i++) {
                     //capturescore ++;
+                    System.out.println("x  :" + move.x + "  y:" + move.y + "  I  " + "Player  " + player);
+
                     if (board[y - i][x - i] == player) {
                         checkCapture = true;
                         break;
@@ -238,7 +285,10 @@ public class ReversiBoard {
                 }
                 break;
             case "Top":
-                for (int i = 2; (y - i) < boardSize; i++) {
+
+                for (int i = 2; (y - i) > 0; i++) {
+                    System.out.println("x  :" + move.x + "  y:" + move.y + "  I  " + "Player  " + player);
+
                     //capturescore ++;
                     if (board[y - i][x] == player) {
                         checkCapture = true;
@@ -251,7 +301,9 @@ public class ReversiBoard {
                 }
                 break;
             case "Topright":
-                for (int i = 2; (x + i) < boardSize && y - i < boardSize; i++) {
+                for (int i = 2; (x + i) < boardSize && (y - i) > 0; i++) {
+                    System.out.println("x  :" + move.x + "  y:" + move.y + "  I  " + "Player  " + player);
+
                     //capturescore ++;
                     if (board[y - i][x + i] == player) {
                         checkCapture = true;
@@ -264,7 +316,9 @@ public class ReversiBoard {
                 }
                 break;
             case "Left":
-                for (int i = 2; (x - i) < boardSize; i++) {
+                for (int i = 2; (x - i) > 0; i++) {
+                    System.out.println("x  :" + move.x + "  y:" + move.y + "  I  " + "Player  " + player);
+
                     //capturescore ++;
                     if (board[y][x - i] == player) {
                         checkCapture = true;
@@ -278,8 +332,9 @@ public class ReversiBoard {
                 break;
             case "Right":
                 for (int i = 2; (x + i) < boardSize; i++) {
+                    System.out.println("x  :" + move.x + "  y:" + move.y + "  I  " + "Player  " + player);
+
                     //capturescore ++;
-                    System.out.println("index" + i);
                     if (board[y][x + i] == player) {
                         checkCapture = true;
                         break;
@@ -291,7 +346,9 @@ public class ReversiBoard {
                 }
                 break;
             case "Bottomleft":
-                for (int i = 2; x - i < boardSize && y + i < boardSize; i++) {
+                for (int i = 2; x - i > 0 && y + i < boardSize; i++) {
+                    System.out.println("x  :" + move.x + "  y:" + move.y + "  I  " + "Player  " + player);
+
                     //capturescore ++;
 
                     if (board[y + i][x - i] == player) {
@@ -306,6 +363,8 @@ public class ReversiBoard {
                 break;
             case "Bottom":
                 for (int i = 2; y + i < boardSize; i++) {
+                    System.out.println("x  :" + move.x + "  y:" + move.y + "  I  " + "Player  " + player);
+
                     //capturescore ++;
                     if (board[y + i][x] == player) {
                         checkCapture = true;
@@ -319,9 +378,10 @@ public class ReversiBoard {
                 break;
             case "Bottomright":
                 for (int i = 2; x + i < boardSize && y + i < boardSize; i++) {
+                    System.out.println("x  :" + move.x + "  y:" + move.y + "  I  " + "Player  " + player);
+
                     //capturescore ++;
                     if (board[y + i][x + i] == player) {
-                        System.out.println(player);
                         checkCapture = true;
                         break;
                     } else if (board[y + i][x + i] == player2) {

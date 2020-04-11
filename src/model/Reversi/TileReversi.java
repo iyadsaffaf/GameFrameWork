@@ -3,9 +3,6 @@ package model.Reversi;
 
 import javafx.scene.layout.*;
 
-
-
-
 public class TileReversi extends Pane {
 
 
@@ -13,12 +10,11 @@ public class TileReversi extends Pane {
 
     // if 1  is black  2 is white  0 is free
     private int colour;
-    private String path;
 
     public TileReversi() {
         setPrefWidth(75);
         setPrefHeight(75);
-        path = String.valueOf(getClass().getResource("/view/Stylesheets/reversieStyle.css").toExternalForm());
+        String path = String.valueOf(getClass().getResource("/view/Stylesheets/reversieStyle.css").toExternalForm());
         getStylesheets().add(path);
 
         getStyleClass().add("background_border");
@@ -64,8 +60,18 @@ public class TileReversi extends Pane {
 
     }
     public void setColourToHighLight() {
+        colour=0;
         getStyleClass().clear();
         getStyleClass().addAll("HighLight");
+
+    }
+    public void setColourToThisPlayer(char player) {
+        if(player=='B'){
+            setColourToBlack();
+        }else {
+            setColourToWhite();
+        }
+
 
     }
 
