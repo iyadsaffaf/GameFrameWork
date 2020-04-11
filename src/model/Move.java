@@ -4,7 +4,7 @@ public class Move {
     public int x;
     public int y;
     private int boardSize;
-    public Move( int index){
+    public Move(int index){
         boardSize=8;
         findTheMove(index);
 
@@ -20,13 +20,7 @@ public class Move {
 
                 }
                 index++;
-
-
             }
-
         }
-
-
     }
-
 }

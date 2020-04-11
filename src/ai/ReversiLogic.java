@@ -31,7 +31,7 @@ public class ReversiLogic {
         if(board.isValid()){
 
       board.fillInCells(index,playerType);
-      board.flipAfterMove();
+      board.flipAfterMove(index, playerType);
 
 
 
@@ -57,7 +57,7 @@ public class ReversiLogic {
         if(board.isValid()){
 
             board.fillInCells(movex,aiType);
-            board.flipAfterMove();
+            board.flipAfterMove(index, playerType);
 
 
 

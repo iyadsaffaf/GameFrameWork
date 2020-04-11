@@ -4,6 +4,8 @@ import java.util.List;
 
 import java.util.Arrays;
 
+import java.util.ArrayList;
+
 import model.Move;
 
 import java.util.LinkedList;
@@ -418,8 +420,66 @@ public class ReversiBoard {
         return result;
     }
 
-    //flibaftermove en fill current
-    public void flipAfterMove() {
+    //flip after move en fill current
+    public void flipAfterMove(int index, char player) {
+        List<Integer> xDirection = new ArrayList<>();
+        List<Integer> yDirection = new ArrayList<>();
+        List<Integer> tilesToChange = new ArrayList<>();
+        int counter;
+        int xTowards = -1;
+        int yTowards = -1;
+        int yCurrentTile;
+        int xCurrentTile;
+        Move move = new Move(index);
+        int x = move.x;
+        int y = move.y;
+        char opponent = player;
+        player = getAiType(player);
+
+        while(yTowards <= 1) {
+            while(xTowards <= 1) {
+                if(xTowards == 0 && yTowards == 0) {
+                    xTowards++;
+                }
+
+                if (board[y + yTowards][x + xTowards] >= 1 && board[y + yTowards][x + xTowards] <= 8) {
+                    if(board[y + yTowards][x + xTowards] == opponent) {
+                        xDirection.add(xTowards);
+                        yDirection.add(yTowards);
+                    }
+                }
+                xTowards++;
+            }
+            xTowards=-1;
+            yTowards++;
+        }
+
+        for(int i = 0; i < xDirection.size(); i++) {
+            counter = 1;
+            xTowards = xDirection.get(i);
+            yTowards = yDirection.get(i);
+
+            do {
+                if (board[y + yTowards * counter][x + xTowards * counter] == opponent) {
+                    xCurrentTile = boardSize * (x + xTowards * counter);
+                    yCurrentTile = boardSize * (y + yTowards * counter);
+                    tilesToChange.add(yCurrentTile+xCurrentTile);
+                } else if (board[y + yTowards][x + xTowards] == player) {
+                    //swap tiles if size TilesToChange>1
+                    if(tilesToChange.size() > 1) {
+                        for(int j = 0;j < tilesToChange.size();j++) {
+                            tiles.get(tilesToChange.get(j)).flip();
+                        }
+                    }
+                    tilesToChange.clear();
+                    break;
+                } else {
+                    tilesToChange.clear();
+                    break;
+                }
+                counter++;
+            } while ((y + yTowards * counter) >= 1 && (y + yTowards * counter) <= 8 && (x + xTowards * counter) >= 1 && x + xTowards * counter <= 8);
+        }
 
     }
 
