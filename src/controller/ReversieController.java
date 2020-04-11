@@ -52,7 +52,7 @@ public class ReversieController {
                         ai.move(tile.GetIndex());
 
 
-                        tile.flip();
+                       // tile.flip();
                         // ai.test();
                     }
                 });

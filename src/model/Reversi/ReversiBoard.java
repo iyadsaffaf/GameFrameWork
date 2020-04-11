@@ -6,6 +6,7 @@ import java.util.Arrays;
 
 import model.Move;
 
+import javax.swing.border.Border;
 import java.util.LinkedList;
 
 public class ReversiBoard {
@@ -38,6 +39,10 @@ public class ReversiBoard {
         fillInCells(36, 'W');
         tiles.get(36).setColourToWhite();
 
+        fillInCells(45, 'W');
+        tiles.get(45).setColourToWhite();
+        fillInCells(54, 'W');
+        tiles.get(54).setColourToWhite();
 
     }
 
@@ -107,7 +112,7 @@ public class ReversiBoard {
         for (int r = 0; r < boardSize; r++) {
             for (int c = 0; c < boardSize; c++) {
 
-                free = checkIfValidMove(index, 'B');
+                free = checkIfValidMove(index, 'W');
                 index++;
 
 
@@ -140,16 +145,13 @@ public class ReversiBoard {
     }
 
     //checkifvalid
-    public boolean checkIfValidMove(int index, char player) {
+    public boolean checkIfValidMove(int index, char playe) {
         boolean isValid = false;
-        boolean opponentCheck = false;
         Move move = new Move(index);
-        int x = move.x;
-        int y = move.y;
-
         String direction = "nothing";
+        char player = getAiType(playe);
 
-        if (getOwner(index) == 'F') {
+        if (board[move.y][move.x] == 'F') {
             if (move.y != 0 && move.x != 0 && board[move.y - 1][move.x - 1] == player) {
                 direction = "Topleft";
                 isValid = checkCapture(direction, move, player);
@@ -220,7 +222,6 @@ public class ReversiBoard {
         int y = move.y;
         char player2 = player;
         player = getAiType(player);
-        System.out.println(player + "" + player2);
         switch (direction) {
             case "Topleft":
                 for (int i = 2; (x - i) < boardSize && (y - i) < boardSize; i++) {
@@ -241,6 +242,7 @@ public class ReversiBoard {
                     //capturescore ++;
                     if (board[y - i][x] == player) {
                         checkCapture = true;
+                        break;
                     } else if (board[y - i][x] == player2) {
                         continue;
                     } else {
@@ -253,19 +255,21 @@ public class ReversiBoard {
                     //capturescore ++;
                     if (board[y - i][x + i] == player) {
                         checkCapture = true;
+                        break;
                     } else if (board[y - i][x + i] == player2) {
                         continue;
                     } else {
                         break;
                     }
-                    break;
                 }
+                break;
             case "Left":
                 for (int i = 2; (x - i) < boardSize; i++) {
                     //capturescore ++;
                     if (board[y][x - i] == player) {
                         checkCapture = true;
-                    }else if (board[y][x - i] == player2) {
+                        break;
+                    } else if (board[y][x - i] == player2) {
                         continue;
                     } else {
                         break;
@@ -278,7 +282,7 @@ public class ReversiBoard {
                     System.out.println("index" + i);
                     if (board[y][x + i] == player) {
                         checkCapture = true;
-                        System.out.println("right = true");
+                        break;
                     } else if (board[y][x + i] == player2) {
                         continue;
                     } else {
@@ -292,6 +296,7 @@ public class ReversiBoard {
 
                     if (board[y + i][x - i] == player) {
                         checkCapture = true;
+                        break;
                     } else if (board[y + i][x - i] == player2) {
                         continue;
                     } else {
@@ -304,6 +309,7 @@ public class ReversiBoard {
                     //capturescore ++;
                     if (board[y + i][x] == player) {
                         checkCapture = true;
+                        break;
                     } else if (board[y + i][x] == player2) {
                         continue;
                     } else {
@@ -315,7 +321,9 @@ public class ReversiBoard {
                 for (int i = 2; x + i < boardSize && y + i < boardSize; i++) {
                     //capturescore ++;
                     if (board[y + i][x + i] == player) {
+                        System.out.println(player);
                         checkCapture = true;
+                        break;
                     } else if (board[y + i][x + i] == player2) {
                         continue;
                     } else {
@@ -324,62 +332,6 @@ public class ReversiBoard {
                 }
         }
         return checkCapture;
-    }
-
-    public boolean checkIfValidMove2(int x, char i) {
-        List<Integer> uitzonderingl = Arrays.asList(0, 8, 16, 24, 32, 40, 48, 56);
-        List<Integer> uitzonderingr = Arrays.asList(7, 15, 23, 31, 39, 47, 55, 63);
-        List<Integer> uitzonderingb = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7);
-        List<Integer> uitzonderingo = Arrays.asList(56, 57, 58, 59, 60, 61, 62, 63);
-        List<Integer> opponentlocation = Arrays.asList();
-        boolean valid = false;
-        boolean opponentCheck = false;
-        //System.out.println(getOwner(x));
-        if (getOwner(x) == 'F') {
-            if (uitzonderingl.contains(x)) {
-                if (uitzonderingb.contains(x)) {
-                    if (getOwner(x + 1) == 'W' || getOwner(x + 8) == 'W' || getOwner(x + 9) == 'W') {
-                        opponentCheck = true;
-                    }
-                } else if (uitzonderingo.contains(x)) {
-                    if (getOwner(x + 1) == 'W' || getOwner(x - 8) == 'W' || getOwner(x - 7) == 'W') {
-                        opponentCheck = true;
-                    }
-                } else if (getOwner(x + 1) == 'W' || getOwner(x + 8) == 'W' || getOwner(x + 9) == 'W' || getOwner(x - 8) == 'W' || getOwner(x - 7) == 'W') {
-                    opponentCheck = true;
-                }
-            } else if (uitzonderingr.contains(x)) {
-                if (uitzonderingb.contains(x)) {
-                    if (getOwner(x - 1) == 'W' || getOwner(x + 7) == 'W' || getOwner(x + 8) == 'W') {
-                        opponentCheck = true;
-                    }
-                } else if (uitzonderingo.contains(x)) {
-                    if (getOwner(x - 1) == 'W' || getOwner(x - 8) == 'W' || getOwner(x - 9) == 'W') {
-                        opponentCheck = true;
-                    }
-                } else if (getOwner(x - 1) == 'W' || getOwner(x - 8) == 'W' || getOwner(x - 9) == 'W' || getOwner(x + 8) == 'W' || getOwner(x + 7) == 'W') {
-                    opponentCheck = true;
-                }
-            } else if (uitzonderingb.contains(x)) {
-                if (getOwner(x + 1) == 'W' || getOwner(x - 1) == 'W' || getOwner(x + 7) == 'W' || getOwner(x + 8) == 'W' || getOwner(x + 9) == 'W') {
-                    opponentCheck = true;
-                }
-            } else if (uitzonderingo.contains(x)) {
-                if (getOwner(x + 1) == 'W' || getOwner(x - 1) == 'W' || getOwner(x - 9) == 'W' || getOwner(x - 8) == 'W' || getOwner(x - 7) == 'W') {
-                    opponentCheck = true;
-                }
-            } else if (uitzonderingb.contains(x) == false && uitzonderingl.contains(x) == false && uitzonderingo.contains(x) == false == uitzonderingr.contains(x) == false) {
-                if (getOwner(x + 1) == 'W' || getOwner(x - 1) == 'W' || getOwner(x + 7) == 'W' || getOwner(x - 7) == 'W' || getOwner(x + 8) == 'W' || getOwner(x - 8) == 'W' || getOwner(x + 9) == 'W' || getOwner(x - 9) == 'W') {
-                    opponentCheck = true;
-                    tiles.get(x).setColourToHighLight();
-                }
-            }
-            if (opponentCheck == true) {
-                // nog check bouwen of steen van zelf aan de andere kant is
-                valid = true; //tijdelijk voor test
-            }
-        }
-        return valid;
     }
 
 
@@ -408,9 +360,9 @@ public class ReversiBoard {
 
     int CountTiles(char color) {
         int result = 0;
-        for (int i = 0; i < board.length; ++i) {
-            for (int j = 0; j < board[i].length; ++j) {
-                if (board[i][j] == color) {
+        for (char[] chars : board) {
+            for (char aChar : chars) {
+                if (aChar == color) {
                     result++;
                 }
             }
@@ -427,10 +379,6 @@ public class ReversiBoard {
         char aiType = 'B';
         if (playerType == 'B') {
             aiType = 'W';
-        } else if (playerType == 'W') {
-            aiType = 'B';
-
-
         }
         return aiType;
     }
