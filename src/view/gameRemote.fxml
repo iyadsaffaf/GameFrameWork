@@ -30,23 +30,23 @@
                   <Image url="@../resources/background.jpg" />
                </image>
             </ImageView>
-            <Button layoutX="41.0" layoutY="571.0" mnemonicParsing="false" onAction="#LoginButton" prefHeight="60.0" prefWidth="273.0" text="Login" textFill="#240202">
+            <Button fx:id="loginButton" disable="true" layoutX="13.0" layoutY="514.0" mnemonicParsing="false" onAction="#LoginButton" prefHeight="25.0" prefWidth="115.0" text="Login" textFill="#240202">
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font></Button>
-            <Button layoutX="732.0" layoutY="302.0" mnemonicParsing="false" onAction="#GetGameListButton" prefHeight="16.0" prefWidth="136.0" text="Get game list">
+            <Button fx:id="getGameListButton" disable="true" layoutX="732.0" layoutY="302.0" mnemonicParsing="false" onAction="#GetGameListButton" prefHeight="16.0" prefWidth="136.0" text="Get game list">
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font></Button>
-            <Button layoutX="731.0" layoutY="106.0" mnemonicParsing="false" onAction="#GetPlyerlistButton" text="Get Plyers list">
+            <Button fx:id="getPlayerListButton" disable="true" layoutX="718.0" layoutY="40.0" mnemonicParsing="false" onAction="#GetPlyerlistButton" text="Get Plyers list">
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font></Button>
-            <Text id="textremote" fx:id="textremote" fill="#fafafa" layoutX="46.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please Connect to server" wrappingWidth="279.7366943359375">
+            <Text id="textremote" fx:id="textremote" fill="#fafafa" layoutX="14.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please Connect to server" wrappingWidth="279.7366943359375">
                <font>
-                  <Font name="System Bold Italic" size="24.0" />
+                  <Font name="System Bold Italic" size="17.0" />
                </font></Text>
-            <Button layoutX="49.0" layoutY="272.0" mnemonicParsing="false" onAction="#ConnectButton" prefHeight="60.0" prefWidth="273.0" text="Connect" textFill="#161515">
+            <Button fx:id="connectButton" layoutX="61.0" layoutY="204.0" mnemonicParsing="false" onAction="#ConnectButton" prefHeight="32.0" prefWidth="211.0" text="Connect" textFill="#161515">
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font></Button>
@@ -60,16 +60,16 @@
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font></Label>
-            <Button layoutX="698.0" layoutY="361.0" mnemonicParsing="false" onAction="#SubscribeButton" prefHeight="4.0" prefWidth="221.0" text="Subcribe for the selected game">
+            <Button fx:id="sunscribeButton" disable="true" layoutX="698.0" layoutY="361.0" mnemonicParsing="false" onAction="#SubscribeButton" prefHeight="4.0" prefWidth="221.0" text="Subcribe for the selected game">
                <font>
                   <Font name="System Bold Italic" size="14.0" />
                </font></Button>
-            <Button layoutX="754.0" layoutY="519.0" mnemonicParsing="false" onAction="#challenge" prefHeight="39.0" prefWidth="115.0" text="Challenge">
+            <Button fx:id="challengeButton" disable="true" layoutX="731.0" layoutY="143.0" mnemonicParsing="false" onAction="#challenge" prefHeight="39.0" prefWidth="115.0" text="Challenge">
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font></Button>
             <ListView fx:id="challengeList" layoutX="544.0" layoutY="470.0" prefHeight="194.0" prefWidth="148.0" />
-            <Button layoutX="727.0" layoutY="582.0" mnemonicParsing="false" onAction="#acceptChallenge" prefHeight="39.0" prefWidth="162.0" text="Accept">
+            <Button fx:id="acceptButton" disable="true" layoutX="728.0" layoutY="547.0" mnemonicParsing="false" onAction="#acceptChallenge" prefHeight="39.0" prefWidth="162.0" text="Accept">
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font></Button>
@@ -77,15 +77,21 @@
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font></Label>
-            <Text id="textremote" fx:id="textremote1" fill="#fafafa" layoutX="55.0" layoutY="400.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please Login" textAlignment="CENTER" wrappingWidth="279.7366943359375">
+            <Text id="textremote" fx:id="textremote13" fill="#fafafa" layoutX="14.0" layoutY="482.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please Login" wrappingWidth="485.6">
                <font>
-                  <Font name="System Bold Italic" size="24.0" />
+                  <Font name="System Bold Italic" size="16.0" />
                </font>
             </Text>
-            <TextField fx:id="ipAddress" layoutX="74.0" layoutY="66.0" text="localhost" />
-            <TextField fx:id="loginName" cache="true" cacheHint="SPEED" layoutX="103.0" layoutY="526.0" promptText="Enter your name please" />
-            <Label layoutX="74.0" layoutY="43.0" text="Ip Address" textFill="WHITE" />
-            <Label layoutX="103.0" layoutY="502.0" text="Log in as" textFill="WHITE" />
+            <TextField fx:id="ipAddress" layoutX="14.0" layoutY="150.0" text="localhost" />
+            <TextField fx:id="loginName" cache="true" cacheHint="SPEED" layoutX="181.0" layoutY="150.0" promptText="Enter your name please" />
+            <Label layoutX="14.0" layoutY="123.0" text="Ip Address" textFill="WHITE" />
+            <Label layoutX="182.0" layoutY="123.0" text="Connect as" textFill="WHITE" />
+            <Label layoutX="696.0" layoutY="94.0" prefHeight="32.0" prefWidth="324.0" text="Select a player to challenge" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="warning" layoutX="56.0" layoutY="285.0" text="* Please enter your name first" textFill="RED" visible="false" />
           
          </children>
       </Pane>

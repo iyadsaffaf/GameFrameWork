@@ -7,6 +7,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
@@ -32,15 +34,51 @@ public class GameRemoteController {
     @FXML
     private TextField ipAddress;
     @FXML
-    private TextField  loginName;
+    private TextField loginName;
+    @FXML
+    private Button loginButton;
+    @FXML
+    private Button getGameListButton;
+    @FXML
+    private Button getPlayerListButton;
+    @FXML
+    private Button connectButton;
+    @FXML
+    private Button sunscribeButton;
+    @FXML
+    private Button challengeButton;
+    @FXML
+    private Button acceptButton;
 
+    @FXML
+    private Text textremote13;
+
+    @FXML
+    private Label warning;
+
+
+    private boolean connected;
+    private boolean loggedin = false;
+    private  Thread thread;
 
     public void LoginButton(ActionEvent actionEvent) {
         // System.out.println(serverCommand.GetPlayersList("SVR GAME MOVE {PLAYER: \"1\", MOVE: \"3\", DETAILS: \"\"}").get(1));
 
+        if (!loggedin) {
+            loggedin = true;
+            connection.getOutput().println("login " + loginName.getText());
+            textremote.setText("Welcome " + loginName.getText());
+            textremote13.setText("You are in");
 
-        connection.getOutput().println("login "+loginName.getText());
-        textremote.setText(loginName.getText());
+            sunscribeButton.setDisable(false);
+            challengeButton.setDisable(false);
+            acceptButton.setDisable(false);
+
+        } else {
+            loggedin = false;
+
+
+        }
 
     }
 
@@ -59,11 +97,35 @@ public class GameRemoteController {
     }
 
     public void ConnectButton(ActionEvent actionEvent) {
-        connection = new Connection(ipAddress.getText(),7789);
-        Connector connector = new Connector(connection, plyerListView, gameListView, challengeList,loginName.getText());
-        System.out.println(loginName.getText()+"loginname test");
-        Thread thread = new Thread(connector);
-        thread.start();
+        if (!loginName.getText().equals("")) {
+
+            if (!connected) {
+                connectButton.setText("Disconnect");
+                textremote.setText("Hello " + loginName.getText()+" You can log in to join");
+                textremote13.setText("Log in to join ");
+
+
+                connected = true;
+                connection = new Connection(ipAddress.getText(), 7789);
+                Connector connector = new Connector(connection, plyerListView, gameListView, challengeList, loginName.getText());
+                System.out.println(loginName.getText() + "loginname test");
+                 thread = new Thread(connector);
+                thread.start();
+                warning.setVisible(false);
+                loginButton.setDisable(false);
+                getGameListButton.setDisable(false);
+                getPlayerListButton.setDisable(false);
+
+            } else {
+                connected=false;
+                connectButton.setText("Connect");
+                disconnect();
+            }
+        } else {
+
+
+            warning.setVisible(true);
+        }
     }
 
     public void SubscribeButton(ActionEvent actionEvent) {
@@ -81,7 +143,7 @@ public class GameRemoteController {
 
     public void acceptChallenge(ActionEvent actionEvent) {
         String ss = challengeList.getSelectionModel().getSelectedItems().toString();
-        String game = (ss.substring(1,3).trim());
+        String game = (ss.substring(1, 3).trim());
         int number = Integer.parseInt(game);
         connection.getOutput().println("challenge accept " + number);
 
@@ -91,10 +153,29 @@ public class GameRemoteController {
 
         String ss = gameListView.getSelectionModel().getSelectedItems().toString();
         String game = (ss.substring(1, ss.length() - 1));
-         ss = plyerListView.getSelectionModel().getSelectedItems().toString();
+        ss = plyerListView.getSelectionModel().getSelectedItems().toString();
         String player = (ss.substring(1, ss.length() - 1));
-        String ssss=  "challenge \""+player+"\" \""+game+"\"";
+        String ssss = "challenge \"" + player + "\" \"" + game + "\"";
         System.out.println(ssss);
         connection.getOutput().println(ssss);
+    }
+
+    public void disconnect() {
+        logOut();
+        thread.interrupt();
+        textremote.setText("Bye " + loginName.getText());
+        textremote13.setText("You have been disconnected  connect again to login ");
+        loginButton.setDisable(true);
+        getGameListButton.setDisable(true);
+        getPlayerListButton.setDisable(true);
+        sunscribeButton.setDisable(true);
+        challengeButton.setDisable(true);
+        acceptButton.setDisable(true);
+
+    }
+
+    private void logOut() {
+        connection.getOutput().println("logout " + loginName.getText());
+
     }
 }
