@@ -479,14 +479,13 @@ public class ReversiBoard {
                         column = index % boardSize;
                         board[row][column] = player;
                     }
-                    tilesToChange.clear();
                     break;
                 } else {
-                    tilesToChange.clear();
                     break;
                 }
                 counter++;
             }
+            tilesToChange.clear();
         }
 
     }
