@@ -38,8 +38,9 @@ public class GameRemoteController {
     public void LoginButton(ActionEvent actionEvent) {
         // System.out.println(serverCommand.GetPlayersList("SVR GAME MOVE {PLAYER: \"1\", MOVE: \"3\", DETAILS: \"\"}").get(1));
 
-        textremote.setText("Dddd");
+
         connection.getOutput().println("login "+loginName.getText());
+        textremote.setText(loginName.getText());
 
     }
 
@@ -59,7 +60,8 @@ public class GameRemoteController {
 
     public void ConnectButton(ActionEvent actionEvent) {
         connection = new Connection(ipAddress.getText(),7789);
-        Connector connector = new Connector(connection, plyerListView, gameListView, challengeList);
+        Connector connector = new Connector(connection, plyerListView, gameListView, challengeList,loginName.getText());
+        System.out.println(loginName.getText()+"loginname test");
         Thread thread = new Thread(connector);
         thread.start();
     }

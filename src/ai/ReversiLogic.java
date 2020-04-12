@@ -27,9 +27,12 @@ public class ReversiLogic {
     //myTurn
     public boolean move(int index) {
         boolean valid = false;
-
+        System.out.println("The AI is "+aiType+" and the player is "+ playerType);
         // System.out.println(board.checkIfValidMove(index,'W'));
+        index=GetRandomMove(playerType);
         if (board.checkIfValidMove(index, playerType)) {
+
+
             board.fillInCells(index, playerType);
 
             board.flipAfterMove(index, playerType);
@@ -64,10 +67,11 @@ public class ReversiLogic {
     //Ai Turn
     public int moveAI() {
         int aiMove;
+        System.out.println("The AI is "+aiType+" and the player is "+ playerType);
         if ("Advanced".equals(difficulty)) {
             aiMove = GetBestMove();
         } else {
-            aiMove = GetRandomMove();
+            aiMove = GetRandomMove(aiType);
         }
 
         System.out.println(aiMove + "GG");
@@ -83,14 +87,14 @@ public class ReversiLogic {
     }
 
     //Random Algorithm
-    public int GetRandomMove() {
+    public int GetRandomMove(char playerType) {
         int index = -1;
         for (int i = 0; i < 8; i++) {
             for (int c = 0; c < 8; c++) {
                 index++;
 
 
-                if (board.checkIfValidMove(index, aiType) && index < 64) {
+                if (board.checkIfValidMove(index, playerType) && index < 64) {
                     return index;
 
                 } else if (index == 63) {
