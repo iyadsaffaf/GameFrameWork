@@ -27,7 +27,7 @@ public class ReversiLogic {
     //myTurn
     public boolean move(int index) {
         boolean valid = false;
-        System.out.println("The AI is "+aiType+" and the player is "+ playerType);
+        System.out.println("The AI is "+aiType+" and the player is  "+ playerType);
         // System.out.println(board.checkIfValidMove(index,'W'));
         index=GetRandomMove(playerType);
         if (board.checkIfValidMove(index, playerType)) {
