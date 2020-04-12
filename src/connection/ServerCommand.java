@@ -15,7 +15,7 @@ public class ServerCommand {
         ArrayList<String> array = new ArrayList<String>();
         Pattern p = Pattern.compile("\"([^\"]*)\"");
         Matcher m = p.matcher(Command);
-        System.out.println(m.matches());
+        //System.out.println(m.matches());
 
         while (m.find()) {
             array.add(m.group(1));

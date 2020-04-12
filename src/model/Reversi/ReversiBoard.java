@@ -220,7 +220,7 @@ public class ReversiBoard {
                 if (isValid) {
                     return true;
                 }
-                System.out.println("Check for Bottom   pleyer:" + player + "  results:" + isValid);
+                System.out.println("Check for Bottom   player:" + player + "  results:" + isValid);
                 System.out.println("x  :" + move.x + "  y:" + move.y);
 
 

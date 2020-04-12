@@ -1,5 +1,6 @@
 package connection;
 
+import ai.ReversiLogic;
 import ai.TicLogic;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 
 public class Connector implements Runnable {
     private TicLogic ai;
+    private ReversiLogic reversiAi;
     private Connection connection;
     private ListView<String> playerListView;
     private ListView<String> gameListView;
@@ -54,6 +56,10 @@ public class Connector implements Runnable {
     }
 
     public void analyse(String message) {
+        if (message.contains("Reversi")){
+            gameType = "Reversi";
+        }
+
         if (message.contains("MATCH")) {
             //start match
             startMatch(message);
@@ -122,8 +128,8 @@ public class Connector implements Runnable {
     public void startMatch(String message) {
         System.out.println(message);
         //todo check the type of math
-
-        this.ai = new TicLogic(PlayerType.X);
+        this.reversiAi = new ReversiLogic('B',"Beginner");
+        //this.ai = new TicLogic(PlayerType.X);
 
 
     }
@@ -132,13 +138,29 @@ public class Connector implements Runnable {
         System.out.println(message);
         if (amIThefirst) {
             amIThefirst = false;
-            playerType = PlayerType.X;
-            this.ai.setAiType(playerType);
+            System.out.println("player1");
+            if (gameType =="Reversi"){
+                this.reversiAi.setPlayerType('B');
+                int x = reversiAi.moveAI();
+                connection.getOutput().println("move " + x);
+            }
+            else {
+                playerType = PlayerType.X;
+                this.ai.setAiType(playerType);
+                int x = ai.GetNextMove();
+                connection.getOutput().println("move " + x);
+            }
 
         }
+        else{
+            System.out.println("player2");
+            this.reversiAi.setPlayerType('W');
+            int x = reversiAi.moveAI();
+            connection.getOutput().println("move " + x);
+        }
+
         //todo check the type of math
-        int x = ai.GetNextMove();
-        connection.getOutput().println("move " + x);
+
 
 
     }
@@ -146,15 +168,27 @@ public class Connector implements Runnable {
     public void updateGame(String message) {
         if (amIThefirst) {
             amIThefirst = false;
-            playerType = PlayerType.O;
-            this.ai.setAiType(playerType);
-
-
+            System.out.println("player1 update");
+            if (gameType == "Reversi") {
+                this.reversiAi.setAiType('W');
+            } else {
+                playerType = PlayerType.O;
+                this.ai.setAiType(playerType);
+            }
+        }
+        else{
+            System.out.println("player2");
+            this.reversiAi.setAiType('B');
         }
 
         System.out.println(serverCommand.GetPlayersList(message).get(1));
 
-        ai.move(Integer.parseInt(serverCommand.GetPlayersList(message).get(1)));
+        if (gameType =="Reversi"){
+            reversiAi.move(Integer.parseInt((serverCommand.GetPlayersList(message).get(1))));
+        }
+        else {
+            ai.move(Integer.parseInt(serverCommand.GetPlayersList(message).get(1)));
+        }
 
 
     }
