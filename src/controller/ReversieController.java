@@ -15,9 +15,9 @@ import javafx.scene.layout.Pane;
 
 import model.Move;
 import model.Reversi.TileReversi;
-import observer.ObserverSubject;
 
 import java.util.LinkedList;
+import java.util.concurrent.LinkedBlockingDeque;
 
 import static java.lang.Thread.*;
 
@@ -45,8 +45,6 @@ public class ReversieController  {
 
 
     public void StartReversie(ActionEvent actionEvent) {
-
-
         //
         difficulty = choiceDifficulty.getSelectionModel().getSelectedItem().toString();
         System.out.println(difficulty);
@@ -98,7 +96,7 @@ public class ReversieController  {
                                         @Override
                                         public void run() {
                                             try {
-                                                Thread.sleep(1000);
+                                                Thread.sleep(2500);
                                             } catch (InterruptedException e) {
                                                 e.printStackTrace();
                                             }

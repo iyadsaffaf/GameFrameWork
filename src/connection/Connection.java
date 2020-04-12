@@ -17,12 +17,18 @@ public class Connection {
     private Socket socket;
     private PrintWriter output;
     private BufferedReader input;
-    public Connection(){
+    private String ipAddress;
+    private int portNumber;
+    public Connection(String ipAddress,int portNumber){
+        this.ipAddress=ipAddress;
+        this.portNumber=portNumber;
+
+
     setUpConnection();
     }
     public void setUpConnection() {
         try {
-            socket = new Socket("127.0.0.1", 7789);
+            socket = new Socket(ipAddress, portNumber);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,5 +1,6 @@
 package connection;
 
+import ai.ReversiLogic;
 import ai.TicLogic;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 
 public class Connector implements Runnable {
     private TicLogic ai;
+    private ReversiLogic reversiAi;
     private Connection connection;
     private ListView<String> playerListView;
     private ListView<String> gameListView;
@@ -19,16 +21,17 @@ public class Connector implements Runnable {
 
     private ServerCommand serverCommand;
     private String gameType;
-    private boolean amIThefirst = true;
+    private boolean amIThefirst = false;
     private PlayerType playerType;
+    private String loginName;
 
-
-    public Connector(Connection s, ListView<String> plyerListView, ListView<String> gameListView, ListView<String> challengeList) {
+    public Connector(Connection s, ListView<String> plyerListView, ListView<String> gameListView, ListView<String> challengeList, String loginName) {
         this.serverCommand = new ServerCommand();
         this.connection = s;
         this.playerListView = plyerListView;
         this.gameListView = gameListView;
         this.challengeList = challengeList;
+        this.loginName = loginName;
 
     }
 
@@ -54,6 +57,10 @@ public class Connector implements Runnable {
     }
 
     public void analyse(String message) {
+        if (message.contains("Reversi")){
+            gameType = "Reversi";
+        }
+
         if (message.contains("MATCH")) {
             //start match
             startMatch(message);
@@ -120,41 +127,61 @@ public class Connector implements Runnable {
     }
 
     public void startMatch(String message) {
-        System.out.println(message);
+        this.reversiAi = new ReversiLogic('t',"Beginner");
+        if (serverCommand.GetPlayersList(message).get(0).equals(this.loginName)){
+            amIThefirst = true;
+            System.out.println("AmIthefirst = "+amIThefirst);
+        }
+        amIThefirst();
+
         //todo check the type of math
+        //this.ai = new TicLogic(PlayerType.X);
 
-        this.ai = new TicLogic(PlayerType.X);
 
+    }
 
+    public void amIThefirst(){
+        if(amIThefirst) {
+            if (gameType == "Reversi") {
+                System.out.println("player1");
+                this.reversiAi.setPlayerType('W');
+                this.reversiAi.setAiType('B');
+            } else {
+                playerType = PlayerType.X;
+                this.ai.setAiType(playerType);
+            }
+        }else{
+            System.out.println("player2");
+            this.reversiAi.setPlayerType('B');
+            this.reversiAi.setAiType('W');
+        }
     }
 
     public void move(String message) {
-        System.out.println(message);
-        if (amIThefirst) {
-            amIThefirst = false;
-            playerType = PlayerType.X;
-            this.ai.setAiType(playerType);
-
+            if (gameType =="Reversi"){
+                int x = reversiAi.moveAI();
+                connection.getOutput().println("move " + x);
+                System.out.println("????????????????????????????????????????????????????????"+"         "+x);
+            }
+            else {
+                int x = ai.GetNextMove();
+                connection.getOutput().println("move " + x);
+            }
         }
+
         //todo check the type of math
-        int x = ai.GetNextMove();
-        connection.getOutput().println("move " + x);
 
-
-    }
 
     public void updateGame(String message) {
-        if (amIThefirst) {
-            amIThefirst = false;
-            playerType = PlayerType.O;
-            this.ai.setAiType(playerType);
 
 
+        if (gameType =="Reversi"){
+            System.out.println(serverCommand.GetPlayersList(message).get(1)+"+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            reversiAi.move(Integer.parseInt((serverCommand.GetPlayersList(message).get(1))));
         }
-
-        System.out.println(serverCommand.GetPlayersList(message).get(1));
-
-        ai.move(Integer.parseInt(serverCommand.GetPlayersList(message).get(1)));
+        else {
+            ai.move(Integer.parseInt(serverCommand.GetPlayersList(message).get(1)));
+        }
 
 
     }
