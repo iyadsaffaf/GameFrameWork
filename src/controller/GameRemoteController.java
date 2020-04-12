@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
@@ -28,13 +29,17 @@ public class GameRemoteController {
 
     @FXML
     private ListView<String> challengeList;
+    @FXML
+    private TextField ipAddress;
+    @FXML
+    private TextField  loginName;
 
 
     public void LoginButton(ActionEvent actionEvent) {
         // System.out.println(serverCommand.GetPlayersList("SVR GAME MOVE {PLAYER: \"1\", MOVE: \"3\", DETAILS: \"\"}").get(1));
 
         textremote.setText("Dddd");
-        connection.getOutput().println("login Iyad");
+        connection.getOutput().println("login "+loginName.getText());
 
     }
 
@@ -53,7 +58,7 @@ public class GameRemoteController {
     }
 
     public void ConnectButton(ActionEvent actionEvent) {
-        connection = new Connection();
+        connection = new Connection(ipAddress.getText(),7789);
         Connector connector = new Connector(connection, plyerListView, gameListView, challengeList);
         Thread thread = new Thread(connector);
         thread.start();

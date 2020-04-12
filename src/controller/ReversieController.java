@@ -53,7 +53,7 @@ public class ReversieController  {
         difficultyLevel.setVisible(false);
 
         tiles = new LinkedList<>();
-        playerType = 'B';
+        playerType = 'W';
         drawTheBoard();
         ai = new ReversiLogic(playerType, difficulty);
         playerTypeText.setText(getTextForPlayerType(playerType));
