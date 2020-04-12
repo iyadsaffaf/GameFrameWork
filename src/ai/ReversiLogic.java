@@ -41,6 +41,7 @@ public class ReversiLogic {
             }
             System.out.println("EndSleeping");
 
+            board.flipAfterMove(index, playerType);
             moveAI();
 
         }
