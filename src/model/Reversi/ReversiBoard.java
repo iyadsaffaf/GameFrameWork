@@ -19,14 +19,12 @@ public class ReversiBoard {
         this.board = board;
     }
 
-    private LinkedList<TileReversi> tiles;
     private Score score;
 
 
     // character W B F
-    public ReversiBoard(LinkedList<TileReversi> tiles) {
+    public ReversiBoard() {
         this.board = new char[boardSize][boardSize];
-        this.tiles = tiles;
         FillInWithFree();
         score = new Score();
         setUpTheFirstCoins();
@@ -36,20 +34,10 @@ public class ReversiBoard {
     // set the first four
     public void setUpTheFirstCoins() {
         fillInCells(27, 'W');
-        tiles.get(27).setColourToWhite();
         fillInCells(28, 'B');
-        tiles.get(28).setColourToBlack();
-        fillInCells(29, 'B');
-        tiles.get(29).setColourToBlack();
         fillInCells(35, 'B');
-        tiles.get(35).setColourToBlack();
         fillInCells(36, 'W');
-        tiles.get(36).setColourToWhite();
 
-        fillInCells(45, 'W');
-        tiles.get(45).setColourToWhite();
-        fillInCells(54, 'W');
-        tiles.get(54).setColourToWhite();
 
     }
 
@@ -160,7 +148,6 @@ public class ReversiBoard {
                 direction = "Topleft";
                 isValid = checkCapture(direction, move, player);
                 if (isValid) {
-                    tiles.get(index).setColourToHighLight();
                     return true;
                 }
                 System.out.println("Check for Topleft   pleyer:" + player + "  results:" + isValid);
@@ -172,7 +159,6 @@ public class ReversiBoard {
                 direction = "Left";
                 isValid = checkCapture(direction, move, player);
                 if (isValid) {
-                    tiles.get(index).setColourToHighLight();
                     return true;
 
                 }
@@ -185,7 +171,6 @@ public class ReversiBoard {
                 direction = "Bottomleft";
                 isValid = checkCapture(direction, move, player);
                 if (isValid) {
-                    tiles.get(index).setColourToHighLight();
                     return true;
 
                 }
@@ -198,7 +183,6 @@ public class ReversiBoard {
                 direction = "Top";
                 isValid = checkCapture(direction, move, player);
                 if (isValid) {
-                    tiles.get(index).setColourToHighLight();
                     return true;
 
                 }
@@ -211,7 +195,6 @@ public class ReversiBoard {
                 direction = "Right";
                 isValid = checkCapture(direction, move, player);
                 if (isValid) {
-                    tiles.get(index).setColourToHighLight();
                     return true;
 
                 }
@@ -224,7 +207,6 @@ public class ReversiBoard {
                 direction = "Bottomright";
                 isValid = checkCapture(direction, move, player);
                 if (isValid) {
-                    tiles.get(index).setColourToHighLight();
                     return true;
                 }
                 System.out.println("Check for Bottomright   pleyer:" + player + "  results:" + isValid);
@@ -236,7 +218,6 @@ public class ReversiBoard {
                 direction = "Bottom";
                 isValid = checkCapture(direction, move, player);
                 if (isValid) {
-                    tiles.get(index).setColourToHighLight();
                     return true;
                 }
                 System.out.println("Check for Bottom   pleyer:" + player + "  results:" + isValid);
@@ -248,7 +229,6 @@ public class ReversiBoard {
                 direction = "Topright";
                 isValid = checkCapture(direction, move, player);
                 if (isValid) {
-                    tiles.get(index).setColourToHighLight();
                     return true;
 
                 }
@@ -494,7 +474,6 @@ public class ReversiBoard {
                 } else if (board[y + yTowards * counter][x + xTowards * counter] == player) {
                     for(int j = 0;j < tilesToChange.size();j++) {
                         index = tilesToChange.get(j);
-                        tiles.get(index).flip();
                         //update board
                         row = (int)Math.floor(index/boardSize);
                         column = index % boardSize;
@@ -519,4 +498,5 @@ public class ReversiBoard {
         }
         return aiType;
     }
+
 }
