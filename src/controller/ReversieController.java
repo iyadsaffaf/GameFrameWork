@@ -15,16 +15,13 @@ import javafx.scene.layout.Pane;
 
 import model.Move;
 import model.Reversi.TileReversi;
-import observer.Observer;
 import observer.ObserverSubject;
 
 import java.util.LinkedList;
-import java.util.concurrent.LinkedBlockingDeque;
 
 import static java.lang.Thread.*;
 
 public class ReversieController  {
-    private ObserverSubject subject;
 
     private ReversiLogic ai;
     private LinkedList<TileReversi> tiles;
@@ -48,7 +45,6 @@ public class ReversieController  {
 
 
     public void StartReversie(ActionEvent actionEvent) {
-        subject = new ObserverSubject();
 
 
         //
