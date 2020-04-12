@@ -1,20 +1,19 @@
 package ai;
 
 import model.Reversi.ReversiBoard;
+import model.Reversi.Score;
 import model.Reversi.TileReversi;
 import java.util.LinkedList;
 
 public class ReversiLogic {
-    private LinkedList<TileReversi> tiles;
     private ReversiBoard board;
     private char playerType;
     private char aiType;
     private String difficulty;
 
 
-    public ReversiLogic(LinkedList<TileReversi> tiles, char b, String difficulty) {
-        this.tiles = tiles;
-        this.board = new ReversiBoard(tiles);
+    public ReversiLogic( char b, String difficulty) {
+        this.board = new ReversiBoard();
         this.playerType = b;
         this.aiType = getAiType(b);
         this.difficulty=difficulty;
@@ -22,36 +21,30 @@ public class ReversiLogic {
 
     public void test() {
 
-        tiles.get(3).setColourToWhite();
     }
 
     //myTurn
-    public void move(int index) {
+    public boolean move(int index) {
+        boolean valid= false;
 
         // System.out.println(board.checkIfValidMove(index,'W'));
         if (board.checkIfValidMove(index, playerType)) {
             board.fillInCells(index, playerType);
-            tiles.get(index).setColourToThisPlayer(playerType);
 
-            try {
-                System.out.println("StartSleeping");
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            System.out.println("EndSleeping");
+            board.flipAfterMove(index, playerType);
+            valid=true;
 
-            moveAI();
+        } else if(board.isMoveLeft()&&board.isValid(playerType)){
+            // Give true so tha ai can start
+            valid =true;
+
+
+        }else if(!board.isMoveLeft()){
+            Score s = board.GetScore();
+            System.out.println("score black " + s.black+ "Score" +s.white);
 
         }
-//        if(board.isValid()){
-//
-//      board.fillInCells(index,playerType);
-//      board.flipAfterMove();
-//
-//
-//
-//      }
+      return valid;
 
     }
 
@@ -68,7 +61,7 @@ public class ReversiLogic {
     }
 
     //Ai Turn
-    public void moveAI() {
+    public int moveAI() {
        int aiMove;
         if ("Advanced".equals(difficulty)) {
             aiMove = GetBestMove();
@@ -77,12 +70,14 @@ public class ReversiLogic {
         }
 
         System.out.println(aiMove+"GG");
-        tiles.get(aiMove).setColourToThisPlayer(aiType);
+    //    tiles.get(aiMove).setColourToThisPlayer(aiType);
         board.fillInCells(aiMove, aiType);
-        board.isValid(playerType);
         board.flipAfterMove(aiMove, aiType);
+     //   board.isValid(playerType);
+
 
         PrintBoard();
+        return aiMove;
 
     }
 
@@ -128,5 +123,24 @@ public class ReversiLogic {
             System.out.println();
         }
     }
+    public char[][] getBoard(){
 
+        return board.getBoard();
+    }
+
+    public char getPlayerType() {
+        return playerType;
+    }
+
+    public void setPlayerType(char playerType) {
+        this.playerType = playerType;
+    }
+
+    public char getAiType() {
+        return aiType;
+    }
+
+    public void setAiType(char aiType) {
+        this.aiType = aiType;
+    }
 }

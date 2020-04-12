@@ -1,7 +1,7 @@
 package controller;
 
 import ai.ReversiLogic;
-import javafx.collections.FXCollections;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -15,10 +15,16 @@ import javafx.scene.layout.Pane;
 
 import model.Move;
 import model.Reversi.TileReversi;
+import observer.Observer;
+import observer.ObserverSubject;
 
 import java.util.LinkedList;
+import java.util.concurrent.LinkedBlockingDeque;
 
-public class ReversieController {
+import static java.lang.Thread.*;
+
+public class ReversieController  {
+    private ObserverSubject subject;
 
     private ReversiLogic ai;
     private LinkedList<TileReversi> tiles;
@@ -36,13 +42,16 @@ public class ReversieController {
     @FXML
     Button startButton;
 
-    public ReversieController(){
+    public ReversieController() {
 
     }
 
 
-
     public void StartReversie(ActionEvent actionEvent) {
+        subject = new ObserverSubject();
+
+
+        //
         difficulty = choiceDifficulty.getSelectionModel().getSelectedItem().toString();
         System.out.println(difficulty);
         pane.setVisible(true);
@@ -50,12 +59,13 @@ public class ReversieController {
         difficultyLevel.setVisible(false);
 
         tiles = new LinkedList<>();
-        playerType='B';
+        playerType = 'B';
         drawTheBoard();
-        ai = new ReversiLogic(tiles,playerType,difficulty);
+        ai = new ReversiLogic(playerType, difficulty);
         playerTypeText.setText(getTextForPlayerType(playerType));
 
 
+        updateBoard();
 
     }
 
@@ -71,22 +81,44 @@ public class ReversieController {
                 tile.setTranslateY(i * 75);
                 pane.getChildren().add(tile);
 
+
                 tile.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                //   tile.setColourToWhite();
+                                System.out.println(tile.GetIndex());
+                                Move move = new Move(tile.GetIndex());
+                                System.out.println("the x = " + move.x + "  the y = " + move.y);
+                                if (ai.move(tile.GetIndex())) {
+                                    System.out.println("gdfsssssssssss");
+
+
+                                    updateBoard();
+
+                                    Thread t = new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            try {
+                                                Thread.sleep(1000);
+                                            } catch (InterruptedException e) {
+                                                e.printStackTrace();
+                                            }
+                                            ai.moveAI();
+                                            updateBoard();
+
+                                        }
+                                    });
+
+                                    t.start();
+                                }
+                            }
+                        });
 
 
 
-                        System.out.println(tile.GetIndex());
-                        Move move = new Move(tile.GetIndex());
-                        System.out.println("the x = " + move.x + "  the y = " + move.y);
-
-                        ai.move(tile.GetIndex());
-                    //    ai.moveAI();
-
-
-                       // tile.flip();
-                        // ai.test();
                     }
                 });
 
@@ -95,20 +127,59 @@ public class ReversieController {
     }
 
 
-    public String getTextForPlayerType(char player){
-        String s ="";
-        if(player=='B'){
-            s=" You are BLack";
-        }else if(player=='W'){
-            s="You are White";
+    public String getTextForPlayerType(char player) {
+        String s = "";
+        if (player == 'B') {
+            s = " You are BLack";
+        } else if (player == 'W') {
+            s = "You are White";
 
         }
 
 
-
-        return s;}
+        return s;
+    }
 
     public void clickck(KeyEvent keyEvent) {
         startButton.setVisible(true);
     }
+
+    public void updateBoard() {
+        int index = 0;
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
+                if (ai.getBoard()[x][y] == 'B') {
+
+                    tiles.get(index).setColourToBlack();
+                } else if (ai.getBoard()[x][y] == 'W') {
+                    tiles.get(index).setColourToWhite();
+                }
+
+
+                index++;
+
+            }
+        }
+    }
+
+
+
+    public void update() {
+
+        System.out.println("Hex String: ");
+        try {
+            System.out.println("StartSleeping");
+            sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("EndSleeping");
+
+        ai.moveAI();
+        updateBoard();
+
+
+    }
+
+
 }
