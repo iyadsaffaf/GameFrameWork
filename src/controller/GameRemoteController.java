@@ -13,6 +13,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
+import java.security.spec.ECField;
 import java.util.ArrayList;
 
 
@@ -100,13 +101,20 @@ public class GameRemoteController {
         if (!loginName.getText().equals("")) {
 
             if (!connected) {
-                connectButton.setText("Disconnect");
+
+
+                try {
+                    connection = new Connection(ipAddress.getText(), 7789);
+
+                }catch (Exception s){
+                    System.out.println("You cannot connect to server");
+                    warning.setText("You cannot connect to server");
+
+                    return;
+                }
                 textremote.setText("Hello " + loginName.getText()+" You can log in to join");
                 textremote13.setText("Log in to join ");
 
-
-                connected = true;
-                connection = new Connection(ipAddress.getText(), 7789);
                 Connector connector = new Connector(connection, plyerListView, gameListView, challengeList, loginName.getText());
                 System.out.println(loginName.getText() + "loginname test");
                  thread = new Thread(connector);
@@ -115,6 +123,10 @@ public class GameRemoteController {
                 loginButton.setDisable(false);
                 getGameListButton.setDisable(false);
                 getPlayerListButton.setDisable(false);
+                connectButton.setText("Disconnect");
+                connected = true;
+
+
 
             } else {
                 connected=false;
@@ -162,6 +174,7 @@ public class GameRemoteController {
 
     public void disconnect() {
         logOut();
+        if(thread!=null)
         thread.interrupt();
         textremote.setText("Bye " + loginName.getText());
         textremote13.setText("You have been disconnected  connect again to login ");
@@ -175,7 +188,8 @@ public class GameRemoteController {
     }
 
     private void logOut() {
-        connection.getOutput().println("logout " + loginName.getText());
-
+        if(connection!=null) {
+            connection.getOutput().println("logout " + loginName.getText());
+        }
     }
 }

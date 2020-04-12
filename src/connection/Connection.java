@@ -19,29 +19,21 @@ public class Connection {
     private BufferedReader input;
     private String ipAddress;
     private int portNumber;
-    public Connection(String ipAddress,int portNumber){
+    public Connection(String ipAddress,int portNumber) throws IOException {
         this.ipAddress=ipAddress;
         this.portNumber=portNumber;
 
 
     setUpConnection();
     }
-    public void setUpConnection() {
-        try {
+    public void setUpConnection() throws IOException,NullPointerException {
             socket = new Socket(ipAddress, portNumber);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
+
             output = new PrintWriter(socket.getOutputStream(), true);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
+
+
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 
     public Socket getSocket() {

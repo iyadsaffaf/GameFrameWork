@@ -91,7 +91,7 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <Label fx:id="warning" layoutX="56.0" layoutY="285.0" text="* Please enter your name first" textFill="RED" visible="false" />
+            <Label fx:id="warning" layoutX="10.0" layoutY="254.0" text="* Please enter your name first" textFill="RED" visible="false" />
           
          </children>
       </Pane>
