@@ -14,10 +14,11 @@
       <RowConstraints />
    </rowConstraints>
    <children>
-      <Pane fx:id="panem" prefHeight="309.0" prefWidth="602.0">
+      <Pane fx:id="panem" prefHeight="398.0" prefWidth="601.0">
          <children>
             <Pane id="pane" fx:id="pane" layoutX="150.0" layoutY="14.0" prefHeight="300.0" prefWidth="300.0" />
             <Button layoutX="280.0" layoutY="335.0" mnemonicParsing="false" onAction="#StartTic" text="start" />
+            <Button layoutX="450.0" layoutY="360.0" mnemonicParsing="false" text="Go back to game list" />
          </children>
       </Pane>
    </children>

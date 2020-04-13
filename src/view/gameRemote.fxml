@@ -92,6 +92,7 @@
                </font>
             </Label>
             <Label fx:id="warning" layoutX="10.0" layoutY="254.0" text="* Please enter your name first" textFill="RED" visible="false" />
+            <Button layoutX="883.0" layoutY="639.0" mnemonicParsing="false" text="Go Back to main menu" />
           
          </children>
       </Pane>
