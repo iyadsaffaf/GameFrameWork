@@ -6,38 +6,53 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
+import javafx.scene.text.Text;
 import model.Move;
 import model.Reversi.TileReversi;
 
 import java.util.LinkedList;
-import java.util.concurrent.LinkedBlockingDeque;
 
 import static java.lang.Thread.*;
 
-public class ReversieController  {
+public class ReversieController {
+
 
     private ReversiLogic ai;
     private LinkedList<TileReversi> tiles;
     private char playerType;
     private String difficulty;
+    private String playerColour;
+    private boolean hint = false;
     @FXML
-    Pane pane;
+    private Pane pane;
     @FXML
-    Label playerTypeText;
+    private Label playerTypeText;
 
     @FXML
-    ChoiceBox choiceDifficulty;
+    private ChoiceBox choiceDifficulty;
     @FXML
-    Label difficultyLevel;
+    private Label difficultyLevel;
     @FXML
-    Button startButton;
+    private Button startButton;
+    @FXML
+    private CheckBox checkBoxHint;
+    @FXML
+    private Text yourScoreText;
+    @FXML
+    private Label OpponentScoreLabel;
+    @FXML
+    private Label chooseYourColourLabel;
+
+    @FXML
+    private ChoiceBox choiceBoxCoulour;
+
 
     public ReversieController() {
 
@@ -47,14 +62,22 @@ public class ReversieController  {
     public void StartReversie(ActionEvent actionEvent) {
         //
         difficulty = choiceDifficulty.getSelectionModel().getSelectedItem().toString();
-        System.out.println(difficulty);
+        playerColour = choiceBoxCoulour.getSelectionModel().getSelectedItem().toString();
         pane.setVisible(true);
         choiceDifficulty.setVisible(false);
+        choiceBoxCoulour.setVisible(false);
         difficultyLevel.setVisible(false);
+        chooseYourColourLabel.setVisible(false);
+
 
         tiles = new LinkedList<>();
-        playerType = 'B';
+
         drawTheBoard();
+        if (playerColour.equals("Black")) {
+            playerType = 'B';
+        } else {
+            playerType = 'W';
+        }
         ai = new ReversiLogic(playerType, difficulty);
         playerTypeText.setText(getTextForPlayerType(playerType));
 
@@ -87,7 +110,6 @@ public class ReversieController  {
                                 Move move = new Move(tile.GetIndex());
                                 System.out.println("the x = " + move.x + "  the y = " + move.y);
                                 if (ai.move(tile.GetIndex())) {
-                                    System.out.println("gdfsssssssssss");
 
 
                                     updateBoard();
@@ -102,6 +124,8 @@ public class ReversieController  {
                                             }
                                             ai.moveAI();
                                             updateBoard();
+                                            if (hint)
+                                                highLight(playerType);
 
                                         }
                                     });
@@ -110,7 +134,6 @@ public class ReversieController  {
                                 }
                             }
                         });
-
 
 
                     }
@@ -147,6 +170,10 @@ public class ReversieController  {
                     tiles.get(index).setColourToBlack();
                 } else if (ai.getBoard()[x][y] == 'W') {
                     tiles.get(index).setColourToWhite();
+                }else if(ai.getBoard()[x][y] == 'F'){
+                    tiles.get(index).setColourToGreen();
+
+
                 }
 
 
@@ -155,7 +182,6 @@ public class ReversieController  {
             }
         }
     }
-
 
 
     public void update() {
@@ -176,4 +202,32 @@ public class ReversieController  {
     }
 
 
+    public void goBacktoGamelist(ActionEvent actionEvent) {
+
+    }
+
+    public void checkBoxClicked(ActionEvent actionEvent) {
+        if (!hint){
+            hint = true;
+        highLight(playerType);}
+        else{
+            hint=false;
+            updateBoard();}
+    }
+
+    public void highLight(char speler) {
+        int xx = 0;
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
+                if (ai.higlight(xx, speler)) {
+                    tiles.get(xx).setColourToHighLight();
+                }
+
+
+                xx++;
+
+            }
+        }
+
+    }
 }

@@ -74,6 +74,15 @@ public class TileReversi extends Pane {
 
 
     }
+    public void setColourToGreen() {
+        colour=0;
+        getStyleClass().clear();
+        getStyleClass().add("background_border");
+
+
+
+    }
+
 
 
 }

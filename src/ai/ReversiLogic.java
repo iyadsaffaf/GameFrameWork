@@ -6,7 +6,7 @@ import model.Reversi.TileReversi;
 
 import java.util.LinkedList;
 
-public class ReversiLogic {
+public class ReversiLogic implements Ai{
     private ReversiBoard board;
     private char playerType;
     private char aiType;
@@ -147,5 +147,10 @@ public class ReversiLogic {
 
     public void setAiType(char aiType) {
         this.aiType = aiType;
+    }
+    public  boolean higlight(int index,char aiType) {
+
+        return board.checkIfValidMove(index,aiType);
+
     }
 }

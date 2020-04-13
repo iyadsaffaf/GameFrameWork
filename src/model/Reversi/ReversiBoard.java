@@ -1,5 +1,6 @@
 package model.Reversi;
 
+import model.Board;
 import model.Move;
 
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ import java.util.List;
 
 import java.util.LinkedList;
 
-public class ReversiBoard {
+public class ReversiBoard implements Board {
     private int boardSize = 8;
     private char[][] board;
 
@@ -42,6 +43,7 @@ public class ReversiBoard {
     }
 
     //fillfree
+    @Override
     public void FillInWithFree() {
 
         for (int r = 0; r < boardSize; r++) {
@@ -137,6 +139,7 @@ public class ReversiBoard {
     }
 
     //checkifvalid
+    @Override
     public boolean checkIfValidMove(int index, char playe) {
         boolean isValid = false;
         Move move = new Move(index);
@@ -393,6 +396,7 @@ public class ReversiBoard {
     }
 
     //evaluateboard
+    @Override
     public Score GetScore() {
         score.setWhite(CountTiles('W'));
         score.setBlack(CountTiles('B'));
@@ -497,5 +501,6 @@ public class ReversiBoard {
         }
         return aiType;
     }
+
 
 }
