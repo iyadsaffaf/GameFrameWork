@@ -52,6 +52,8 @@ public class ReversiLogic implements Ai{
             Score s = board.GetScore();
             System.out.println("score black " + s.black + "Score" + s.white);
         }
+        board.CheckWin();
+
         return valid;
 
     }
