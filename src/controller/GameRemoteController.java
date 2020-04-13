@@ -116,6 +116,7 @@ public class GameRemoteController {
                 }catch (Exception s){
                     System.out.println("You cannot connect to server");
                     warning.setText("You cannot connect to server");
+                    warning.setVisible(true);
 
                     return;
                 }
