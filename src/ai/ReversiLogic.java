@@ -1,7 +1,9 @@
 package ai;
-
+import java.util.Random;
 import model.Reversi.ReversiBoard;
 import model.Reversi.Score;
+import java.util.ArrayList;
+import java.util.List;
 import model.Reversi.TileReversi;
 
 import java.util.LinkedList;
@@ -11,7 +13,6 @@ public class ReversiLogic implements Ai{
     private char playerType;
     private char aiType;
     private String difficulty;
-
 
     public ReversiLogic(char b, String difficulty) {
         this.board = new ReversiBoard();
@@ -88,6 +89,8 @@ public class ReversiLogic implements Ai{
 
     //Random Algorithm
     public int GetRandomMove(char playerType) {
+        List<Integer> validMoves= new ArrayList<>();
+        Random random = new Random();
         int index = -1;
         for (int i = 0; i < 8; i++) {
             for (int c = 0; c < 8; c++) {
@@ -95,7 +98,8 @@ public class ReversiLogic implements Ai{
 
 
                 if (board.checkIfValidMove(index, playerType) && index < 64) {
-                    return index;
+                    validMoves.add(index);
+                    //return index;
 
                 } else if (index == 63) {
                     System.out.println("There are no move for  " + aiType);
@@ -104,7 +108,8 @@ public class ReversiLogic implements Ai{
 
             }
         }
-        return index;
+        int randomMove = random.nextInt(validMoves.size());
+        return validMoves.get(randomMove);
 
     }
 
