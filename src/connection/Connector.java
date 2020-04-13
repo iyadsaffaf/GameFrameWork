@@ -82,7 +82,10 @@ public class Connector implements Runnable {
             move(message);
 
         } else if (message.contains("LOSS")) {
-            //update PlayerList
+            gameLoss(message);
+
+        } else if (message.contains("WIN")) {
+            gameWin(message);
 
         } else if (message.contains("MOVE")) {
             //update PlayerList
@@ -184,6 +187,15 @@ public class Connector implements Runnable {
         }
 
 
+    }
+    public void gameLoss(String message){
+        reversiAi=null;
+        amIThefirst=false;
+
+    }
+    public void gameWin(String message){
+        reversiAi=null;
+        amIThefirst=false;
     }
 
 }
