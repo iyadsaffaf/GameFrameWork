@@ -1,5 +1,8 @@
 package connection;
 
+import javafx.fxml.FXML;
+import javafx.scene.layout.GridPane;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,6 +16,8 @@ public class Connect {
     private SocketChannel sc;
     private PrintWriter out;
     private BufferedReader in;
+
+
     public void setUpConnection(){
          sc = null;
         try {

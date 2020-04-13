@@ -1,15 +1,20 @@
 package ai;
+
 import java.util.Random;
+
+import model.Move;
 import model.Reversi.ReversiBoard;
 import model.Reversi.Score;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import model.Reversi.TileReversi;
 
 import javax.swing.*;
 import java.util.LinkedList;
 
-public class ReversiLogic implements Ai{
+public class ReversiLogic implements Ai {
     private ReversiBoard board;
     private char playerType;
     private char aiType;
@@ -27,12 +32,11 @@ public class ReversiLogic implements Ai{
     }
 
 
-
     //myTurn
     public boolean move(int index) {
 
         boolean valid = false;
-        System.out.println("The AI is "+aiType+" and the player is  "+ playerType);
+        System.out.println("The AI is " + aiType + " and the player is  " + playerType);
         // System.out.println(board.checkIfValidMove(index,'W'));
         //index=GetRandomMove(playerType);
         if (board.checkIfValidMove(index, playerType)) {
@@ -43,7 +47,7 @@ public class ReversiLogic implements Ai{
             board.flipAfterMove(index, playerType);
             valid = true;
 
-        } else if (board.isMoveLeft() && board.isValid(playerType)) {
+        } else if (board.isMoveLeft() && board.isValid(aiType)) {
             // Give true so tha ai can start
             valid = true;
 
@@ -73,14 +77,16 @@ public class ReversiLogic implements Ai{
     //Ai Turn
     public int moveAI() {
         int aiMove;
-        System.out.println("The AI is "+aiType+" and the player is "+ playerType);
+        System.out.println("The AI is " + aiType + " and the player is " + playerType);
         if ("Advanced".equals(difficulty)) {
-            aiMove = GetBestMove();
+            aiMove = getTheBestMove(board);
         } else {
             aiMove = GetRandomMove(aiType);
+            System.out.println(aiMove + " Random mode ");
+
         }
 
-        System.out.println(aiMove + "GG");
+        System.out.println(aiMove + " Ai best Move");
         //    tiles.get(aiMove).setColourToThisPlayer(aiType);
         board.fillInCells(aiMove, aiType);
         board.flipAfterMove(aiMove, aiType);
@@ -94,7 +100,7 @@ public class ReversiLogic implements Ai{
 
     //Random Algorithm
     public int GetRandomMove(char playerType) {
-        List<Integer> validMoves= new ArrayList<>();
+        List<Integer> validMoves = new ArrayList<>();
         Random random = new Random();
         int index = -1;
         for (int i = 0; i < 8; i++) {
@@ -119,18 +125,90 @@ public class ReversiLogic implements Ai{
     }
 
     //miniMAX Algorithm
-    public int GetBestMove() {
-//todo
-        System.out.println("NIKS");
+//    public int GetBestMove() {
+//        int indexOfTheBes
+//        System.out.println("NIKS");
+//
+//        return 4;
+//    }
 
-        return 4;
-    }
     //minimax
-   public int minimax(char[][] board, int depth, boolean isMax){
+    public int minimax(ReversiBoard board, int depth, boolean isMaximizer, char maximizerType) {
+        System.out.println(depth);
+        if (depth == 0 || !board.isMoveLeft()) {
+
+            return board.CountTiles(maximizerType);
+        }
+
+        int index = 0;
+
+        // get the Result for the maximizer
+
+        if (isMaximizer) {
+            int best = -1000;
+            for (int x = 0; x < 8; x++) {
+                for (int y = 0; y < 8; y++) {
+                    if (board.checkIfValidMove(index, aiType)) {
+                        board.getBoard()[x][y] = playerType;
+                        best = Math.max(best, minimax(board, depth-1,false, aiType));
+                        board.getBoard()[x][y] = 'F';
+
+                    }
+                    index++;
 
 
-        return 3;
-   }
+                }
+            }
+          return best;
+        } else {
+            int best = 1000;
+
+            for (int x = 0; x < 8; x++) {
+                for (int y = 0; y < 8; y++) {
+                    if (board.checkIfValidMove(index, aiType)) {
+                        board.getBoard()[x][y] = aiType;
+                        best = Math.min(best, minimax(board, depth-1,true, aiType));
+                        board.getBoard()[x][y] = 'F';
+
+                    }
+                    index++;
+
+
+                }
+            }
+
+            return best;
+        }
+
+    }
+
+    public int getTheBestMove(ReversiBoard board) {
+        int bestMove = -55555;
+       int index=-1;
+       int indexOfTheBestMove=0;
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
+                index++;
+                if (board.checkIfValidMove(index, aiType)) {
+
+                    board.getBoard()[x][y] = aiType;
+                    int moveV = minimax(board, 4, false,aiType);
+                    System.out.println(moveV);
+                    board.getBoard()[x][y] = 'F';
+                    if (moveV > bestMove) {
+
+                        bestMove = moveV;
+                        indexOfTheBestMove=index;
+                    }
+                }
+
+
+            }
+        }
+
+        return indexOfTheBestMove;
+
+    }
 
 
     public void PrintBoard() {
@@ -164,9 +242,10 @@ public class ReversiLogic implements Ai{
     public void setAiType(char aiType) {
         this.aiType = aiType;
     }
-    public  boolean higlight(int index,char aiType) {
 
-        return board.checkIfValidMove(index,aiType);
+    public boolean higlight(int index, char aiType) {
+
+        return board.checkIfValidMove(index, aiType);
 
     }
 }

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane prefHeight="694.0" prefWidth="1000.0" style="-fx-background-color: BEIGE;" styleClass="background" stylesheets="@Stylesheets/ticStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TicController">
+<GridPane fx:id="root" prefHeight="694.0" prefWidth="1000.0" style="-fx-background-color: BEIGE;" styleClass="background" stylesheets="@Stylesheets/ticStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TicController">
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />
@@ -32,7 +32,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </TextField>
-            <Button layoutX="837.0" layoutY="655.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Go Back">
+            <Button layoutX="837.0" layoutY="655.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Go Back" onAction="#BackButton">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>

@@ -4,11 +4,15 @@ import ai.TicLogic;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import model.tic.PlayerType;
 import model.tic.TicTacGame;
 import model.tic.Tile;
+
+import java.io.IOException;
 import java.util.LinkedList;
 
 public class TicController {
@@ -16,7 +20,8 @@ public class TicController {
     LinkedList<Tile> tiles;
     private TicTacGame state;
     private PlayerType playerType;
-
+    @FXML
+    private GridPane root;
 
 
     @FXML
@@ -85,6 +90,16 @@ public class TicController {
         state.win();
     }
 
+
+    public void BackButton(ActionEvent actionEvent) {
+        GridPane gridPane= null;
+        try {
+            gridPane = FXMLLoader.load(getClass().getResource("../view/gameLocal.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        root.getChildren().setAll(gridPane);
+    }
 
 }
 

@@ -152,8 +152,6 @@ public class ReversiBoard implements Board {
                 if (isValid) {
                     return true;
                 }
-                System.out.println("Check for Topleft   player:" + player + "  results:" + isValid);
-                System.out.println("x  :" + move.x + "  y:" + move.y);
 
 
             }
@@ -164,8 +162,6 @@ public class ReversiBoard implements Board {
                     return true;
 
                 }
-                System.out.println("Check for Left   player:" + player + "  results:" + isValid);
-                System.out.println("x  :" + move.x + "  y:" + move.y);
 
 
             }
@@ -176,8 +172,6 @@ public class ReversiBoard implements Board {
                     return true;
 
                 }
-                System.out.println("Check for Bottomleft   player:" + player + "  results:" + isValid);
-                System.out.println("x  :" + move.x + "  y:" + move.y);
 
 
             }
@@ -188,8 +182,6 @@ public class ReversiBoard implements Board {
                     return true;
 
                 }
-                System.out.println("Check for Top   player:" + player + "  results:" + isValid);
-                System.out.println("x  :" + move.x + "  y:" + move.y);
 
 
             }
@@ -200,8 +192,6 @@ public class ReversiBoard implements Board {
                     return true;
 
                 }
-                System.out.println("Check for Right   player:" + player + "  results:" + isValid);
-                System.out.println("x  :" + move.x + "  y:" + move.y);
 
 
             }
@@ -211,8 +201,6 @@ public class ReversiBoard implements Board {
                 if (isValid) {
                     return true;
                 }
-                System.out.println("Check for Bottomright   player:" + player + "  results:" + isValid);
-                System.out.println("x  :" + move.x + "  y:" + move.y);
 
 
             }
@@ -222,8 +210,6 @@ public class ReversiBoard implements Board {
                 if (isValid) {
                     return true;
                 }
-                System.out.println("Check for Bottom   player:" + player + "  results:" + isValid);
-                System.out.println("x  :" + move.x + "  y:" + move.y);
 
 
             }
@@ -234,8 +220,6 @@ public class ReversiBoard implements Board {
                     return true;
 
                 }
-                System.out.println("Check for Topright   player:" + player + "  results:" + isValid);
-                System.out.println("x  :" + move.x + "  y:" + move.y);
 
 
             }
@@ -276,8 +260,6 @@ public class ReversiBoard implements Board {
         switch (direction) {
             case "Topleft":
                 for (int i = 2; (x - i) >= 0 && (y - i) >= 0; i++) {
-                    //capturescore ++;
-                    System.out.println("x  :" + move.x + "  y:" + move.y + "  I  " + "Player  " + player);
 
                     if (board[y - i][x - i] == player) {
                         checkCapture = true;
@@ -293,9 +275,7 @@ public class ReversiBoard implements Board {
             case "Top":
 
                 for (int i = 2; (y - i) >= 0; i++) {
-                    System.out.println("x  :" + move.x + "  y:" + move.y + "  I  " + "Player  " + player);
 
-                    //capturescore ++;
                     if (board[y - i][x] == player) {
                         checkCapture = true;
                         break;
@@ -308,9 +288,7 @@ public class ReversiBoard implements Board {
                 break;
             case "Topright":
                 for (int i = 2; (x + i) < boardSize && (y - i) >= 0; i++) {
-                    System.out.println("x  :" + move.x + "  y:" + move.y + "  I  " + "Player  " + player);
 
-                    //capturescore ++;
                     if (board[y - i][x + i] == player) {
                         checkCapture = true;
                         break;
@@ -323,9 +301,7 @@ public class ReversiBoard implements Board {
                 break;
             case "Left":
                 for (int i = 2; (x - i) >= 0; i++) {
-                    System.out.println("x  :" + move.x + "  y:" + move.y + "  I  " + "Player  " + player);
 
-                    //capturescore ++;
                     if (board[y][x - i] == player) {
                         checkCapture = true;
                         break;
@@ -338,9 +314,7 @@ public class ReversiBoard implements Board {
                 break;
             case "Right":
                 for (int i = 2; (x + i) < boardSize; i++) {
-                    System.out.println("x  :" + move.x + "  y:" + move.y + "  I  " + "Player  " + player);
 
-                    //capturescore ++;
                     if (board[y][x + i] == player) {
                         checkCapture = true;
                         break;
@@ -353,9 +327,7 @@ public class ReversiBoard implements Board {
                 break;
             case "Bottomleft":
                 for (int i = 2; x - i >= 0 && y + i < boardSize; i++) {
-                    System.out.println("x  :" + move.x + "  y:" + move.y + "  I  " + "Player  " + player);
 
-                    //capturescore ++;
 
                     if (board[y + i][x - i] == player) {
                         checkCapture = true;
@@ -369,7 +341,6 @@ public class ReversiBoard implements Board {
                 break;
             case "Bottom":
                 for (int i = 2; y + i < boardSize; i++) {
-                    System.out.println("x  :" + move.x + "  y:" + move.y + "  I  " + "Player  " + player);
 
                     //capturescore ++;
                     if (board[y + i][x] == player) {
@@ -384,7 +355,6 @@ public class ReversiBoard implements Board {
                 break;
             case "Bottomright":
                 for (int i = 2; x + i < boardSize && y + i < boardSize; i++) {
-                    System.out.println("x  :" + move.x + "  y:" + move.y + "  I  " + "Player  " + player);
 
                     //capturescore ++;
                     if (board[y + i][x + i] == player) {
@@ -404,9 +374,9 @@ public class ReversiBoard implements Board {
     //ismoveleft
     public boolean isMoveLeft() {
         boolean moveleft = false;
-        for (int i = 0; i < board.length; ++i) {
-            for (int j = 0; j < board[i].length; ++j) {
-                if (board[i][j] == 'F') {
+        for (char[] chars : board) {
+            for (char aChar : chars) {
+                if (aChar == 'F') {
                     moveleft = true;
                     break;
                 }
@@ -425,7 +395,7 @@ public class ReversiBoard implements Board {
         return score;
     }
 
-    int CountTiles(char color) {
+    public int CountTiles(char color) {
         int result = 0;
         for (char[] chars : board) {
             for (char aChar : chars) {

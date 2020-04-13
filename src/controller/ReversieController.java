@@ -35,9 +35,7 @@ public class ReversieController {
     private boolean hint = false;
     @FXML
     private Pane pane;
-    @FXML
-    private Label playerTypeText;
-
+    @FXML    private Label playerTypeText;
     @FXML
     private ChoiceBox choiceDifficulty;
     @FXML
@@ -52,7 +50,6 @@ public class ReversieController {
     private Label OpponentScoreLabel;
     @FXML
     private Label chooseYourColourLabel;
-
     @FXML
     private ChoiceBox choiceBoxCoulour;
     @FXML
