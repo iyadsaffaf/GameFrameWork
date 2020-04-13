@@ -3,6 +3,7 @@ package model.Reversi;
 import model.Board;
 import model.Move;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -243,7 +244,22 @@ public class ReversiBoard implements Board {
 
 
         }
+        CheckWin();
         return isValid;
+    }
+
+    void CheckWin() {
+        Score score = this.GetScore();
+
+        int board = CountTiles('W') + CountTiles('B');
+
+        if (board >= 64) {
+            if (score.black > score.white)
+                JOptionPane.showMessageDialog(null, "Black wins! Black: " + score.black + " White: " + score.white);
+            else if (score.black < score.white)
+                JOptionPane.showMessageDialog(null, "White wins! White: " + score.white + " Black: " + score.black);
+            else JOptionPane.showMessageDialog(null, "DRAW");
+        }
     }
 
     public boolean checkCapture(String direction, Move move, char player) {

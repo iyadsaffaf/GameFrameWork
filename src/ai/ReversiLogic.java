@@ -26,16 +26,7 @@ public class ReversiLogic implements Ai{
 
     }
 
-    void ShowWinBox(Score score)
-    {
-        if(score.black > score.white)
-            JOptionPane.showMessageDialog(null, "Black wins! Black: " + score.black + " White: " +score.white);
-        else if (score.black < score.white)
-            JOptionPane.showMessageDialog(null, "White wins! White: " + score.white + " Black: " +score.black);
-        else if(score.black == score.white)
-            JOptionPane.showMessageDialog(null, "DRAW");
 
-    }
 
     //myTurn
     public boolean move(int index) {
@@ -60,7 +51,6 @@ public class ReversiLogic implements Ai{
         } else if (!board.isMoveLeft()) {
             Score s = board.GetScore();
             System.out.println("score black " + s.black + "Score" + s.white);
-            ShowWinBox(s);
         }
         return valid;
 
