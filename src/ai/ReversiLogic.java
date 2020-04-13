@@ -111,17 +111,16 @@ public class ReversiLogic implements Ai {
                 if (board.checkIfValidMove(index, playerType) && index < 64) {
                     validMoves.add(index);
                     //return index;
-
-                } else if (index == 63) {
-                    System.out.println("There are no move for  " + aiType);
-
                 }
-
             }
         }
-        int randomMove = random.nextInt(validMoves.size());
-        return validMoves.get(randomMove);
-
+        if (validMoves.size() != 0) {
+            int randomMove = random.nextInt(validMoves.size());
+            return validMoves.get(randomMove);
+        }else{
+            System.out.println("there are no moves for: "+aiType);
+        }
+        return 63;
     }
 
     //miniMAX Algorithm

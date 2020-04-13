@@ -210,4 +210,5 @@ public class GameRemoteController {
         }
         root.getChildren().setAll(gridPane);
     }
+
 }

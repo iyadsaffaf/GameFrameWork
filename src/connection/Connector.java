@@ -79,13 +79,13 @@ public class Connector implements Runnable {
 
         } else if (message.contains("YOURTURN")) {
             //update PlayerList
-            move(message);
+            move();
 
         } else if (message.contains("LOSS")) {
-            gameLoss(message);
+            gameLoss();
 
         } else if (message.contains("WIN")) {
-            gameWin(message);
+            gameWin();
 
         } else if (message.contains("MOVE")) {
             //update PlayerList
@@ -130,7 +130,7 @@ public class Connector implements Runnable {
     }
 
     public void startMatch(String message) {
-        this.reversiAi = new ReversiLogic('t',"Beginner");
+        this.reversiAi = new ReversiLogic('t',"Advanced");
         if (serverCommand.GetPlayersList(message).get(0).equals(this.loginName)){
             amIThefirst = true;
             System.out.println("AmIthefirst = "+amIThefirst);
@@ -160,13 +160,12 @@ public class Connector implements Runnable {
         }
     }
 
-    public void move(String message) {
+    public void move() {
             if (gameType =="Reversi"){
                 int x = reversiAi.moveAI();
                 connection.getOutput().println("move " + x);
-                System.out.println("????????????????????????????????????????????????????????"+"         "+x);
             }
-            else {
+            else if(gameType =="Tic-tac-toe"){
                 int x = ai.GetNextMove();
                 connection.getOutput().println("move " + x);
             }
@@ -179,23 +178,24 @@ public class Connector implements Runnable {
 
 
         if (gameType =="Reversi"){
-            System.out.println(serverCommand.GetPlayersList(message).get(1)+"+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
             reversiAi.move(Integer.parseInt((serverCommand.GetPlayersList(message).get(1))));
         }
-        else {
+        else if(gameType == "Tic-tac-toe"){
             ai.move(Integer.parseInt(serverCommand.GetPlayersList(message).get(1)));
         }
 
 
     }
-    public void gameLoss(String message){
+    public void gameLoss(){
         reversiAi=null;
         amIThefirst=false;
+        System.out.println("Loss");
 
     }
-    public void gameWin(String message){
+    public void gameWin(){
         reversiAi=null;
         amIThefirst=false;
+        System.out.println("Win");
     }
 
 }
