@@ -5,18 +5,21 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
 import javafx.scene.text.Text;
 import model.Move;
 import model.Reversi.TileReversi;
 
+import java.io.IOException;
 import java.util.LinkedList;
 
 import static java.lang.Thread.*;
@@ -52,6 +55,8 @@ public class ReversieController {
 
     @FXML
     private ChoiceBox choiceBoxCoulour;
+    @FXML
+    private GridPane root;
 
 
     public ReversieController() {
@@ -203,7 +208,13 @@ public class ReversieController {
 
 
     public void goBacktoGamelist(ActionEvent actionEvent) {
-
+        GridPane gridPane= null;
+        try {
+            gridPane = FXMLLoader.load(getClass().getResource("../view/gameLocal.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        root.getChildren().setAll(gridPane);
     }
 
     public void checkBoxClicked(ActionEvent actionEvent) {
@@ -230,4 +241,5 @@ public class ReversieController {
         }
 
     }
+
 }

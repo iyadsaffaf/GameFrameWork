@@ -28,4 +28,14 @@ public class GameLocalController {
         }
         root.getChildren().setAll(gridPane);
     }
+
+    public void backButton(ActionEvent actionEvent) {
+        GridPane gridPane= null;
+        try {
+            gridPane = FXMLLoader.load(getClass().getResource("../view/sample.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        root.getChildren().setAll(gridPane);
+    }
 }

@@ -7,12 +7,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
+import java.io.IOException;
 import java.security.spec.ECField;
 import java.util.ArrayList;
 
@@ -20,6 +23,9 @@ import java.util.ArrayList;
 public class GameRemoteController {
     private Connection connection;
     private ServerCommand serverCommand = new ServerCommand();
+    @FXML
+    private GridPane root;
+    
 
     @FXML
     private Text textremote;
@@ -191,5 +197,15 @@ public class GameRemoteController {
         if(connection!=null) {
             connection.getOutput().println("logout " + loginName.getText());
         }
+    }
+
+    public void backButton(ActionEvent actionEvent) {
+        GridPane gridPane= null;
+        try {
+            gridPane = FXMLLoader.load(getClass().getResource("../view/gameLocal.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        root.getChildren().setAll(gridPane);
     }
 }
