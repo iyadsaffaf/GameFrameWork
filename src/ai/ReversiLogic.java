@@ -123,6 +123,12 @@ public class ReversiLogic implements Ai{
 
         return 4;
     }
+    //minimax
+   public int minimax(char[][] board, int depth, boolean isMax){
+
+
+        return 3;
+   }
 
 
     public void PrintBoard() {
