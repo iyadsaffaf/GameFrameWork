@@ -7,13 +7,15 @@ import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import model.tic.PlayerType;
+import model.tic.TicTacGame;
 import model.tic.Tile;
-
 import java.util.LinkedList;
 
 public class TicController {
     private TicLogic ai;
     LinkedList<Tile> tiles;
+    private TicTacGame state;
+    private PlayerType playerType;
 
 
 
@@ -23,9 +25,14 @@ public class TicController {
     public void StartTic(ActionEvent actionEvent) {
         tiles= new LinkedList<Tile>();
         ai = new TicLogic(PlayerType.X);
+        state = new TicTacGame();
         drawTheBoard();
 
+
+
+
     }
+
 
     public void drawTheBoard(){
         int index=0;
@@ -46,22 +53,40 @@ public class TicController {
                         //my turn
 
 
-                        if(ai.isValidMove(tile.GetIndex())){
+                        if (ai.isValidMove(tile.GetIndex())) {
                             //my turn
                             ai.move(tile.GetIndex());
                             tile.DrawX();
                             // the ai turn
-                            int x=  ai.GetNextMove();
+                            int x = ai.GetNextMove();
                             tiles.get(x).DrawO();
 
-                      }
-                        else {
+                        } else {
                             System.out.println("Not A valid move");
                         }
+
                     }
+
                 });
 
             }
         }
     }
+
+
+    public TicTacGame getState() {
+        return state;
+    }
+
+    public void setState(TicTacGame state) {
+        this.state = state;
+    }
+    public void gameOver(){
+        state.win();
+    }
+
+
 }
+
+
+

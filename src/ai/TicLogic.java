@@ -1,5 +1,6 @@
 package ai;
 
+import model.tic.AIMove;
 import model.tic.PlayerType;
 import model.tic.TicTacGame;
 
@@ -79,29 +80,27 @@ public class TicLogic {
                        int depth, Boolean isMax) {
         int score = state.evaluate(playerType.toString());
 
-        // If Maximizer has won the game
-        // return his/her evaluated score
-        if (score == 10)
-            return score;
+        switch (score){
+            case 1: score=10;
+                break;
+            case 2: score=-10;
+                break;
+            default: score=0;
+                break;
+        }
 
-        // If Minimizer has won the game
-        // return his/her evaluated score
-        if (score == -10)
-            return score;
-
-        // If there are no more moves and
-        // no winner then it is a tie
-        if (!state.isMovesLeft())
-            return 0;
+        
 
         // If this maximizer's move
+        int best;
         if (isMax) {
-            int best = -1000;
+            best = -1000;
 
             // Traverse all cells
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
                     // Check if cell is empty
+
                     if (board[i][j].equals("FREE")) {
                         // Make the move
                         board[i][j] = aiType.toString();
@@ -116,12 +115,12 @@ public class TicLogic {
                     }
                 }
             }
-            return best;
         }
+
 
         // If this minimizer's move
         else {
-            int best = 1000;
+            best = 1000;
 
             // Traverse all cells
             for (int i = 0; i < 3; i++) {
@@ -141,8 +140,8 @@ public class TicLogic {
                     }
                 }
             }
-            return best;
         }
+        return best;
     }
 
     public Move findBestMove(String[][] board) {
@@ -168,6 +167,7 @@ public class TicLogic {
                     // Undo the move
                     board[i][j] = "FREE";
 
+
                     // If the value of the current move is
                     // more than the best value, then update
                     // best/
@@ -176,6 +176,7 @@ public class TicLogic {
                         bestMove.col = j;
                         bestVal = moveVal;
                     }
+
                 }
             }
         }
@@ -185,6 +186,7 @@ public class TicLogic {
 
         return bestMove;
     }
+
 
 }
 
