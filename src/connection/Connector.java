@@ -24,14 +24,16 @@ public class Connector implements Runnable {
     private boolean amIThefirst = false;
     private PlayerType playerType;
     private String loginName;
+    private String difficulty;
 
-    public Connector(Connection s, ListView<String> plyerListView, ListView<String> gameListView, ListView<String> challengeList, String loginName) {
+    public Connector(Connection s, ListView<String> plyerListView, ListView<String> gameListView, ListView<String> challengeList, String loginName,String difficulty) {
         this.serverCommand = new ServerCommand();
         this.connection = s;
         this.playerListView = plyerListView;
         this.gameListView = gameListView;
         this.challengeList = challengeList;
         this.loginName = loginName;
+        this.difficulty=difficulty;
 
     }
 
@@ -130,7 +132,7 @@ public class Connector implements Runnable {
     }
 
     public void startMatch(String message) {
-        this.reversiAi = new ReversiLogic('t',"Beginner");
+        this.reversiAi = new ReversiLogic('t',difficulty);
         if (serverCommand.GetPlayersList(message).get(0).equals(this.loginName)){
             amIThefirst = true;
             System.out.println("AmIthefirst = "+amIThefirst);

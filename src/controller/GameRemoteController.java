@@ -8,10 +8,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
@@ -63,6 +61,10 @@ public class GameRemoteController {
     private Label warning;
     @FXML
     private TextField portNumber;
+    @FXML
+    private ChoiceBox choiceDifficulty;
+    private String difficulty;
+
 
 
     private boolean connected;
@@ -87,6 +89,7 @@ public class GameRemoteController {
 
 
         }
+        difficulty = choiceDifficulty.getSelectionModel().getSelectedItem().toString();
 
     }
 
@@ -108,6 +111,8 @@ public class GameRemoteController {
         if (!loginName.getText().equals("")) {
 
             if (!connected) {
+                difficulty = choiceDifficulty.getSelectionModel().getSelectedItem().toString();
+
 
 
                 try {
@@ -123,7 +128,7 @@ public class GameRemoteController {
                 textremote.setText("Hello " + loginName.getText()+" You can log in to join");
                 textremote13.setText("Log in to join ");
 
-                Connector connector = new Connector(connection, plyerListView, gameListView, challengeList, loginName.getText());
+                Connector connector = new Connector(connection, plyerListView, gameListView, challengeList, loginName.getText(),difficulty);
                 System.out.println(loginName.getText() + "loginname test");
                  thread = new Thread(connector);
                 thread.start();
@@ -202,12 +207,16 @@ public class GameRemoteController {
     }
 
     public void backButton(ActionEvent actionEvent) {
+        disconnect();
         GridPane gridPane= null;
         try {
-            gridPane = FXMLLoader.load(getClass().getResource("../view/gameLocal.fxml"));
+            gridPane = FXMLLoader.load(getClass().getResource("../view/sample.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
         root.getChildren().setAll(gridPane);
+    }
+
+    public void onChooseDifficulty (KeyEvent keyEvent) {
     }
 }
