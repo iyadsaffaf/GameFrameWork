@@ -46,7 +46,7 @@
                <font>
                   <Font name="System Bold Italic" size="17.0" />
                </font></Text>
-            <Button fx:id="connectButton" layoutX="61.0" layoutY="204.0" mnemonicParsing="false" onAction="#ConnectButton" prefHeight="32.0" prefWidth="211.0" text="Connect" textFill="#161515">
+            <Button fx:id="connectButton" layoutX="10.0" layoutY="283.0" mnemonicParsing="false" onAction="#ConnectButton" prefHeight="32.0" prefWidth="211.0" text="Connect" textFill="#161515">
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font></Button>
@@ -83,16 +83,18 @@
                </font>
             </Text>
             <TextField fx:id="ipAddress" layoutX="14.0" layoutY="150.0" text="localhost" />
-            <TextField fx:id="loginName" cache="true" cacheHint="SPEED" layoutX="181.0" layoutY="150.0" promptText="Enter your name please" />
+            <TextField fx:id="loginName" cache="true" cacheHint="SPEED" layoutX="14.0" layoutY="227.0" promptText="Enter your name please" />
             <Label layoutX="14.0" layoutY="123.0" text="Ip Address" textFill="WHITE" />
-            <Label layoutX="182.0" layoutY="123.0" text="Connect as" textFill="WHITE" />
+            <Label layoutX="13.0" layoutY="202.0" text="Connect as" textFill="WHITE" />
             <Label layoutX="696.0" layoutY="94.0" prefHeight="32.0" prefWidth="324.0" text="Select a player to challenge" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <Label fx:id="warning" layoutX="10.0" layoutY="254.0" text="* Please enter your name first" textFill="RED" visible="false" />
-            <Button onAction="#backButton" layoutX="883.0" layoutY="639.0" mnemonicParsing="false" text="Go Back to main menu" />
+            <Label fx:id="warning" layoutX="10.0" layoutY="342.0" text="* Please enter your name first" textFill="RED" visible="false" />
+            <Button layoutX="883.0" layoutY="639.0" mnemonicParsing="false" onAction="#backButton" text="Go Back to main menu" />
+            <TextField fx:id="portNumber" layoutX="192.0" layoutY="150.0" text="7789" />
+            <Label layoutX="191.0" layoutY="123.0" text="Port number" textFill="#fafafa" />
           
          </children>
       </Pane>

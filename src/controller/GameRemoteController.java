@@ -25,7 +25,6 @@ public class GameRemoteController {
     private ServerCommand serverCommand = new ServerCommand();
     @FXML
     private GridPane root;
-    
 
     @FXML
     private Text textremote;
@@ -62,6 +61,8 @@ public class GameRemoteController {
 
     @FXML
     private Label warning;
+    @FXML
+    private TextField portNumber;
 
 
     private boolean connected;
@@ -110,7 +111,7 @@ public class GameRemoteController {
 
 
                 try {
-                    connection = new Connection(ipAddress.getText(), 7789);
+                    connection = new Connection(ipAddress.getText(), Integer.parseInt(portNumber.getText()));
 
                 }catch (Exception s){
                     System.out.println("You cannot connect to server");
