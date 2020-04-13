@@ -24,14 +24,16 @@ public class Connector implements Runnable {
     private boolean amIThefirst = false;
     private PlayerType playerType;
     private String loginName;
+    private String difficulty;
 
-    public Connector(Connection s, ListView<String> plyerListView, ListView<String> gameListView, ListView<String> challengeList, String loginName) {
+    public Connector(Connection s, ListView<String> plyerListView, ListView<String> gameListView, ListView<String> challengeList, String loginName,String difficulty) {
         this.serverCommand = new ServerCommand();
         this.connection = s;
         this.playerListView = plyerListView;
         this.gameListView = gameListView;
         this.challengeList = challengeList;
         this.loginName = loginName;
+        this.difficulty=difficulty;
 
     }
 
@@ -79,13 +81,13 @@ public class Connector implements Runnable {
 
         } else if (message.contains("YOURTURN")) {
             //update PlayerList
-            move();
+            move(message);
 
         } else if (message.contains("LOSS")) {
-            gameLoss();
+            gameLoss(message);
 
         } else if (message.contains("WIN")) {
-            gameWin();
+            gameWin(message);
 
         } else if (message.contains("MOVE")) {
             //update PlayerList
@@ -130,7 +132,7 @@ public class Connector implements Runnable {
     }
 
     public void startMatch(String message) {
-        this.reversiAi = new ReversiLogic('t',"Advanced");
+        this.reversiAi = new ReversiLogic('t',difficulty);
         if (serverCommand.GetPlayersList(message).get(0).equals(this.loginName)){
             amIThefirst = true;
             System.out.println("AmIthefirst = "+amIThefirst);
@@ -160,12 +162,13 @@ public class Connector implements Runnable {
         }
     }
 
-    public void move() {
+    public void move(String message) {
             if (gameType =="Reversi"){
                 int x = reversiAi.moveAI();
                 connection.getOutput().println("move " + x);
+                System.out.println("????????????????????????????????????????????????????????"+"         "+x);
             }
-            else if(gameType =="Tic-tac-toe"){
+            else {
                 int x = ai.GetNextMove();
                 connection.getOutput().println("move " + x);
             }
@@ -178,24 +181,23 @@ public class Connector implements Runnable {
 
 
         if (gameType =="Reversi"){
+            System.out.println(serverCommand.GetPlayersList(message).get(1)+"+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
             reversiAi.move(Integer.parseInt((serverCommand.GetPlayersList(message).get(1))));
         }
-        else if(gameType == "Tic-tac-toe"){
+        else {
             ai.move(Integer.parseInt(serverCommand.GetPlayersList(message).get(1)));
         }
 
 
     }
-    public void gameLoss(){
+    public void gameLoss(String message){
         reversiAi=null;
         amIThefirst=false;
-        System.out.println("Loss");
 
     }
-    public void gameWin(){
+    public void gameWin(String message){
         reversiAi=null;
         amIThefirst=false;
-        System.out.println("Win");
     }
 
 }
