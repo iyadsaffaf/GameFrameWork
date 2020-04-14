@@ -6,7 +6,7 @@ import model.tic.TicTacGame;
 import javax.swing.*;
 
 public class TicLogic {
-    public  TicTacGame state;
+    public TicTacGame state;
     private PlayerType playerType;
     private PlayerType aiType;
 
@@ -47,46 +47,32 @@ public class TicLogic {
         return lastMovePlayer;
     }
 
-    public void CheckWin()
-    {
-        JOptionPane optionPane;
+    public void CheckWin() {
+        JOptionPane optionPane = null;
 
-        if(state.evaluate(playerType.toString()) == 10 )
-        {
+        if (state.evaluate(playerType.toString()) == 10) {
             System.out.println(playerType.toString() + " has won!");
-
-                optionPane = new JOptionPane(playerType.toString() + " wins!");
-            JDialog myDialog = optionPane.createDialog(null, "GAME OVER");
-            myDialog.setModal(false);
-            myDialog.setVisible(true);
-            state.FillInWithFree();
+            optionPane = new JOptionPane(playerType.toString() + " wins!");
         }
-        if(state.evaluate(aiType.toString()) == 10)
-        {
+        if (state.evaluate(aiType.toString()) == 10) {
             System.out.println(aiType.toString() + " has won!");
-
             optionPane = new JOptionPane(aiType.toString() + " wins!");
+        }
+        if (state.checkFinish() >= 8) {
+            optionPane = new JOptionPane("DRAW!");
+        }
+        if (optionPane != null) {
             JDialog myDialog = optionPane.createDialog(null, "GAME OVER");
             myDialog.setModal(false);
             myDialog.setVisible(true);
             state.FillInWithFree();
-        }
-        if(state.checkFinish() >= 8) {
-            optionPane = new JOptionPane("DRAW!");
-            JDialog myDialog = optionPane.createDialog(null, "GAME OVER");
-            myDialog.setModal(false);
-            myDialog.setVisible(true);
         }
     }
 
     //Return the best move
     public int GetNextMove() {
         int nextMove = 0;
-
-        //Can we win?
-
-        //Do we need to defend?
-
+        CheckWin();
 
         //start in een corner 0 2 6 8
         //Eerste zet
@@ -104,7 +90,6 @@ public class TicLogic {
                 return nextMove;
         }
 
-        //als hij middel heeft pak de tegenovergestelde hoek
 
         moveCount++;
         nextMove = state.getTheFirstFreeIndex();

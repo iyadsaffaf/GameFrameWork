@@ -60,6 +60,8 @@ public class TicController {
 
                         if (ai.isValidMove(tile.GetIndex())) {
                             //my turn
+                            ai.CheckWin();
+
                             ai.move(tile.GetIndex());
                             tile.DrawX();
                             // the ai turn
@@ -79,6 +81,7 @@ public class TicController {
 
             }
         }
+        ai.CheckWin();
     }
 
 
