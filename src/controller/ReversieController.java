@@ -58,6 +58,8 @@ public class ReversieController {
     @FXML
     private GridPane root;
 
+    private boolean startFase = true;
+
 
     public ReversieController() {
 
@@ -66,34 +68,55 @@ public class ReversieController {
 
     public void StartReversie(ActionEvent actionEvent) {
         //
-        difficulty = choiceDifficulty.getSelectionModel().getSelectedItem().toString();
-        playerColour = choiceBoxCoulour.getSelectionModel().getSelectedItem().toString();
-        pane.setVisible(true);
-        frame.setVisible(true);
-        checkBoxHint.setVisible(true);
-        blackCount.setVisible(true);
-        whiteCount.setVisible(true);
-        playerTypeText.setVisible(true);
-        //
-        choiceDifficulty.setVisible(false);
-        choiceBoxCoulour.setVisible(false);
-        difficultyLevel.setVisible(false);
-        chooseYourColourLabel.setVisible(false);
+        if (startFase) {
+            startButton.setText("Play again");
+            startFase = false;
+            difficulty = choiceDifficulty.getSelectionModel().getSelectedItem().toString();
+            playerColour = choiceBoxCoulour.getSelectionModel().getSelectedItem().toString();
+            pane.setVisible(true);
+            frame.setVisible(true);
+            checkBoxHint.setVisible(true);
+            blackCount.setVisible(true);
+            whiteCount.setVisible(true);
+            playerTypeText.setVisible(true);
+            //
+            choiceDifficulty.setVisible(false);
+            choiceBoxCoulour.setVisible(false);
+            difficultyLevel.setVisible(false);
+            chooseYourColourLabel.setVisible(false);
 
 
-        tiles = new LinkedList<>();
+            tiles = new LinkedList<>();
 
-        drawTheBoard();
-        if (playerColour.equals("Black")) {
-            playerType = 'B';
+            drawTheBoard();
+            if (playerColour.equals("Black")) {
+                playerType = 'B';
+            } else {
+                playerType = 'W';
+            }
+            ai = new ReversiLogic(playerType, difficulty);
+            playerTypeText.setText(getTextForPlayerType(playerType));
+
+
+            updateBoard();
         } else {
-            playerType = 'W';
+            playAgain();
+        }
+
+    }
+
+    public void playAgain() {
+        int xx = 0;
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
+                tiles.get(xx).setColourToGreen();
+                xx++;
+
+            }
         }
         ai = new ReversiLogic(playerType, difficulty);
-        playerTypeText.setText(getTextForPlayerType(playerType));
-
-
         updateBoard();
+
 
     }
 
@@ -130,7 +153,7 @@ public class ReversieController {
                                         @Override
                                         public void run() {
                                             try {
-                                                Thread.sleep(5000);
+                                                Thread.sleep(1000);
                                             } catch (InterruptedException e) {
                                                 e.printStackTrace();
                                             }
@@ -174,11 +197,13 @@ public class ReversieController {
     public void clickck(KeyEvent keyEvent) {
         startButton.setVisible(true);
     }
-   private int whiteCounter=0;
+
+    private int whiteCounter = 0;
+
     public void updateBoard() {
         int index = 0;
-        int whiteCounter=0;
-        int blackCounter=0;
+        int whiteCounter = 0;
+        int blackCounter = 0;
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
                 if (ai.getBoard()[x][y] == 'B') {
@@ -188,7 +213,7 @@ public class ReversieController {
                 } else if (ai.getBoard()[x][y] == 'W') {
                     whiteCounter++;
                     tiles.get(index).setColourToWhite();
-                }else if(ai.getBoard()[x][y] == 'F'){
+                } else if (ai.getBoard()[x][y] == 'F') {
                     tiles.get(index).setColourToGreen();
 
 
@@ -206,13 +231,13 @@ public class ReversieController {
             @Override
             public void run() {
                 int index = 0;
-                int whiteCounter=0;
-                int blackCounter=0;
+                int whiteCounter = 0;
+                int blackCounter = 0;
                 for (int x = 0; x < 8; x++) {
                     for (int y = 0; y < 8; y++) {
                         if (ai.getBoard()[x][y] == 'B') {
 
-                           // tiles.get(index).setColourToBlack();
+                            // tiles.get(index).setColourToBlack();
                             blackCounter++;
                         } else if (ai.getBoard()[x][y] == 'W') {
                             whiteCounter++;
@@ -224,8 +249,8 @@ public class ReversieController {
 
                     }
                 }
-                blackCount.setText(blackCounter+"");
-                whiteCount.setText(whiteCounter+"");
+                blackCount.setText(blackCounter + "");
+                whiteCount.setText(whiteCounter + "");
 
             }
         });
@@ -233,26 +258,10 @@ public class ReversieController {
     }
 
 
-    public void update() {
-
-        System.out.println("Hex String: ");
-        try {
-            System.out.println("StartSleeping");
-            sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        System.out.println("EndSleeping");
-
-        ai.moveAI();
-        updateBoard();
-
-
-    }
 
 
     public void goBacktoGamelist(ActionEvent actionEvent) {
-        GridPane gridPane= null;
+        GridPane gridPane = null;
         try {
             gridPane = FXMLLoader.load(getClass().getResource("../view/gameLocal.fxml"));
         } catch (IOException e) {
@@ -262,12 +271,13 @@ public class ReversieController {
     }
 
     public void checkBoxClicked(ActionEvent actionEvent) {
-        if (!hint){
+        if (!hint) {
             hint = true;
-        highLight(playerType);}
-        else{
-            hint=false;
-            updateBoard();}
+            highLight(playerType);
+        } else {
+            hint = false;
+            updateBoard();
+        }
     }
 
     public void highLight(char speler) {
