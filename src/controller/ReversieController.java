@@ -56,9 +56,14 @@ public class ReversieController {
     @FXML
     private ChoiceBox choiceBoxCoulour;
     @FXML
+    private ChoiceBox gametype;
+    @FXML
     private GridPane root;
 
     private boolean startFase = true;
+    private String gameType;
+    private boolean isMultiPlayer;
+    private boolean myTurn = true;
 
 
     public ReversieController() {
@@ -73,6 +78,7 @@ public class ReversieController {
             startFase = false;
             difficulty = choiceDifficulty.getSelectionModel().getSelectedItem().toString();
             playerColour = choiceBoxCoulour.getSelectionModel().getSelectedItem().toString();
+            gameType = gametype.getSelectionModel().getSelectedItem().toString();
             pane.setVisible(true);
             frame.setVisible(true);
             checkBoxHint.setVisible(true);
@@ -93,6 +99,11 @@ public class ReversieController {
                 playerType = 'B';
             } else {
                 playerType = 'W';
+            }
+            if (gameType.equals("Multi player")) {
+                isMultiPlayer = true;
+            } else {
+                isMultiPlayer = false;
             }
             ai = new ReversiLogic(playerType, difficulty);
             playerTypeText.setText(getTextForPlayerType(playerType));
@@ -139,35 +150,51 @@ public class ReversieController {
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
-                                //   tile.setColourToWhite();
-                                System.out.println(tile.GetIndex());
-                                Move move = new Move(tile.GetIndex());
-                                System.out.println("the x = " + move.x + "  the y = " + move.y);
-                                if (ai.move(tile.GetIndex())) {
-
-
-                                    updateBoard();
-                                    pane.setDisable(true);
-
-                                    Thread t = new Thread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            try {
-                                                Thread.sleep(1000);
-                                            } catch (InterruptedException e) {
-                                                e.printStackTrace();
-                                            }
-                                            ai.moveAI();
-                                            pane.setDisable(false);
-
+                                if (isMultiPlayer) {
+                                    if (myTurn) {
+                                        if (ai.move(tile.GetIndex())) {
+                                            myTurn = false;
                                             updateBoard();
-                                            if (hint)
-                                                highLight(playerType);
-
                                         }
-                                    });
 
-                                    t.start();
+                                    } else {
+                                        if(ai.multiPlayerMove(tile.GetIndex())){
+                                            myTurn = true;
+                                            updateBoard();
+                                        }
+                                    }
+                                } else {
+                                    //   tile.setColourToWhite();
+                                    System.out.println(tile.GetIndex());
+                                    Move move = new Move(tile.GetIndex());
+                                    System.out.println("the x = " + move.x + "  the y = " + move.y);
+                                    if (ai.move(tile.GetIndex())) {
+
+
+                                        updateBoard();
+                                        if (!isMultiPlayer) {
+                                            pane.setDisable(true);
+                                            Thread t = new Thread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    try {
+                                                        Thread.sleep(1000);
+                                                    } catch (InterruptedException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                    ai.moveAI();
+                                                    pane.setDisable(false);
+
+                                                    updateBoard();
+                                                    if (hint)
+                                                        highLight(playerType);
+
+                                                }
+                                            });
+
+                                            t.start();
+                                        }
+                                    }
                                 }
                             }
                         });
@@ -256,8 +283,6 @@ public class ReversieController {
         });
 
     }
-
-
 
 
     public void goBacktoGamelist(ActionEvent actionEvent) {

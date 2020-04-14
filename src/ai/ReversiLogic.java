@@ -54,6 +54,32 @@ public class ReversiLogic implements Ai {
         return valid;
 
     }
+    public boolean multiPlayerMove(int index) {
+
+        boolean valid = false;
+
+        if (board.checkIfValidMove(index, aiType)) {
+
+
+            board.fillInCells(index, aiType);
+
+            board.flipAfterMove(index, aiType);
+            valid = true;
+
+        } else if (board.isMoveLeft() && board.isValid(playerType)) {
+            // Give true so tha ai can start
+            valid = true;
+
+
+        } else if (!board.isMoveLeft()) {
+            Score s = board.GetScore();
+            System.out.println("score black " + s.black + "Score" + s.white);
+        }
+        board.CheckWin();
+
+        return valid;
+
+    }
 
     public char getAiType(char playerType) {
         char aiType = 'B';
