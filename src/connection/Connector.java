@@ -182,7 +182,6 @@ public class Connector implements Runnable {
             }
             else {
                 int x = ai.GetNextMove();
-                connection.getOutput().println("move " + x);
             }
         }
 
