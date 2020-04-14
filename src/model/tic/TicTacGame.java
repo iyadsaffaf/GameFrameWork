@@ -100,7 +100,7 @@ public class TicTacGame {
 
                 if (cells[r][c].equals("FREE")) {
                     //System.out.println("R AND C " + r + ":" + c + "so free are " + (((r *3)+c)));
-                    return ((r *3)+c);
+                    return ((r * 3) + c);
                 }
                 if (index >= 8)
                     break;
@@ -116,10 +116,8 @@ public class TicTacGame {
             if (cells[row][0] == cells[row][1] &&
                     cells[row][1] == cells[row][2]) {
                 if (cells[row][0] == player) {
-                    System.out.print("X is the winner");
                     return +10;
                 } else if (cells[row][0] == opponent) {
-                    System.out.print("O is the winner");
                     return -10;
                 }
 

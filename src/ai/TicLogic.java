@@ -3,8 +3,10 @@ package ai;
 import model.tic.PlayerType;
 import model.tic.TicTacGame;
 
+import javax.swing.*;
+
 public class TicLogic {
-    private TicTacGame state;
+    public  TicTacGame state;
     private PlayerType playerType;
     private PlayerType aiType;
 
@@ -25,10 +27,12 @@ public class TicLogic {
     }
 
     public void move(int x) {
+        CheckWin();
         if (state.isFree(x)) {
             state.fillInCells(x, playerType.toString());
             lastMovePlayer = x;
         }
+        CheckWin();
     }
 
     public int GetRandomIndex(int posA, int posB) {
@@ -44,10 +48,25 @@ public class TicLogic {
         return lastMovePlayer;
     }
 
+    public void CheckWin()
+    {
+        if(state.evaluate(playerType.toString()) == 10)
+        {
+            System.out.println(playerType.toString() + " has won!");
+
+            JOptionPane optionPane;
+                optionPane = new JOptionPane(playerType.toString() + " wins!");
+            JDialog myDialog = optionPane.createDialog(null, "GAME OVER");
+            myDialog.setModal(false);
+            myDialog.setVisible(true);
+            state.FillInWithFree();
+        }
+        return;
+    }
+
     //Return the best move
     public int GetNextMove() {
         int nextMove = 0;
-
 
         //Can we win?
 
