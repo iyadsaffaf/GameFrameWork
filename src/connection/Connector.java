@@ -183,6 +183,7 @@ public class Connector implements Runnable {
             else {
                 ai.CheckWin();
                 int x = ai.GetNextMove();
+                ai.state.getTheFirstFreeIndex2();
             }
         }
 

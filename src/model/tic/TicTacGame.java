@@ -29,16 +29,10 @@ public class TicTacGame {
             for (int c = 0; c < boardSize; c++) {
                 if (index == x) {
                     cells[r][c] = playerType;
-
                 }
                 index++;
-
-
             }
-
         }
-
-
     }
 
 
@@ -99,8 +93,25 @@ public class TicTacGame {
             for (int c = 0; c < boardSize; c++) {
 
                 if (cells[r][c].equals("FREE")) {
-                    //System.out.println("R AND C " + r + ":" + c + "so free are " + (((r *3)+c)));
-                    return ((r * 3) + c);
+                    System.out.println("Free are " + (((r *3)+c)));
+                    index = ((r * 3) + c);
+                }
+                if (index >= 8)
+                    break;
+            }
+        }
+        return index;
+    }
+
+    public int getTheFirstFreeIndex2() {
+        int index = 0;
+
+        for (int r = 0; r < boardSize; r++) {
+            for (int c = 0; c < boardSize; c++) {
+
+                if (cells[r][c].equals("FREE")) {
+                    System.out.println("Free are " + (((r *3)+c)));
+                    index = ((r * 3) + c);
                 }
                 if (index >= 8)
                     break;
@@ -202,10 +213,6 @@ public class TicTacGame {
             System.out.print("O has won");
         } else {
             System.out.print("Draw!");
-
-
         }
     }
-
-
 }
