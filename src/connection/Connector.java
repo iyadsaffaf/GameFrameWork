@@ -112,10 +112,16 @@ public class Connector implements Runnable {
     public void updatePlayerList(String message) {
         ArrayList<String> array = serverCommand.GetPlayersList(message);
         ObservableList<String> data = FXCollections.observableArrayList();
-        playerListView.getItems().clear();
 
         data.addAll(array);
-        playerListView.setItems(data);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                playerListView.getItems().clear();
+
+                playerListView.setItems(data);
+            }
+        });
 
         System.out.println(playerListView.getSelectionModel().getSelectedItems());
     }
@@ -124,11 +130,17 @@ public class Connector implements Runnable {
         System.out.println(message);
         ArrayList<String> array = serverCommand.GetPlayersList(message);
         ObservableList<String> data = FXCollections.observableArrayList();
-        gameListView.getItems().clear();
-        data.addAll(array);
-        gameListView.setItems(data);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                gameListView.getItems().clear();
+                data.addAll(array);
+                gameListView.setItems(data);
+            }
+        });
 
-        System.out.println(gameListView.getSelectionModel().getSelectedItems());
+
+
     }
 
     public void startMatch(String message) {

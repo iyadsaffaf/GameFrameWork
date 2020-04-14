@@ -1,18 +1,11 @@
 package ai;
 
 import java.util.Random;
-
-import model.Move;
 import model.Reversi.ReversiBoard;
 import model.Reversi.Score;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Reversi.TileReversi;
-
-import javax.swing.*;
-import java.util.LinkedList;
 
 public class ReversiLogic implements Ai {
     private ReversiBoard board;

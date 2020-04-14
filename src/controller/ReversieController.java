@@ -35,7 +35,10 @@ public class ReversieController {
     private boolean hint = false;
     @FXML
     private Pane pane;
-    @FXML    private Label playerTypeText;
+    @FXML
+    private Pane frame;
+    @FXML
+    private Label playerTypeText;
     @FXML
     private ChoiceBox choiceDifficulty;
     @FXML
@@ -45,9 +48,9 @@ public class ReversieController {
     @FXML
     private CheckBox checkBoxHint;
     @FXML
-    private Text yourScoreText;
+    private Text whiteCount;
     @FXML
-    private Label OpponentScoreLabel;
+    private Label blackCount;
     @FXML
     private Label chooseYourColourLabel;
     @FXML
@@ -66,6 +69,12 @@ public class ReversieController {
         difficulty = choiceDifficulty.getSelectionModel().getSelectedItem().toString();
         playerColour = choiceBoxCoulour.getSelectionModel().getSelectedItem().toString();
         pane.setVisible(true);
+        frame.setVisible(true);
+        checkBoxHint.setVisible(true);
+        blackCount.setVisible(true);
+        whiteCount.setVisible(true);
+        playerTypeText.setVisible(true);
+        //
         choiceDifficulty.setVisible(false);
         choiceBoxCoulour.setVisible(false);
         difficultyLevel.setVisible(false);
@@ -96,8 +105,8 @@ public class ReversieController {
                 tiles.add(tile);
                 tile.setIndex(index);
                 index++;
-                tile.setTranslateX(j * 75);
-                tile.setTranslateY(i * 75);
+                tile.setTranslateX(j * 60);
+                tile.setTranslateY(i * 60);
                 pane.getChildren().add(tile);
 
 
@@ -162,15 +171,19 @@ public class ReversieController {
     public void clickck(KeyEvent keyEvent) {
         startButton.setVisible(true);
     }
-
+   private int whiteCounter=0;
     public void updateBoard() {
         int index = 0;
+        int whiteCounter=0;
+        int blackCounter=0;
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
                 if (ai.getBoard()[x][y] == 'B') {
 
                     tiles.get(index).setColourToBlack();
+                    blackCounter++;
                 } else if (ai.getBoard()[x][y] == 'W') {
+                    whiteCounter++;
                     tiles.get(index).setColourToWhite();
                 }else if(ai.getBoard()[x][y] == 'F'){
                     tiles.get(index).setColourToGreen();
@@ -183,6 +196,37 @@ public class ReversieController {
 
             }
         }
+
+
+        //Counter
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                int index = 0;
+                int whiteCounter=0;
+                int blackCounter=0;
+                for (int x = 0; x < 8; x++) {
+                    for (int y = 0; y < 8; y++) {
+                        if (ai.getBoard()[x][y] == 'B') {
+
+                           // tiles.get(index).setColourToBlack();
+                            blackCounter++;
+                        } else if (ai.getBoard()[x][y] == 'W') {
+                            whiteCounter++;
+                            //tiles.get(index).setColourToWhite();
+                        }
+
+
+                        index++;
+
+                    }
+                }
+                blackCount.setText(blackCounter+"");
+                whiteCount.setText(whiteCounter+"");
+
+            }
+        });
+
     }
 
 

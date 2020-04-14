@@ -168,10 +168,11 @@ public class GameRemoteController {
 
     public void acceptChallenge(ActionEvent actionEvent) {
         String ss = challengeList.getSelectionModel().getSelectedItems().toString();
-        String game = (ss.substring(1, 3).trim());
-        int number = Integer.parseInt(game);
-        connection.getOutput().println("challenge accept " + number);
-
+        if(!ss.isEmpty()) {
+            String game = (ss.substring(1, 3).trim());
+            int number = Integer.parseInt(game);
+            connection.getOutput().println("challenge accept " + number);
+        }
     }
 
     public void challenge(ActionEvent actionEvent) {

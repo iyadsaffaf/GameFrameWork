@@ -2,14 +2,19 @@
 
 <?import java.lang.String?>
 <?import javafx.collections.FXCollections?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -22,18 +27,29 @@
         <RowConstraints />
     </rowConstraints>
     <children>
-        <Pane fx:id="panem" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" styleClass="background" stylesheets="@Stylesheets/reversieStyle.css">
+        <Pane fx:id="panem" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1013.0" styleClass="solid" stylesheets="@Stylesheets/reversieStyle.css">
             <children>
-                <Pane id="pane" fx:id="pane" layoutX="172.0" layoutY="23.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" styleClass="pane" stylesheets="@Stylesheets/reversieStyle.css" visible="false" />
-                <Button fx:id="startButton" layoutX="433.0" layoutY="639.0" mnemonicParsing="false" onAction="#StartReversie" prefHeight="35.0" prefWidth="134.0" text="Play" />
-            <Label id="playerTypeText" fx:id="playerTypeText" layoutX="325.0" layoutY="648.0" text="You are BK" />
-            <Label fx:id="difficultyLevel" layoutX="262.0" layoutY="161.0" text="Please select the difficulty Level" textAlignment="CENTER">
+                <Button fx:id="startButton" layoutX="460.0" layoutY="634.0" mnemonicParsing="false" onAction="#StartReversie" prefHeight="35.0" prefWidth="134.0" text="Play" />
+            <Label id="playerTypeText" fx:id="playerTypeText" layoutX="28.0" layoutY="169.0" text="You are BK" textFill="WHITE" textOverrun="CLIP" visible="false">
+
                <font>
-                  <Font size="33.0" />
+                  <Font size="16.0" />
+               </font></Label>
+            <Label fx:id="difficultyLevel" layoutX="30.0" layoutY="40.0" text="Please select the difficulty Level" textAlignment="CENTER" textOverrun="LEADING_ELLIPSIS">
+               <font>
+                  <Font name="System Bold" size="33.0" />
                </font>
+               <textFill>
+                  <RadialGradient centerY="0.5" radius="0.5">
+                     <stops>
+                        <Stop color="#9f9797" />
+                        <Stop color="#e2e2e2" offset="1.0" />
+                     </stops>
+                  </RadialGradient>
+               </textFill>
             </Label>
 
-                <ChoiceBox id="o" fx:id="choiceDifficulty" layoutX="262.0" layoutY="222.0" onKeyPressed="#clickck" prefHeight="42.0" prefWidth="200.0" value="Beginner">
+                <ChoiceBox id="o" fx:id="choiceDifficulty" layoutX="30.0" layoutY="109.0" onKeyPressed="#clickck" prefHeight="42.0" prefWidth="200.0" value="Beginner">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
                             <String fx:value="Advanced" />
@@ -41,23 +57,55 @@
                         </FXCollections>
                     </items>
                 </ChoiceBox>
-            <Button fx:id="goBacktoGamelistButton" layoutX="643.0" layoutY="644.0" mnemonicParsing="false" onAction="#goBacktoGamelist" text="Go Back to game list" />
-            <Text fx:id="yourScoreText" layoutX="22.0" layoutY="129.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your Score is : 55" />
-            <Label fx:id="OpponentScoreLabel" layoutX="22.0" layoutY="153.0" text="Opponent Score is :55" />
-            <CheckBox fx:id="checkBoxHint" layoutX="22.0" layoutY="193.0" mnemonicParsing="false" onAction="#checkBoxClicked" text="Hint" />
-            <Label fx:id="chooseYourColourLabel" layoutX="262.0" layoutY="294.0" text="Choose your colour">
+            <Button layoutX="865.0" layoutY="652.0" mnemonicParsing="false" onAction="#goBacktoGamelist" text="Go Back to game list" />
+            <ImageView fitHeight="90.0" fitWidth="83.0" layoutX="882.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/b.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="104.0" fitWidth="91.0" layoutX="882.0" layoutY="237.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/ws.png" />
+               </image>
+            </ImageView>
+            <Text fx:id="whiteCount" layoutX="911.0" layoutY="293.0" strokeType="OUTSIDE" strokeWidth="0.0" text="22" visible="false">
                <font>
-                  <Font size="29.0" />
+                  <Font size="30.0" />
+               </font></Text>
+            <Label fx:id="blackCount" layoutX="907.0" layoutY="136.0" snapToPixel="false" text="22" textFill="WHITE" visible="false">
+               <font>
+                  <Font size="30.0" />
+               </font></Label>
+            <CheckBox fx:id="checkBoxHint" layoutX="30.0" layoutY="252.0" mnemonicParsing="false" onAction="#checkBoxClicked" text="Hint" textFill="WHITE" visible="false" />
+            <Label fx:id="chooseYourColourLabel" layoutX="28.0" layoutY="179.0" text="Choose your colour">
+               <font>
+                  <Font name="System Bold" size="29.0" />
                </font>
+               <textFill>
+                  <RadialGradient centerY="0.5" radius="0.5">
+                     <stops>
+                        <Stop color="#9f9797" />
+                        <Stop color="#e2e2e2" offset="1.0" />
+                     </stops>
+                  </RadialGradient>
+               </textFill>
             </Label>
-            <ChoiceBox fx:id="choiceBoxCoulour" layoutX="262.0" layoutY="350.0" prefWidth="150.0" value="Black">
+            <ChoiceBox fx:id="choiceBoxCoulour" layoutX="30.0" layoutY="240.0" prefWidth="150.0" value="Black">
                 <items>
                     <FXCollections fx:factory="observableArrayList">
                         <String fx:value="Black" />
                         <String fx:value="White" />
                     </FXCollections>
                 </items>
+               <cursor>
+                  <Cursor fx:constant="W_RESIZE" />
+               </cursor>
             </ChoiceBox>
+            <Pane fx:id="frame" layoutX="235.0" layoutY="33.0" prefHeight="572.0" prefWidth="577.0" styleClass="frame" stylesheets="@Stylesheets/reversieStyle.css" visible="false">
+               <children>
+                      <Pane id="pane" fx:id="pane" layoutX="48.0" layoutY="55.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="480.0" styleClass="greenx" stylesheets="@Stylesheets/reversieStyle.css" />
+               </children>
+            </Pane>
 
             </children>
         </Pane>

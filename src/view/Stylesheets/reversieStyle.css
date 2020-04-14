@@ -11,7 +11,7 @@
 .background_image{
     -fx-background-image: url("../../resources/b.png");
       -fx-background-repeat: stretch;
-      -fx-background-size: 50 50;
+      -fx-background-size: 42 42;
       -fx-background-position: center center;
       -fx-border-color: black ;
       -fx-border-width: 1 ;
@@ -19,7 +19,7 @@
 .background_imagew{
     -fx-background-image: url("../../resources/ws.png");
       -fx-background-repeat: stretch;
-      -fx-background-size: 50 50;
+      -fx-background-size: 42 42;
       -fx-background-position: center center;
       -fx-border-color: black ;
       -fx-border-width: 1 ;
@@ -36,6 +36,32 @@
       -fx-background-position: center center;
       -fx-border-color: black ;
       -fx-border-width: 1 ;
+
+}
+.solid{
+    -fx-background-image: url("../../resources/wood.jpg");
+          -fx-background-repeat: stretch;
+                -fx-background-size: 1200 700;
+
+
+
+}
+.greenx{
+    -fx-background-image: url("../../resources/green.jpg");
+          -fx-background-repeat: stretch;
+                -fx-background-size: 1000 700;
+
+
+
+}
+.frame{
+    -fx-background-image: url("../../resources/frame.png");
+          -fx-background-repeat: stretch;
+              -fx-background-position: center center;
+                -fx-background-size: 590 615;
+
+
+
 
 }
 

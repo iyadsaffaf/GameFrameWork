@@ -12,8 +12,8 @@ public class TileReversi extends Pane {
     private int colour;
 
     public TileReversi() {
-        setPrefWidth(75);
-        setPrefHeight(75);
+        setPrefWidth(60);
+        setPrefHeight(60);
         String path = String.valueOf(getClass().getResource("/view/Stylesheets/reversieStyle.css").toExternalForm());
         getStylesheets().add(path);
 
