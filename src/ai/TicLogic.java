@@ -27,7 +27,6 @@ public class TicLogic {
     }
 
     public void move(int x) {
-        CheckWin();
         if (state.isFree(x)) {
             state.fillInCells(x, playerType.toString());
             lastMovePlayer = x;
@@ -50,18 +49,34 @@ public class TicLogic {
 
     public void CheckWin()
     {
-        if(state.evaluate(playerType.toString()) == 10)
+        JOptionPane optionPane;
+
+        if(state.evaluate(playerType.toString()) == 10 )
         {
             System.out.println(playerType.toString() + " has won!");
 
-            JOptionPane optionPane;
                 optionPane = new JOptionPane(playerType.toString() + " wins!");
             JDialog myDialog = optionPane.createDialog(null, "GAME OVER");
             myDialog.setModal(false);
             myDialog.setVisible(true);
             state.FillInWithFree();
         }
-        return;
+        if(state.evaluate(aiType.toString()) == 10)
+        {
+            System.out.println(aiType.toString() + " has won!");
+
+            optionPane = new JOptionPane(aiType.toString() + " wins!");
+            JDialog myDialog = optionPane.createDialog(null, "GAME OVER");
+            myDialog.setModal(false);
+            myDialog.setVisible(true);
+            state.FillInWithFree();
+        }
+        if(state.checkFinish() >= 8) {
+            optionPane = new JOptionPane("DRAW!");
+            JDialog myDialog = optionPane.createDialog(null, "GAME OVER");
+            myDialog.setModal(false);
+            myDialog.setVisible(true);
+        }
     }
 
     //Return the best move
@@ -99,7 +114,7 @@ public class TicLogic {
             return nextMove;
         } else
             System.out.println(nextMove + " = " + isValidMove(nextMove) + ", Not a valid move (Ai)");
-        return state.getTheFirstFreeIndex();
+        return state.getTheFirstFreeIndex2();
 
     }
 

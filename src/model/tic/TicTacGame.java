@@ -20,7 +20,6 @@ public class TicTacGame {
     public TicTacGame() {
         cells = new String[boardSize][boardSize];
         FillInWithFree();
-
     }
 
     public void fillInCells(int x, String playerType) {
@@ -44,11 +43,8 @@ public class TicTacGame {
                 if (index == x) {
                     if (cells[r][c].equals("FREE"))
                         free = true;
-
                 }
                 index++;
-
-
             }
 
         }
@@ -63,8 +59,6 @@ public class TicTacGame {
 
                 if (cells[r][c].equals("FREE"))
                     free = true;
-
-
                 index++;
 
 
@@ -111,7 +105,24 @@ public class TicTacGame {
 
                 if (cells[r][c].equals("FREE")) {
                     System.out.println("Free are " + (((r *3)+c)));
-                    index = ((r * 3) + c);
+                    return  ((r * 3) + c);
+                }
+                if (index >= 8)
+                    break;
+            }
+        }
+        return index;
+    }
+
+    public int checkFinish() {
+        int index = 0;
+
+        for (int r = 0; r < boardSize; r++) {
+            for (int c = 0; c < boardSize; c++) {
+
+                if (cells[r][c].equals("FREE")) {
+                    index++;
+                    break;
                 }
                 if (index >= 8)
                     break;

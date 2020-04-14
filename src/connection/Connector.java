@@ -26,14 +26,14 @@ public class Connector implements Runnable {
     private String loginName;
     private String difficulty;
 
-    public Connector(Connection s, ListView<String> plyerListView, ListView<String> gameListView, ListView<String> challengeList, String loginName,String difficulty) {
+    public Connector(Connection s, ListView<String> plyerListView, ListView<String> gameListView, ListView<String> challengeList, String loginName, String difficulty) {
         this.serverCommand = new ServerCommand();
         this.connection = s;
         this.playerListView = plyerListView;
         this.gameListView = gameListView;
         this.challengeList = challengeList;
         this.loginName = loginName;
-        this.difficulty=difficulty;
+        this.difficulty = difficulty;
 
     }
 
@@ -59,7 +59,7 @@ public class Connector implements Runnable {
     }
 
     public void analyse(String message) {
-        if (message.contains("Reversi")){
+        if (message.contains("Reversi")) {
             gameType = "Reversi";
         }
 
@@ -102,8 +102,8 @@ public class Connector implements Runnable {
 
     private void updateChallengeList(String message) {
 
-        ArrayList<String> array= serverCommand.GetPlayersList(message);
-        String challenge = array.get(1) +" The player "+ array.get(0)+" sent you a challenge to "+ array.get(2);
+        ArrayList<String> array = serverCommand.GetPlayersList(message);
+        String challenge = array.get(1) + " The player " + array.get(0) + " sent you a challenge to " + array.get(2);
         challengeList.getItems().add(challenge);
         System.out.println(challengeList.getSelectionModel().getSelectedItems());
 
@@ -140,14 +140,13 @@ public class Connector implements Runnable {
         });
 
 
-
     }
 
     public void startMatch(String message) {
-        this.reversiAi = new ReversiLogic('t',difficulty);
-        if (serverCommand.GetPlayersList(message).get(0).equals(this.loginName)){
+        this.reversiAi = new ReversiLogic('t', difficulty);
+        if (serverCommand.GetPlayersList(message).get(0).equals(this.loginName)) {
             amIThefirst = true;
-            System.out.println("AmIthefirst = "+amIThefirst);
+            System.out.println("AmIthefirst = " + amIThefirst);
         }
         amIThefirst();
 
@@ -157,8 +156,8 @@ public class Connector implements Runnable {
 
     }
 
-    public void amIThefirst(){
-        if(amIThefirst) {
+    public void amIThefirst() {
+        if (amIThefirst) {
             if (gameType == "Reversi") {
                 System.out.println("player1");
                 this.reversiAi.setPlayerType('W');
@@ -167,7 +166,7 @@ public class Connector implements Runnable {
                 playerType = PlayerType.X;
                 this.ai.setAiType(playerType);
             }
-        }else{
+        } else {
             System.out.println("player2");
             this.reversiAi.setPlayerType('B');
             this.reversiAi.setAiType('W');
@@ -175,42 +174,40 @@ public class Connector implements Runnable {
     }
 
     public void move(String message) {
-            if (gameType =="Reversi"){
-                int x = reversiAi.moveAI();
-                connection.getOutput().println("move " + x);
-                System.out.println("????????????????????????????????????????????????????????"+"         "+x);
-            }
-            else {
-                ai.CheckWin();
-                int x = ai.GetNextMove();
-                ai.state.getTheFirstFreeIndex2();
-            }
+        if (gameType == "Reversi") {
+            int x = reversiAi.moveAI();
+            connection.getOutput().println("move " + x);
+            System.out.println("????????????????????????????????????????????????????????" + "         " + x);
+        } else {
+            int x = ai.GetNextMove();
         }
+    }
 
-        //todo check the type of math
+    //todo check the type of math
 
 
     public void updateGame(String message) {
 
 
-        if (gameType =="Reversi"){
-            System.out.println(serverCommand.GetPlayersList(message).get(1)+"+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        if (gameType == "Reversi") {
+            System.out.println(serverCommand.GetPlayersList(message).get(1) + "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
             reversiAi.move(Integer.parseInt((serverCommand.GetPlayersList(message).get(1))));
-        }
-        else {
+        } else {
             ai.move(Integer.parseInt(serverCommand.GetPlayersList(message).get(1)));
         }
 
 
     }
-    public void gameLoss(String message){
-        reversiAi=null;
-        amIThefirst=false;
+
+    public void gameLoss(String message) {
+        reversiAi = null;
+        amIThefirst = false;
 
     }
-    public void gameWin(String message){
-        reversiAi=null;
-        amIThefirst=false;
+
+    public void gameWin(String message) {
+        reversiAi = null;
+        amIThefirst = false;
     }
 
 }

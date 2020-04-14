@@ -65,6 +65,9 @@ public class TicController {
                             // the ai turn
                             int x = ai.GetNextMove();
                             tiles.get(x).DrawO();
+                            ai.state.getTheFirstFreeIndex2();
+
+                            ai.CheckWin();
 
                         } else {
                             System.out.println("Not A valid move");
