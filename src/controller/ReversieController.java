@@ -124,16 +124,19 @@ public class ReversieController {
 
 
                                     updateBoard();
+                                    pane.setDisable(true);
 
                                     Thread t = new Thread(new Runnable() {
                                         @Override
                                         public void run() {
                                             try {
-                                                Thread.sleep(1000);
+                                                Thread.sleep(5000);
                                             } catch (InterruptedException e) {
                                                 e.printStackTrace();
                                             }
                                             ai.moveAI();
+                                            pane.setDisable(false);
+
                                             updateBoard();
                                             if (hint)
                                                 highLight(playerType);
