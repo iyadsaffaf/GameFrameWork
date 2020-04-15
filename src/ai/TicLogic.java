@@ -77,19 +77,24 @@ public class TicLogic implements Ai {
 
     public int getRandomMove() {
         int randomMove = 0;
-        LinkedList<Integer> n = new LinkedList<Integer>();
+        LinkedList<Integer> validMoves = new LinkedList<Integer>();
 
         int index = 0;
         for (int x = 0; x < 3; x++) {
             for (int y = 0; y < 3; y++) {
-                if (state.checkIfValidMove(index, aiType))
-                    n.add(index);
                 index++;
+                if (state.checkIfValidMove(index, aiType)&&index <9)
+                    validMoves.add(index);
+
             }
         }
         Random r = new Random();
-        if (!n.isEmpty())
-            randomMove = n.get(r.nextInt(n.size() - 1));
+
+        if (!validMoves.isEmpty()) {
+            randomMove = validMoves.get(r.nextInt(validMoves.size()));
+            return randomMove;
+        }
+
 
         return randomMove;
     }
@@ -175,6 +180,12 @@ public class TicLogic implements Ai {
 
     public char[][] getBoard() {
         return state.getBaord();
+    }
+    public void setPlayerType(char playerType) {
+        this.playerType = playerType;
+    }
+    public void setAiType(char aiType) {
+        this.aiType = aiType;
     }
 
 }
