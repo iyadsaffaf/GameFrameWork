@@ -1,10 +1,7 @@
 package model.tic;
 
 
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -12,33 +9,54 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 
-public class Tile extends StackPane {
+public class Tile extends Pane {
 
 
     private Text text;
     private  int  TileIndex;
     public Tile(){
-
-
-        text= new Text();
-        Rectangle border =new Rectangle(100,100);
-        border.setFill(Color.WHITE);
-        border.setStroke(Color.BLACK);
-        setAlignment(Pos.CENTER);
-        getChildren().addAll(border,text);
-        text.setFont(Font.font(72));
+        setPrefWidth(100);
+        setPrefHeight(100);
+        String path = String.valueOf(getClass().getResource("/view/Stylesheets/ticStyle.css").toExternalForm());
+        getStylesheets().add(path);
+        getStyleClass().add("background_border");
+//        text= new Text();
+//        getChildren().addAll(text);
+        //text.setFont(Font.font(72));
 
     }
   public void DrawX(){
-        text.setText("X");
+       // text.setText("X");
+      getStyleClass().clear();
+      getStyleClass().addAll("background_x");
 
   }
     public void DrawO(){
-        text.setText("O");
+       // text.setText("O");
+        setStyle("-fx-background-color: rgba(255, 255, 255, 0.2);");
+
+        getStyleClass().clear();
+        getStyleClass().addAll("background_o");
 
     }
     public void DrawIndex(int s){
-        text.setText(s+"");
+        // text.setText("O");
+        setStyle("-fx-background-color: rgba(11, 165, 49, 0.2);");
+
+//        getStyleClass().clear();
+//        getStyleClass().addAll("background_win");
+
+
+    }
+    public void drawEmpty(){
+        // text.setText("O");
+     //   setStyle("-fx-background-color: rgba(255, 255, 255, 0.5);");
+
+        getStyleClass().clear();
+        setStyle("-fx-background-color: rgba(255, 255, 255, 0.2);");
+
+        getStyleClass().add("background_border");
+
 
     }
     public void setIndex(int x){
@@ -46,6 +64,11 @@ public class Tile extends StackPane {
 
     }
     public int GetIndex(){
+        return this.TileIndex;
+
+    }
+    public int drawStrip(){
+
         return this.TileIndex;
 
     }

@@ -19,24 +19,32 @@ import java.util.LinkedList;
 public class TicController {
     private TicLogic ai;
     private LinkedList<Tile> tiles;
-    private TicTacGame state;
     private char playerType;
     @FXML
     private GridPane root;
+
+    private boolean isStarted=true;
 
 
     @FXML
     Pane pane;
 
     public void StartTic(ActionEvent actionEvent) {
-        pane.setDisable(false);
+        if(isStarted) {
+            isStarted=false;
+            pane.setDisable(false);
 
-        playerType = 'X';
-        tiles = new LinkedList<Tile>();
-        ai = new TicLogic(playerType);
-        state = new TicTacGame();
-        drawTheBoard();
+            playerType = 'X';
+            tiles = new LinkedList<Tile>();
+            ai = new TicLogic(playerType);
+            drawTheBoard();
+        }else {
+            pane.setDisable(false);
+            playerType = 'X';
+            ai = new TicLogic(playerType);
+            playAgain();
 
+        }
 
     }
 
@@ -121,6 +129,19 @@ public class TicController {
                     tiles.get(index).DrawO();
                 }
 
+                index++;
+
+            }
+        }
+
+
+    }
+
+    public void playAgain() {
+        int index = 0;
+        for (int x = 0; x < 3; x++) {
+            for (int y = 0; y < 3; y++) {
+               tiles.get(index).drawEmpty();
                 index++;
 
             }

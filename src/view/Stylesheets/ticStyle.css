@@ -3,3 +3,35 @@
    -fx-text-fill: white;
 
 }
+.ticBack {
+   -fx-background-color: BEIGE;
+
+}
+.background_border{
+
+      -fx-border-color: black ;
+      -fx-border-width: 1 ;
+}
+.background_win{
+   -fx-background-color: RED;
+      -fx-text-fill: white;
+}
+.background_o{
+    -fx-background-image: url("../../resources/o.png");
+      -fx-background-repeat: stretch;
+      -fx-background-size: 42 42;
+      -fx-background-position: center center;
+      -fx-border-color: black ;
+      -fx-border-width: 1 ;
+}
+.background_x{
+    -fx-background-image: url("../../resources/x.png");
+      -fx-background-repeat: stretch;
+      -fx-background-size: 42 42;
+      -fx-background-position: center center;
+      -fx-border-color: black ;
+      -fx-border-width: 1 ;
+}
+
+
+
