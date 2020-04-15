@@ -21,7 +21,7 @@ public class Connector implements Runnable {
     private ServerCommand serverCommand;
     private String gameType;
     private boolean amIThefirst = false;
-    private char playerType;
+    //private char playerType;
     private String loginName;
     private String difficulty;
 
@@ -142,7 +142,12 @@ public class Connector implements Runnable {
     }
 
     public void startMatch(String message) {
-        this.reversiAi = new ReversiLogic('t', difficulty);
+        if (gameType == "Reversi") {
+            this.reversiAi = new ReversiLogic('t', difficulty);
+        }
+        else{
+            this.ai = new TicLogic('t');
+        }
         if (serverCommand.GetPlayersList(message).get(0).equals(this.loginName)) {
             amIThefirst = true;
             System.out.println("AmIthefirst = " + amIThefirst);
@@ -162,13 +167,19 @@ public class Connector implements Runnable {
                 this.reversiAi.setPlayerType('W');
                 this.reversiAi.setAiType('B');
             } else {
-                playerType = 'X';
-                //this.ai.setAiType(playerType);
+
+                System.out.println("X " + ")))))))))))))))))))))))))))");
+                this.ai.setPlayerType('X');
             }
         } else {
-            System.out.println("player2");
-            this.reversiAi.setPlayerType('B');
-            this.reversiAi.setAiType('W');
+            if (gameType == "Reversi") {
+                System.out.println("player2");
+                this.reversiAi.setPlayerType('B');
+                this.reversiAi.setAiType('W');
+            }
+            else {
+                this.ai.setPlayerType('O');
+            }
         }
     }
 
@@ -176,9 +187,9 @@ public class Connector implements Runnable {
         if (gameType == "Reversi") {
             int x = reversiAi.moveAI();
             connection.getOutput().println("move " + x);
-            System.out.println("????????????????????????????????????????????????????????" + "         " + x);
         } else {
-           // int x = ai.GetNextMove();
+           int x = ai.getRandomMove();
+            connection.getOutput().println("move " + x);
         }
     }
 
