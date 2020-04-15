@@ -27,14 +27,6 @@ public class TicLogic implements Ai {
         System.out.println("Start...");
     }
 
-//    public void move(int x) {
-//        if (state.isFree(x)) {
-//           state.fillInCells(x, playerType.toString());
-//
-//       }
-////        CheckWin();
-//    }
-
     @Override
     public boolean move(int index) {
         boolean ismoved = false;
@@ -53,7 +45,7 @@ public class TicLogic implements Ai {
 
     @Override
     public int moveAI() {
-        int move = GetNextMove();
+        int move = getRandomMove();
         if (isValidMove(move)) {
             state.fillInCells(move, aiType);
             //  System.out.println(state.getScorex(aiType) + "  +++++++++++++++++++++++++++++++++++++++++++"+state.getScorex(aiType).getWinMoves().get(0));
@@ -66,7 +58,7 @@ public class TicLogic implements Ai {
         return move;
     }
 
-    public int GetRandomIndex(int posA, int posB) {
+    public int getRandomIndex(int posA, int posB) {
         int randomNr = (int) Math.floor((Math.random() * 2) + 1);
         System.out.println(randomNr);
         if (randomNr == 1)
@@ -98,7 +90,7 @@ public class TicLogic implements Ai {
         return state.getScorex(playerType);
     }
 
-     public int GetLastMovePlayer() {
+    public int GetLastMovePlayer() {
         return lastMovePlayer;
     }
 
@@ -125,26 +117,24 @@ public class TicLogic implements Ai {
 //    }
 
     //Return the best move
-
     public int GetNextMove() {
         int nextMove = 0;
         //start in een corner 0 2 6 8
         //Eerste zet
         if (moveCount == 0) {
-            System.out.println("Eerste beurt");
             if (GetLastMovePlayer() > 4)
-                nextMove = GetRandomIndex(0, 2);
+                nextMove = getRandomIndex(0, 2);
             else if (GetLastMovePlayer() < 4)
-                nextMove = GetRandomIndex(6, 8);
+                nextMove = getRandomIndex(6, 8);
             else {
-                nextMove = GetRandomIndex(2, 8);
+                nextMove = getRandomIndex(2, 8);
             }
             moveCount++;
             if (isValidMove(nextMove))
                 return nextMove;
         }
-
         moveCount++;
+
         nextMove = state.getTheFirstFreeIndex();
         if (isValidMove(nextMove)) {
             System.out.println(nextMove + " = " + isValidMove(nextMove) + ", IS VALID! (Ai)");

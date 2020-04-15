@@ -10,7 +10,7 @@ public class TicTacGame implements Board {
 
     int boardSize = 3;
 
-    private char[][] tiles;
+    public char[][] tiles;
 
     // 1=x
     //2=o
