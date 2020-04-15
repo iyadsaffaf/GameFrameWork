@@ -146,7 +146,7 @@ public class Connector implements Runnable {
             this.reversiAi = new ReversiLogic('t', difficulty);
         }
         else{
-            this.ai = new TicLogic('t');
+            this.ai = new TicLogic('t',difficulty);
         }
         if (serverCommand.GetPlayersList(message).get(0).equals(this.loginName)) {
             amIThefirst = true;
@@ -188,7 +188,7 @@ public class Connector implements Runnable {
             int x = reversiAi.moveAI();
             connection.getOutput().println("move " + x);
         } else {
-           int x = ai.getRandomMove();
+           int x = ai.moveAI();
             connection.getOutput().println("move " + x);
         }
     }

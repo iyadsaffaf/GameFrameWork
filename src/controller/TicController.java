@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -28,11 +29,19 @@ public class TicController {
     @FXML
     private Label oScore;
 
+    @FXML
+    private Label difficultyLevel;
+
+    @FXML
+    private ChoiceBox choiceDifficulty;
+
     private int xCounter = 0;
 
     private int oCounter = 0;
 
     private boolean isStarted = true;
+
+    private String difficulty;
 
 
     @FXML
@@ -43,16 +52,18 @@ public class TicController {
             xCounter = 0;
             oCounter = 0;
             isStarted = false;
+            difficulty = "Beginner";
+            System.out.println(difficulty + "Tesadsdasda");
             pane.setDisable(false);
 
             playerType = 'X';
-            tiles = new LinkedList<Tile>();
-            ai = new TicLogic(playerType);
+            tiles = new LinkedList<>();
+            ai = new TicLogic(playerType,difficulty);
             drawTheBoard();
         } else {
             pane.setDisable(false);
             playerType = 'X';
-            ai = new TicLogic(playerType);
+            ai = new TicLogic(playerType, difficulty);
             playAgain();
 
         }

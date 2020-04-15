@@ -1,6 +1,5 @@
 package ai;
 
-import model.Move;
 import model.tic.TicTacGame;
 import model.tic.WinMove;
 
@@ -12,6 +11,7 @@ public class TicLogic implements Ai {
     public TicTacGame state;
     private char playerType;
     private char aiType;
+    private String difficulty;
 
     boolean areWeFirst = false;
     int moveCount = 0;
@@ -20,10 +20,11 @@ public class TicLogic implements Ai {
     int lastMoveAi;
 
 
-    public TicLogic(char playerType) {
+    public TicLogic(char playerType,String difficulty) {
         state = new TicTacGame();
         this.playerType = playerType;
         this.aiType = getAiType(this.playerType);
+        this.difficulty = difficulty;
         System.out.println("Player  " + playerType);
         System.out.println("Ai    " + aiType);
         System.out.println("Start...");
@@ -47,7 +48,13 @@ public class TicLogic implements Ai {
 
     @Override
     public int moveAI() {
-        int move = GetNextMove();
+        int move;
+        if ("Beginner".equals(difficulty)) {
+            move = getRandomMove();
+        }
+        else{
+            move = getRandomMove();
+        }
         if (isValidMove(move)) {
             state.fillInCells(move, aiType);
             //  System.out.println(state.getScorex(aiType) + "  +++++++++++++++++++++++++++++++++++++++++++"+state.getScorex(aiType).getWinMoves().get(0));
@@ -71,26 +78,29 @@ public class TicLogic implements Ai {
 
     public int getRandomMove() {
         int randomMove = 0;
-        LinkedList<Integer> validMoves = new LinkedList<Integer>();
+        LinkedList<Integer> validMoves = new LinkedList<>();
+        Random r = new Random();
 
-        int index = 0;
+        int index = -1;
         for (int x = 0; x < 3; x++) {
             for (int y = 0; y < 3; y++) {
                 index++;
-                if (state.checkIfValidMove(index, aiType)&&index <9)
+                if (state.checkIfValidMove(index, aiType)&&index <9) {
                     validMoves.add(index);
-
+                }
             }
         }
-        Random r = new Random();
 
         if (!validMoves.isEmpty()) {
             randomMove = validMoves.get(r.nextInt(validMoves.size()));
             return randomMove;
         }
+        else{
+            System.out.println("There is no valid Move");
+        }
 
 
-        return randomMove;
+        return 9;
     }
 
     public WinMove checkWin(char playerType) {
