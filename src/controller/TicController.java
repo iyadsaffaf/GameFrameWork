@@ -29,6 +29,8 @@ public class TicController {
     Pane pane;
 
     public void StartTic(ActionEvent actionEvent) {
+        pane.setDisable(false);
+
         playerType = 'X';
         tiles = new LinkedList<Tile>();
         ai = new TicLogic(playerType);
@@ -127,6 +129,7 @@ public class TicController {
 
     }
     public void gameEnd(WinMove winMove) {
+        pane.setDisable(true);
         System.out.println("end dddddddddddddddddddddddddddddddddd dddddddddddddddd");
      for( int i=0 ;i<winMove.getWinMoves().size();i++){
          Move move = winMove.getWinMoves().get(i);

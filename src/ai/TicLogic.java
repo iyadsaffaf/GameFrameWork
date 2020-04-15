@@ -41,7 +41,7 @@ public class TicLogic implements Ai {
         if (isValidMove(index)) {
             ismoved = true;
             state.fillInCells(index, playerType);
-            System.out.println(state.getScorex(playerType));
+          //  System.out.println(state.getScorex(playerType));
 
 
         } else if (!state.isMovesLeft()) {
@@ -56,7 +56,7 @@ public class TicLogic implements Ai {
         int move = getRandomMove();
         if (isValidMove(move)) {
             state.fillInCells(move, aiType);
-            System.out.println(state.getScorex(aiType) + "  +++++++++++++++++++++++++++++++++++++++++++"+state.getScorex(aiType).getWinMoves().get(0));
+          //  System.out.println(state.getScorex(aiType) + "  +++++++++++++++++++++++++++++++++++++++++++"+state.getScorex(aiType).getWinMoves().get(0));
 
         } else if (!state.isMovesLeft()) {
             System.out.println("The board is full");

@@ -8,6 +8,7 @@ public class WinMove {
     private LinkedList<Move> winMoves = new LinkedList<>();
     private boolean isWin;
     private char player;
+    private int index;
 
     public LinkedList<Move> getWinMoves() {
         return winMoves;

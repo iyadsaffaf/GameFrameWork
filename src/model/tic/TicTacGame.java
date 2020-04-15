@@ -244,20 +244,21 @@ public class TicTacGame implements Board {
         winMove.setPlayer(playerType);
 
         // left to right scan
-
+        int index=0;
         for (int i = 0; i < 3; i++) {
             counter = 0;
             winMove.getWinMoves().clear();
             for (int j = 0; j < 3; j++) {
+                index=0;
                 if (tiles[i][j] == playerType) {
                     winMove.getWinMoves().add(new Move(i, j));
-
                     counter++;
                     System.out.println(winMove.getWinMoves());
                     System.out.println("test "+ i+" i  "+j+" J" + "left to right scan");
                     if (counter == 3) {
                         winMove.setWin(true);
-                        break;
+                        return winMove;
+
                     }
 
 
@@ -282,7 +283,8 @@ public class TicTacGame implements Board {
 
 
                         winMove.setWin(true);
-                        break;
+                        return winMove;
+
                     }
 
                 }
@@ -304,7 +306,8 @@ public class TicTacGame implements Board {
                     System.out.println(winMove.getWinMoves());
                     System.out.println("test "+ i+" i  "+j+" J" + "up right to down left scan");
                     winMove.setWin(true);
-                    break;
+                    return winMove;
+
                 }
 
 
@@ -325,7 +328,8 @@ public class TicTacGame implements Board {
 
                 if (counter == 3) {
                     winMove.setWin(true);
-                    break;
+                    return winMove;
+
                 }
 
 
