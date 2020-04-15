@@ -6,7 +6,6 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
-import model.tic.PlayerType;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,7 +21,7 @@ public class Connector implements Runnable {
     private ServerCommand serverCommand;
     private String gameType;
     private boolean amIThefirst = false;
-    private PlayerType playerType;
+    private char playerType;
     private String loginName;
     private String difficulty;
 
@@ -163,8 +162,8 @@ public class Connector implements Runnable {
                 this.reversiAi.setPlayerType('W');
                 this.reversiAi.setAiType('B');
             } else {
-                playerType = PlayerType.X;
-                this.ai.setAiType(playerType);
+                playerType = 'X';
+                //this.ai.setAiType(playerType);
             }
         } else {
             System.out.println("player2");
@@ -179,7 +178,7 @@ public class Connector implements Runnable {
             connection.getOutput().println("move " + x);
             System.out.println("????????????????????????????????????????????????????????" + "         " + x);
         } else {
-            int x = ai.GetNextMove();
+           // int x = ai.GetNextMove();
         }
     }
 

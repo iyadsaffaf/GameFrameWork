@@ -7,8 +7,6 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.util.LinkedList;
-
 public class ReversiBoard implements Board {
     private int boardSize = 8;
     private char[][] board;
@@ -27,7 +25,7 @@ public class ReversiBoard implements Board {
     // character W B F
     public ReversiBoard() {
         this.board = new char[boardSize][boardSize];
-        FillInWithFree();
+        fillInWithFree();
         score = new Score();
         setUpTheFirstCoins();
 
@@ -43,7 +41,7 @@ public class ReversiBoard implements Board {
 
     //fillfree
     @Override
-    public void FillInWithFree() {
+    public void fillInWithFree() {
 
         for (int r = 0; r < boardSize; r++) {
             for (int c = 0; c < boardSize; c++) {
@@ -229,7 +227,7 @@ public class ReversiBoard implements Board {
         return isValid;
     }
     public void CheckWin() {
-        Score score = this.GetScore();
+        Score score = this.getScore();
 
         int board = CountTiles('W') + CountTiles('B');
 
@@ -387,7 +385,7 @@ public class ReversiBoard implements Board {
 
     //evaluateboard
     @Override
-    public Score GetScore() {
+    public Score getScore() {
         score.setWhite(CountTiles('W'));
         score.setBlack(CountTiles('B'));
         score.setFree(CountTiles('F'));

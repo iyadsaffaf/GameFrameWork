@@ -155,12 +155,18 @@ public class ReversieController {
                                         if (ai.move(tile.GetIndex())) {
                                             myTurn = false;
                                             updateBoard();
+                                            if (hint)
+                                                highLight(getAiType(playerType));
+
                                         }
 
                                     } else {
-                                        if(ai.multiPlayerMove(tile.GetIndex())){
+                                        if (ai.multiPlayerMove(tile.GetIndex())) {
                                             myTurn = true;
                                             updateBoard();
+                                            if (hint)
+                                                highLight(playerType);
+
                                         }
                                     }
                                 } else {
@@ -319,6 +325,14 @@ public class ReversieController {
             }
         }
 
+    }
+
+    public char getAiType(char playerType) {
+        char aiType = 'B';
+        if (playerType == 'B') {
+            aiType = 'W';
+        }
+        return aiType;
     }
 
 }

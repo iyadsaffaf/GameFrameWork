@@ -46,7 +46,7 @@ public class ReversiLogic implements Ai {
 
 
         } else if (!board.isMoveLeft()) {
-            Score s = board.GetScore();
+            Score s = board.getScore();
             System.out.println("score black " + s.black + "Score" + s.white);
         }
         board.CheckWin();
@@ -72,7 +72,7 @@ public class ReversiLogic implements Ai {
 
 
         } else if (!board.isMoveLeft()) {
-            Score s = board.GetScore();
+            Score s = board.getScore();
             System.out.println("score black " + s.black + "Score" + s.white);
         }
         board.CheckWin();
