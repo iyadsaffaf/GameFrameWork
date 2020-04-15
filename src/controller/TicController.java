@@ -177,6 +177,9 @@ public class TicController {
         SetScoreText();
     }
 
+
+
+
     void SetScoreText()
     {
         xScore.setText(String.valueOf(xCounter / 3));
@@ -189,8 +192,6 @@ public class TicController {
             aiType = 'O';
         } else {
             aiType = 'X';
-
-
         }
         return aiType;
     }

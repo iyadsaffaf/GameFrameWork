@@ -1,8 +1,10 @@
 package ai;
 
+import model.Move;
 import model.tic.TicTacGame;
 import model.tic.WinMove;
 
+import javax.swing.*;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -45,14 +47,14 @@ public class TicLogic implements Ai {
 
     @Override
     public int moveAI() {
-        int move = getRandomMove();
+        int move = GetNextMove();
         if (isValidMove(move)) {
             state.fillInCells(move, aiType);
             //  System.out.println(state.getScorex(aiType) + "  +++++++++++++++++++++++++++++++++++++++++++"+state.getScorex(aiType).getWinMoves().get(0));
 
         } else if (!state.isMovesLeft()) {
             System.out.println("The board is full");
-
+            CheckWin();
         }
 
         return move;
@@ -98,28 +100,15 @@ public class TicLogic implements Ai {
     public int GetLastMovePlayer() {
         return lastMovePlayer;
     }
-
-//    public void CheckWin() {
-//        JOptionPane optionPane = null;
-//
-//        if (state.evaluate(playerType.toString()) == 10) {
-//            System.out.println(playerType.toString() + " has won!");
-//            optionPane = new JOptionPane(playerType.toString() + " wins!");
-//        }
-//        if (state.evaluate(aiType.toString()) == 10) {
-//            System.out.println(aiType.toString() + " has won!");
-//            optionPane = new JOptionPane(aiType.toString() + " wins!");
-//        }
-//        if (state.checkFinish() >= 8) {
-//            optionPane = new JOptionPane("DRAW!");
-//        }
-//        if (optionPane != null) {
-//            JDialog myDialog = optionPane.createDialog(null, "GAME OVER");
-//            myDialog.setModal(false);
-//            myDialog.setVisible(true);
-//            state.FillInWithFree();
-//        }
-//    }
+    public void CheckWin() {
+        JOptionPane optionPane = null;
+        optionPane = new JOptionPane("DRAW!");
+        if (optionPane != null) {
+            JDialog myDialog = optionPane.createDialog(null, "GAME OVER");
+            myDialog.setModal(false);
+            myDialog.setVisible(true);
+        }
+    }
 
     //Return the best move
     public int GetNextMove() {
@@ -139,6 +128,12 @@ public class TicLogic implements Ai {
                 return nextMove;
         }
         moveCount++;
+
+        //CHECK ERGENS 2 OP EEN RIJ
+
+
+        WinMove winMove = new WinMove();
+        winMove.setPlayer('X');
 
         nextMove = state.getTheFirstFreeIndex();
         if (isValidMove(nextMove)) {
